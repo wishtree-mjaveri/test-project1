@@ -1,4 +1,4 @@
-# shell
+# test-project-1
 
 a [Sails v1](https://sailsjs.com) application
 
@@ -14,27 +14,13 @@ a [Sails v1](https://sailsjs.com) application
 
 ### Version info
 
-This app was originally generated on Tue Jan 28 2020 11:17:02 GMT+0530 (India Standard Time) using Sails v1.2.3.
+This app was originally generated on Wed Feb 10 2021 12:10:49 GMT+0530 (India Standard Time) using Sails v1.4.0.
 
-# React
-
- * Antd framework used for UI (Ant design requires node version > 8)
- * Global CSS
- * Handled javascript disabled and cookies disabled
- * Configured webpack
- * Environment set up - Production, staging, development
- * Signin
- * Signup
- * CRUD
- * Datatable
- * Validation framework integration 
- * Eslint airbnb
- * Google Captcha
- * moment
+<!-- Internally, Sails used [`sails-generate@2.0.1`](https://github.com/balderdashy/sails-generate/tree/v2.0.1/lib/core-generators/new). -->
 
 
-# How to run Shell Application
 
- * Clone the project - git clone https://wishtree_dmakkar@bitbucket.org/wishtreeshellprojects/wtsailsreactmongo.git (You can use your's user    clone URL)
- * Run command - npm run build ( to build the project )
- * Run command - npm start ( to run the project )
+<!--
+Note:  Generators are usually run using the globally-installed `sails` CLI (command-line interface).  This CLI version is _environment-specific_ rather than app-specific, thus over time, as a project's dependencies are upgraded or the project is worked on by different developers on different computers using different versions of Node.js, the Sails dependency in its package.json file may differ from the globally-installed Sails CLI release it was originally generated with.  (Be sure to always check out the relevant [upgrading guides](https://sailsjs.com/upgrading) before upgrading the version of Sails used by your app.  If you're stuck, [get help here](https://sailsjs.com/support).)
+-->
+

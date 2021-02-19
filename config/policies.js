@@ -10,26 +10,13 @@
 
 module.exports.policies = {
 
-  /** *************************************************************************
+  /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions, unless overridden.       *
   * (`true` allows public access)                                            *
   *                                                                          *
-  ************************************************************************** */
+  ***************************************************************************/
 
   // '*': true,
-
-  // '*': 'rateLimit',
-
-  auth: {
-    // '*': ['rateLimit'],
-    '*': true,
-  },
-  user: {
-    /*  '*': ['rateLimit', 'isAuthenticated'],
-    registration: ['rateLimit'], */
-    '*': ['isAuthenticated'],
-    registration: true,
-  },
 
 };
