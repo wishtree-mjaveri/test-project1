@@ -18,5 +18,15 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
+  RestaurantController:{
+    '*':['isAuthenticated'],
+    'getRestaurants':true,
+    'getRestaurant':true
+    
+  },
+  AuthController:{
+    '*':true,
+    
+  }
 
 };
