@@ -19,7 +19,6 @@
  * For more information see:
  *   https://sailsjs.com/anatomy/app.js
  */
-require('ts-node/register');
 
 
 // Ensure we're in the project directory, so cwd-relative paths work as expected

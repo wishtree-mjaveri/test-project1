@@ -15,7 +15,7 @@
 
 module.exports.security = {
 
-  /** *************************************************************************
+  /***************************************************************************
   *                                                                          *
   * CORS is like a more modern version of JSONP-- it allows your application *
   * to circumvent browsers' same-origin policy, so that the responses from   *
@@ -26,7 +26,7 @@ module.exports.security = {
   * For additional options and more information, see:                        *
   * https://sailsjs.com/docs/concepts/security/cors                          *
   *                                                                          *
-  ************************************************************************** */
+  ***************************************************************************/
 
   // cors: {
   //   allRoutes: false,
@@ -35,18 +35,7 @@ module.exports.security = {
   // },
 
 
-  cors: {
-    allRoutes: true,
-    allowOrigins: '*',
-    // allowOrigins: ['http://localhost:8080', 'http://172.17.0.1:8080', 'http://localhost:9000', 'http://localhost:1337', 'http://192.168.1.20:1337', 'http://192.168.1.20:8080', 'http://192.168.1.15:1337', 'http://192.168.1.19:1337', 'http://192.168.1.15:8080', 'http://192.168.1.107:8080', 'http://192.168.1.107:1337'],
-    allowCredentials: true,
-    allowAnyOriginWithCredentialsUnsafe: true,
-    allowRequestMethods: 'GET, POST, OPTIONS, HEAD',
-    allowRequestHeaders: 'Access-Control-*, Origin, X-Requested-With, Content-Type, Accept, Authorization,Access-Control-Allow-Origin',
-    allowResponseHeaders: 'Access-Control-*, Origin, X-Requested-With, Content-Type, Accept, Authorization,Access-Control-Allow-Origin',
-  },
-
-  /** **************************************************************************
+  /****************************************************************************
   *                                                                           *
   * By default, Sails' built-in CSRF protection is disabled to facilitate     *
   * rapid development.  But be warned!  If your Sails app will be accessed by *
@@ -58,7 +47,7 @@ module.exports.security = {
   * For more information, see:                                                *
   * https://sailsjs.com/docs/concepts/security/csrf                           *
   *                                                                           *
-  *************************************************************************** */
+  ****************************************************************************/
 
   // csrf: false
 

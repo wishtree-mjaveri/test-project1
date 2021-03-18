@@ -4,85 +4,75 @@
  *
  * Your routes tell Sails what to do each time it receives a request.
  *
+ * For more information on configuring custom routes, check out:
+ * https://sailsjs.com/anatomy/config/routes-js
  */
 
 module.exports.routes = {
 
-  /** **************************************************************************
-    *  Routes which are used by react should be prefix with api
-    *  Example :
-    *  Method /api/routeName:{
-    *   controller: 'controllerName',
-    *   action: 'actionName',
-    * }
-    *
-    * Note: Please update swagger file if route is added
-    ************************************************************************** */
+  /***************************************************************************
+  *                                                                          *
+  * Make the view located at `views/homepage.ejs` your home page.            *
+  *                                                                          *
+  * (Alternatively, remove this and add an `index.html` file in your         *
+  * `assets` directory)                                                      *
+  *                                                                          *
+  ***************************************************************************/
 
-  'POST /api/login': {
-    controller: 'AuthController',
-    action: 'login',
-  },
+  '/': { view: 'pages/homepage' },
 
-  'POST /api/logout': {
-    controller: 'AuthController',
-    action: 'logout',
-  },
 
-  'POST /api/getUser': {
-    controller: 'UserController',
-    action: 'getUser',
-  },
-  'POST /api/getUserList': {
-    controller: 'UserController',
-    action: 'getUserList',
-  },
-  'POST /api/editUser': {
-    controller: 'UserController',
-    action: 'editUser',
-  },
-  'POST /api/deleteUser': {
-    controller: 'UserController',
-    action: 'deleteUser',
-  },
-  'POST /api/registration': {
-    controller: 'UserController',
-    action: 'registration',
-  },
+  /***************************************************************************
+  *                                                                          *
+  * More custom routes here...                                               *
+  * (See https://sailsjs.com/config/routes for examples.)                    *
+  *                                                                          *
+  * If a request to a URL doesn't match any of the routes in this file, it   *
+  * is matched against "shadow routes" (e.g. blueprint routes).  If it does  *
+  * not match any of those, it is matched against static assets.             *
+  *                                                                          *
+  ***************************************************************************/
+ 'POST /api/registration': {
+  controller: 'RestaurantController',
+  action: 'registration',
+},
 
-  'POST /api/uploadProfilePic': {
-    controller: 'UserController',
-    action: 'uploadProfilePic',
-  },
+'GET /api/restaurant':{
+  controller:'RestaurantController',
+  action:'getRestaurant'
+},
 
-  '/api/subscribeNotification': {
-    controller: 'NotificationController',
-    action: 'subscribeNotification',
-  },
+'GET /api/restaurants':{
+  controller:'RestaurantController',
+  action:'getAllRestaurant'
+},
+'GET /api/card/restaurants':{
+  controller:'RestaurantController',
+  action:'getRestaurants'
+},
 
-  'GET /sendNotification': {
-    controller: 'NotificationController',
-    action: 'sendNotification',
-  },
+'PUT /api/restaurant':{
+  controller:'RestaurantController',
+  action:'updateRestaurant'
+},
 
-  'POST /api/verifyCaptcha': {
-    controller: 'AuthController',
-    action: 'verifyCaptcha',
-  },
+'DELETE /api/restaurant':{
+  controller:"RestaurantController",
+  action:'deleteRestaurant'
+},
 
-  'GET /api/v1/auth/facebook': { controller: 'AuthController', action: 'facebookAuth' },
-  'GET /facebook/callback': { controller: 'AuthController', action: 'facebookCallback' },
 
-  // Mongoose connection testing routes
-
-  /* 'GET /Admin/getAdmin': { controller: 'AdminController', action: 'findAdmin' },
-
-  'GET /Admin/saveAdmin': { controller: 'AdminController', action: 'saveAdmin' }, */
-
-  // typescript testing routes
-
-  /* 'GET /Type/getAdmin': { controller: 'AdminController', action: 'getAdmin' },
-
-  'GET /Type/saveAdmin': { controller: 'AdminController', action: 'createAdmin' }, */
+'POST /user/login':{
+  controller:"AuthController",
+  action:"login"
+},
+'POST /user/logout':{
+  controller:"AuthController",
+  action:"logout"
+},
+'POST /user/registration':{
+  controller:"UserController",
+  action:"registration"
+}
 
 };

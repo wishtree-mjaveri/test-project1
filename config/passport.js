@@ -1,10 +1,35 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
-const FacebookStrategy = require('passport-facebook').Strategy;
-const request = require('request');
-
+const passport = require('passport'),
+      LocalStrategy = require('passport-local').Strategy,
+      bcrypt = require('bcrypt');
+const Logger = require('../api/services/Logger')
+// passport.serializeUser(function(user, cb) {
+//   cb(null, user.id);
+// });
+// passport.deserializeUser(function(id, cb){
+//   User.findOne({id}, function(err, users) {
+//     cb(err, users);
+//   });
+// });
+// passport.use(new LocalStrategy({
+//   emailField: 'email',
+//   passwordField: 'password'
+// }, function(email, password, cb){
+// User.findOne({email: email}, function(err, user){
+//     if(err) return cb(err);
+//     if(!user) return cb(null, false, {message: 'email not found'});
+// bcrypt.compare(password, user.password, function(err, res){
+//       if(!res) return cb(null, false, { message: 'Invalid Password' });
+// let userDetails = {
+//         email: user.email,
+//         username: user.username,
+//         id: user.id
+//       };
+// return cb(null, userDetails, { message: 'Login Succesful'});
+//     });
+//   });
+// }));
 passport.serializeUser((user, done) => {
+  Logger.verbose(user.id)
   done(null, user.id);
 });
 
@@ -15,20 +40,24 @@ passport.deserializeUser((req, id, done) => {
 });
 
 passport.use(new LocalStrategy({
-  usernameField: 'username',
+  usernameField:'email',
   passwordField: 'password',
+  
   passReqToCallback: true,
 },
-((req, username, password, done) => {
-  User.findOne({ email: username, isActive: true, isVerified: true }, (err, user) => {
+((req,email, password, done) => {
+  // Logger.verbose(username);
+  Logger.verbose(email);
+  Logger.verbose(password);
+  User.findOne({ email: email}, (err, user) => {
     if (err) {
       Logger.err(`Passport : at User.findOne ${err}`);
       return done(err);
     }
     Logger.verbose(user);
     if (!user) {
-      Logger.warn({ message: 'User Incorrect Username' });
-      return done(null, false, { message: 'Incorrect Username' });
+      Logger.warn({ message: 'User Incorrect email' });
+      return done(null, false, { message: 'Incorrect email' });
     }
     if (!user.password) {
       Logger.warn({ message: 'User Incorrect Password' });
@@ -48,35 +77,3 @@ passport.use(new LocalStrategy({
   });
 })));
 
-
-const verifyHandler = function (req, token, tokenSecret, profile, done) {
-  Logger.verbose('verifyHandler');
-  process.nextTick(() => {
-    let url = 'https://graph.facebook.com/v2.10/me?access_token=%s&fields=id,email,first_name,last_name';
-    url = url.replace('%s', token);
-
-    const options = { method: 'GET', url, json: true };
-    request(options, (err, response) => {
-      if (err) {
-        return done(null, null);
-      }
-      Logger.verbose(response);
-
-      const data = {
-        id: response.body.id,
-        first_name: response.body.first_name,
-        last_name: response.body.last_name,
-        email: response.body.email,
-      };
-
-      return done(null, data);
-    });
-  });
-};
-
-passport.use(new FacebookStrategy({
-  clientID: '1218514478336787',
-  clientSecret: '6d9b0238d7d4ff44ed4669e84a9d2ff6',
-  callbackURL: 'http://localhost:1337/facebook/callback',
-  passReqToCallback: true,
-}, verifyHandler));
