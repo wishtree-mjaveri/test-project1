@@ -50,15 +50,25 @@ setIsModalVisible(true)
 Axios.post(`http://localhost:1337/user/login`,{email,password},{headers:headers,withCredentials:true},)
 
 .then(res=>{console.log(res)
-if(res.data.status==200) {
-history.push('/home')
+    if(res.data.status==200&&res.data.user.role!=="Admin"){
+        history.push('/userhomepage')
+      return successfulLogin()
+    
+    }
+if(res.data.status==200&&res.data.user.role==="Admin") {
+    console.log('admin successful login to home page')
+history.push('/home') 
 successfulLogin()
-}else if(res.data.status==300){
+
+} 
+else if(res.data.status==300){
 setErrorMessage('invalid email or password')
 seterrorState(true)
+} 
 
 }
-}).catch(error=>{console.log(error)
+)
+.catch(error=>{console.log(error)
 setEmail(''),
 setPassword('')
 

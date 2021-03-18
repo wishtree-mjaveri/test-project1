@@ -26,6 +26,7 @@ import {
 import Home from "../../routes/admin/Home";
 import UserHome from "../../routes/user/UserHome";
 import RestaurantDetails from "../../routes/user/RestaurantDetails";
+import UserHomePage from "../../routes/admin/UserHomePage";
 
 const RestrictedRoute = ({component: Component, location, authUser, ...rest}) =>
   <Route
@@ -142,6 +143,7 @@ const App = (props) => {
           <Route exact path='/signin' component={SignIn}/>
           <Route exact path='/signup' component={SignUp}/>
           <Route path="/home" component={Home} />
+          <Route path="/userhomepage" component={UserHomePage}/>
           <Route path="/restaurantdetails" component={RestaurantDetails} />
           <RestrictedRoute path={`${match.url}`} authUser={authUser} location={location}
                            component={MainApp}/>

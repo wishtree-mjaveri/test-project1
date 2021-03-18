@@ -1,5 +1,5 @@
 import Modal from 'antd/lib/modal/Modal'
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {Button, Input,TimePicker,Form,message} from 'antd'
 import Axios from 'axios'
 import {EditTwoTone} from '@ant-design/icons'
@@ -8,16 +8,18 @@ import {useHistory} from 'react-router-dom'
 const FormItem =Form.Item
 
 
-function EditRestaurant({visible,name,id,desc,address,openingTime,closingTime,refresh,image}) {
+function EditRestaurant({visible,name,id,desc,address,openingTime,closingTime,refresh,image},props) {
     const [isEditModelVisible, setIsEditModelVisible] = useState(visible)
-    const [restaurantName, setRestaurantName] = useState(name)
-    const [restaurantDescription, setdescription] = useState(desc)
-    const [restaurantAddress, setrestaurantAddress] = useState(address)
-    const [restaurantOpeningTime, setRestaurantOpeningTime] = useState(openingTime)
-    const [restaurantClosingTime, setRestaurantClosingTime] = useState(closingTime)
-    const [restaurantImage, setRestaurantImage] = useState(image)
+    const [restaurantName, setRestaurantName] = useState()
+    const [restaurantDescription, setdescription] = useState()
+    const [restaurantAddress, setrestaurantAddress] = useState()
+    const [restaurantOpeningTime, setRestaurantOpeningTime] = useState()
+    const [restaurantClosingTime, setRestaurantClosingTime] = useState()
+    const [restaurantImage, setRestaurantImage] = useState()
+    const [restaurant, setRestaurant] = useState({})
     const [requiredMark, setRequiredMark] = useState('optional')
     const history=useHistory()
+
     const succesfulEdit = ()=>{
       message.success("Edit successful !")
     }
@@ -41,7 +43,21 @@ const headers={
       'Content-Type': 'application/json',
     }
 }
-    const showModel=()=>{
+    const showModel=async()=>{
+     await Axios.get(`http://localhost:1337/api/restaurant?_id=${id}`).
+      then(res=>{
+          console.log(res.data.restaurant)
+          setRestaurant(res.data.restaurant)
+          setRestaurantName(res.data.restaurant.restaurantName)
+          setrestaurantAddress(res.data.restaurant.restaurantAddress)
+          setdescription(res.data.restaurant.restaurantDescription)
+          setRestaurantOpeningTime(res.data.restaurant.restaurantOpeningTime)
+          setRestaurantClosingTime(res.data.restaurant.restaurantClosingTime)
+          setRestaurantImage(res.data.restaurant.image)
+          console.log(restaurant)
+      })
+      .catch(error=>console.log(error))
+  
       console.log(id)
       console.log(restaurantName)
         setIsEditModelVisible(true)
@@ -74,6 +90,7 @@ const headers={
         setIsEditModelVisible(false)
     }
     const handleOnClose=()=>{
+      refresh()
       setRestaurantName(name)
       setrestaurantAddress(address)
       setRestaurantOpeningTime(openingTime)

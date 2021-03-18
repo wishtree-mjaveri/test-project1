@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Divider, Table, Tooltip, Layout, message } from "antd";
+import { Button, Card, Divider, Table, Tooltip, Layout, message,Pagination,PaginationProps ,TablePaginationConfig} from "antd";
 import Icon from "@ant-design/icons";
 import AddRestaurant from "./AddRestaurant";
 import Modal from "antd/lib/modal/Modal";
@@ -9,6 +9,8 @@ import Axios from "axios";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import { footerText } from "../../util/config";
 import './index.css'
+import { refresh } from "less";
+
 const pleaseLogin = () => {
   message.error("Unauthorized access please login");
 };
@@ -23,17 +25,37 @@ const headers = {
 };
 function Home(props) {
   const [restaurantList, setRestaurantList] = useState([]);
-  useEffect(() => {
-    Axios.get(`http://localhost:1337/api/card/restaurants`).then((res) => {
-      console.log(res.data.list);
-      setRestaurantList(res.data.list);
-    });
-  }, []);
+  const [page, setPage] = useState(1)
+  const [total, setTotal] = useState()
+  const [current, setCurrent] = useState(1)
+  const [pageNum, setPageNum] = useState(1)
+  const TablePaginationConfig={
+ showSizeChanger: false,
+            showQuickJumper: false,
+                         
+           defaultPageSize:4,
+           
+            total: total,
+            onChange: (e) => handleChange(e),
+  }
 
-  const refreshData = () => {
-    Axios.get(`http://localhost:1337/api/card/restaurants`).then((res) => {
+  useEffect( () => {
+    Axios.get(`http://localhost:1337/api/restaurants?page=${page}`).then((res) => {
       console.log(res.data.list);
       setRestaurantList(res.data.list);
+      Axios.get(`http://localhost:1337/api/card/restaurants`).then(res=>{console.log(res.data.list.length) ,setTotal(Math.ceil(res.data.list.length/4))  })
+    }).catch(error=>console.log(error)
+      );
+  }, [page,total]);
+
+
+
+  const refreshData = async() => {
+   await Axios.get(`http://localhost:1337/api/restaurants?page=${page}`).then((res) => {
+      console.log(res.data.list);
+      setRestaurantList(res.data.list);
+      Axios.get(`http://localhost:1337/api/card/restaurants`).then(res=>{console.log(res.data.list.length) ,setTotal(Math.ceil(res.data.list.length/4))  })
+
     });
   };
   const { Footer } = Layout;
@@ -116,8 +138,9 @@ function Home(props) {
     {
       title: "Action",
       key: "action",
-      render: (text, record) => (
+      render: (text, record) => ( 
         <div style={{ display: "inline-flex" }}>
+         
           <EditRestaurant
             name={record.restaurantName}
             id={record.id}
@@ -160,7 +183,15 @@ function Home(props) {
       })
       .catch((error) => console.log(error));
   };
+const handleChange=(e)=>{
+  setPage(e)
+  // Axios.get(`http://localhost:1337/api/restaurants?page=${page}`).then((res) => {
+  //     console.log(res.data.list);
+  //     setRestaurantList(res.data.list);
+  //   });
+  refreshData()
 
+}
   return (
     <div>
       <header style={style}>
@@ -198,8 +229,14 @@ function Home(props) {
             className="gx-table-responsive"
             columns={columns}
             dataSource={restaurantList}
+            // pagination={{
+            //   defaultPageSize:4,
+            //   total:{total},
+            //   change:{handleChange}
+            // }}
             pagination={false}
           />
+         <Pagination style={{float:'right'}} defaultPageSize={page} defaultCurrent={current} total={total} onChange={handleChange} />
         </Card>
       </div>
       <Footer style={{ background: " #036" ,position: 'absolute' ,

@@ -68,7 +68,7 @@ module.exports = {
 
   async getAllRestaurants(page,pagination,callback) {
     try {
-        const allRestaurants = await Restaurant.find().skip((page-1)*pagination).limit(pagination)
+        const allRestaurants = await Restaurant.find().where({isActive:true}).skip((page-1)*pagination).limit(pagination)
         return callback(null,allRestaurants)
     } catch (error) {
         return callback(error)
