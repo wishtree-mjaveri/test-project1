@@ -219,6 +219,22 @@ module.exports = {
     });
   },
 
+  searchRestaurantsByText(req,res){
+      Logger.verbose('RestaurantController.searchRestaurantsByText');
+      const searchText = req.allParams().text
+      RestaurantServices.searchRestaurantBytext(searchText,(error,restaurantsFound)=>{
+        if (error) {
+          res.send({status:200,message:messages.serverError})
+        } else {
+          res.send({
+            status:200,
+            message:messages.restaurantList,
+            restaurants:restaurantsFound
+          })
+        }
+      })
+  },
+
   deleteRestaurant(req, res) {
     Logger.verbose("RestaurantController.deleteRestaurant");
     const restaurantId = req.allParams().uid;

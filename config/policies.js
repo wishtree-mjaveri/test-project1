@@ -22,7 +22,8 @@ module.exports.policies = {
     '*':['isAuthenticated'],
     'getRestaurants':true,
     'getRestaurant':true,
-    'getAllRestaurant':true
+    'getAllRestaurant':true,
+    'searchRestaurantsByText':true
     
   },
   AuthController:{

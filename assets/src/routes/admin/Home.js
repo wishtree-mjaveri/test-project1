@@ -236,7 +236,7 @@ const handleChange=(e)=>{
             // }}
             pagination={false}
           />
-         <Pagination style={{float:'right'}} defaultPageSize={page} defaultCurrent={current} total={total} onChange={handleChange} />
+         <Pagination style={{float:'right',paddingTop:'20px'}} defaultPageSize={page} defaultCurrent={current} total={total} onChange={handleChange} />
         </Card>
       </div>
       <Footer style={{ background: " #036" ,position: 'absolute' ,

@@ -51,6 +51,11 @@ module.exports.routes = {
   action:'getRestaurants'
 },
 
+'GET /api/description/restaurants':{
+  controller:'RestaurantController',
+  action:'searchRestaurantsByText'
+},
+
 'PUT /api/restaurant':{
   controller:'RestaurantController',
   action:'updateRestaurant'

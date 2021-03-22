@@ -16,8 +16,8 @@ function RestaurantCard({name,description,rating,grid,hotelImage}) {
           </div>
         </div>
   
-        <div className="gx-product-body">
-          <h3 className="gx-product-title">{name}
+        <div className="gx-product-body"  >
+          <h3 className="gx-product-title"  >{name}
             {/* <small className="gx-text-grey">{", " + variant}</small> */}
           </h3>
           {/* <div className="ant-row-flex">

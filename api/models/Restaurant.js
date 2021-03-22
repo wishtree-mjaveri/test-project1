@@ -1,3 +1,4 @@
+const Logger = require('../services/Logger')
 
 
 module.exports = {
@@ -91,6 +92,25 @@ module.exports = {
     const deletedRecord = await Restaurant.updateOne().where({uid:restaurantId,isActive:true}).set(restaurantData);
     return callback(null, deletedRecord);
   },
+
+  async searchRestaurantByText(searchText,callback){
+    Logger.verbose('Restaurant Model')
+    try {
+     
+        const restaurantsFound = await Restaurant.find({
+          isActive:true,
+          or:[{
+          restaurantDescription:{contains:searchText}
+
+          },{restaurantAddress:{contains:searchText}}]
+      }) 
+      return callback(null,restaurantsFound)  
+      
+    } catch (error) {
+      return callback(error)
+    }
+     
+  }
 
 };
 

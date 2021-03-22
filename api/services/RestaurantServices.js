@@ -52,6 +52,18 @@ module.exports={
         })
     },
 
+    searchRestaurantBytext(searchText,callback){
+        Logger.debug('RestaurantServices.searchRestaurantByText')
+        Restaurant.searchRestaurantByText(searchText,(error,restaurantsFound)=>{
+            if (error) {
+                callback(error)
+            } else {
+                callback(null,restaurantsFound)
+            }
+        })
+
+    },
+
     updateRestaurant(restaurantId,restaurantData,callback){
         Logger.debug('RestaurantServices.updateRestaurant')
         Restaurant.updateRestaurant(restaurantId,restaurantData,(error,updatedRestaurant)=>{

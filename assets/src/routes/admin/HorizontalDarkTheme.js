@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import {Button, Dropdown, Layout, Menu, message, Popover, Select} from 'antd';
 import Icon from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
@@ -83,6 +83,25 @@ const HorizontalDark = (props) => {
       .catch((error) => console.log(error));
   };
 
+  const handleSearch= async()=>{
+    await  Axios.get(`http://localhost:1337/api/description/restaurants?text=${props.search}`)
+    .then(result=>{
+        console.log(result.data.restaurants)
+        props.setrestaurants(result.data.restaurants)
+    })
+    .catch(error=>console.log(error))
+  }
+
+  useEffect(() => {
+    Axios.get(`http://localhost:1337/api/description/restaurants?text=${props.search}`)
+    .then(result=>{
+        console.log(result.data.restaurants)
+        props.setrestaurants(result.data.restaurants)
+    })
+    .catch(error=>console.log(error))
+  
+    
+  }, [])
   return (
     <div className="gx-header-horizontal gx-header-horizontal-dark"   >
       {/* <div className="gx-header-horizontal-top">
@@ -120,10 +139,10 @@ const HorizontalDark = (props) => {
             <div className="gx-header-search gx-d-none gx-d-lg-flex">
 
               <SearchBox styleName="gx-lt-icon-search-bar-lg"
-                         placeholder="Search in app..."
+                         placeholder="Search in app for dish,city"
                          onChange={e=>{props.setSearch(e.target.value)}}
                          value={props.search}/>
-
+              <Button onClick={handleSearch}>Search</Button>
               {/* <Select defaultValue="lucy" style={{width: 120}} onChange={handleChange}>
                 <Option value="jack">City</Option>
                 <Option value="lucy">cousine</Option>

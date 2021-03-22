@@ -102,7 +102,7 @@ const headers={
         <div>
             {/* <Button onClick={showModel}>Edit-{restaurantName} </Button> */}
            <EditTwoTone onClick={showModel} />
-            <Modal visible={isEditModelVisible} title={"Edit Restaurant"} onOk={handleOk} onCancel={handelCancel} afterClose={handleOnClose} destroyOnClose footer={null}>
+            <Modal visible={isEditModelVisible} title={"Edit Restaurant"} onOk={handleOk} onCancel={handelCancel} afterClose={handleOnClose} destroyOnClose bodyStyle={{overflowY:'auto',maxHeight:'500px',}} footer={null}>
                
                 <div className="gx-modal-box-form-item">
                   <Form
@@ -217,7 +217,7 @@ const headers={
             <div  className="gx-form-group" style={{alignItems:"center",display: "grid",justifyContent: "center"}} >
             <Button type="primary" htmlType='submit'  onClick={handleOk}>
             
-           submit
+           Submit
           </Button>
           </div>
           </Form>

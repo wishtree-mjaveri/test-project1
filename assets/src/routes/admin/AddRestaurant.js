@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {Modal,Button,Input,Form,message,TimePicker} from 'antd'
+import {Modal,Button,Input,Form,message,TimePicker, Upload} from 'antd'
 import moment from 'moment'
 import axios from 'axios'
 import {useHistory} from 'react-router-dom'
@@ -17,6 +17,7 @@ function AddRestaurant(props) {
     const [email, setEmail] = useState('')
     const [errorMessage, seterrorMessage] = useState()
     const [errorStatus, setErrorStatus] = useState(false)
+    const [errorimage, setErrorimage] = useState(false)
     const [image, setImage] = useState()
     const showModel = ()=>{
         setIsModelVisible(true)
@@ -56,6 +57,7 @@ const headers={
           setrestaurantAddress('')
           setrestaurantDescription('')
           setRestaurantName('')
+          setImage('')
         }
       
       })  
@@ -68,12 +70,32 @@ const headers={
         setIsModelVisible(false)
     }
     const onFileChange = (event) => {
+      setImage('')
       var file = event.target.files[0];
       var reader = new FileReader();
-      reader.onloadend = function () {
-        console.log("RESULT", reader.result);
-        setImage(reader.result);
-      };
+      var maxSize=2000000;
+      if (file.size<=maxSize) {
+        reader.onload = function (e) {
+          const img = new Image()
+          img.onload=()=>{
+            setErrorimage(false)
+            // seterrorMessage('')
+            setImage(reader.result)
+          }
+          img.onerror=(error)=>{
+            console.log(error)
+            setErrorimage(true)
+            seterrorMessage('Unable to store this image')
+          }
+          img.src=e.target.result
+          console.log("RESULT", reader.result);
+        };
+      } else {
+        setErrorimage(true)
+        seterrorMessage('unable to store image file greater than 2 mb')
+      }
+     
+
       var res = reader.readAsDataURL(file);
       console.log("asd", res);
     };
@@ -82,7 +104,7 @@ const headers={
         <div>
          
             <Button onClick={showModel}>Add New Restaurant</Button>
-            <Modal title="Add New Restaurant" visible={isModelVisible} onCancel={handleCancel} onOk={handleOk} destroyOnClose footer={null}>
+            <Modal title="Add New Restaurant" visible={isModelVisible} onCancel={handleCancel} onOk={handleOk} destroyOnClose afterClose={()=>setImage("")} footer={null}>
             <div className="gx-modal-box-form-item">
       <Form layout="vertical">
           
@@ -90,7 +112,7 @@ const headers={
 <FormItem rules={[{ required: true, message: 'Please enter restaurant name!' },]} label="Restaurant Name" name="restaurantName">
             
               <Input
-                
+               
                 placeholder="Enter name"
                 onChange={(event) => setRestaurantName(event.target.value)}
                 value={restaurantName}
@@ -158,16 +180,56 @@ const headers={
               </FormItem>
             </div>
             <div className="gx-form-group">
-            <FormItem  label="Restaurant Image"  name="restaurantImage">
+            <FormItem  label="Restaurant Image"   name="restaurantImage">
               
               <Input
-               
+                accept='image/*'
                 type='file'
                 placeholder="Select image"
                 onChange={(e) =>{onFileChange(e)} }
                 
                 margin="normal"
               />
+              {errorimage?errorMessage:null}
+              {/* <Upload
+              accept='image/*'
+              type='file'
+              beforeUpload={(file)=>{
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                  const img = new Image()
+                  img.onload=()=>{
+                    setImage(reader.result)
+                  }
+                  img.onerror=(error)=>{
+                   if (error.type=='error') {
+                    setErrorimage(true)
+                     
+                   } else {
+                    setErrorimage(false)
+                     
+                   }
+                    
+
+                  }
+                  img.src=e.target.result
+                  console.log("RESULT", );
+                };
+                var res = reader.readAsDataURL(file);
+                console.log("asd", res);
+                if (errorimage) {
+                  console.log(errorimage)
+                  return false
+                } else {
+                  console.log(errorimage)
+
+                  return true
+                }
+              }}
+              > */}
+                {/* <Button>Upload</Button>
+              </Upload> */}
               </FormItem>
             </div>
             <div className="gx-form-group">
@@ -180,7 +242,7 @@ const headers={
             <FormItem className="gx-text-center">
           
           <Button type="primary" htmlType='submit' onClick={handleOk}>
-           submit
+           Submit
           </Button>
           
         </FormItem>
