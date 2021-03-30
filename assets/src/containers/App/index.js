@@ -4,7 +4,7 @@ import URLSearchParams from 'url-search-params'
 import {Redirect, Route, Switch, useHistory, useLocation, useRouteMatch} from "react-router-dom";
 import {ConfigProvider} from 'antd';
 import {IntlProvider} from "react-intl";
-
+import Error404 from '../../routes/customViews/errorPages/404/index'
 import AppLocale from "../../lngProvider";
 import MainApp from "./MainApp";
 import SignIn from "../SignIn";
@@ -27,6 +27,7 @@ import Home from "../../routes/admin/Home";
 import UserHome from "../../routes/user/UserHome";
 import RestaurantDetails from "../../routes/user/RestaurantDetails";
 import UserHomePage from "../../routes/admin/UserHomePage";
+import RestaurantInfo from "../../routes/user/RestaurantsInfo";
 
 const RestrictedRoute = ({component: Component, location, authUser, ...rest}) =>
   <Route
@@ -132,7 +133,7 @@ const App = (props) => {
   ,[]);
 
   const currentAppLocale = AppLocale[locale.locale];
-
+    const someid=""
   return (
     <ConfigProvider locale={currentAppLocale.antd}>
       <IntlProvider
@@ -144,9 +145,11 @@ const App = (props) => {
           <Route exact path='/signup' component={SignUp}/>
           <Route path="/home" component={Home} />
           <Route path="/userhomepage" component={UserHomePage}/>
-          <Route path="/restaurantdetails" component={RestaurantDetails} />
+          <Route path={`/restaurantdetails/${someid}`}  component={RestaurantDetails} />
+          <Route path="/restaurantinfo" component={RestaurantInfo}/>
           <RestrictedRoute path={`${match.url}`} authUser={authUser} location={location}
                            component={MainApp}/>
+          <Route component={Error404} />
         </Switch>
       </IntlProvider>
     </ConfigProvider>

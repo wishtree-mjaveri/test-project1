@@ -25,7 +25,11 @@ module.exports = {
               Logger.error(`AuthController.login at req.logIn ${logInErr}`);
               return res.send({ status: 300, message: messages.serverError, user: null });
             }
-            req.session.user = { id: user.id ,email:user.email};
+            
+            Logger.verbose(req.session)
+
+            req.session.user = { id: user.id ,email:user.email,role:user.role};
+            
             Logger.verbose(req.session.user)
             /*
               Like this you can create signed and secure cookies

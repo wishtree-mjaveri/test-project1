@@ -4,19 +4,16 @@ import ScrollAutomatically from '../components/dataDisplay/Carousel/ScrollAutoma
 import Gallery from 'react-grid-gallery'
 import Axios from 'axios'
 import {footerText} from '../../util/config'
-import Loader from 'react-loader-spinner'
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 
-function RestaurantDetails(props) {
+function RestaurantInfo(props) {
     
    const [restaurant, setRestaurant] = useState({})
    const [restaurantStatus, setRestaurantStatus] = useState('')
    const [currentRestaurantStatus, setcurrentRestaurantStatus] = useState('')
+   const [spining, setSpining] = useState(true)
    const [address, setAddress] = useState('')
-   const [spining, setSpining] = useState()
    const [description, setDescription] = useState('')
-   const [loading, setLoading] = useState(true)
     useEffect(() => {
       
      async function fetchRestaurants(){
@@ -26,12 +23,13 @@ function RestaurantDetails(props) {
             console.log(res.data.restaurant)
             setRestaurant(res.data.restaurant)
             setDescription(res.data.restaurant.restaurantDescription)
+
             if (res.data.restaurant.restaurantAddress=="") {
               setAddress("N/A")
             } else {
               setAddress(res.data.restaurant.restaurantAddress)
             }
-            setLoading(false)
+            setSpining(false)
         })
         .catch(error=>console.log(error))
        .finally(()=>setSpining(false))
@@ -49,11 +47,6 @@ function RestaurantDetails(props) {
   fontSize: '30px',
         
     }
-
-    const describedWords = description.split(",")
-
-
-
     const currentTime=new Date().toTimeString()
     const timeStatus =()=>{ if(parseInt(currentTime) >=parseInt(restaurant.restaurantOpeningTime)&&parseInt(currentTime)<=parseInt(restaurant.restaurantClosingTime)){
       console.log("current Time",currentTime)
@@ -66,31 +59,25 @@ function RestaurantDetails(props) {
       console.log("close time",parseInt(restaurant.restaurantClosingTime))   
       setRestaurantStatus('Closed')
     } }
+
+    const describedWords=description.split(",")
     return (
         <div>
               <header style={style}>
       <h1 style={{float:'left',color:"white",fontFamily: 'Paytone One, sans-serif',fontSize:"40px",fontWeight:"bold"}}>Zonions</h1>
-      <Button style={{float:"right"}} onClick={()=>{props.history.push('/userHome')}}>Home</Button>  
+      <Button style={{float:"right"}} onClick={()=>{props.history.push('/UserHomePage')}}>Home</Button>  
 
       </header> 
         <div style={{backgroundColor:"#f5f5f5",padding:80 }}>
             <Card>
-     <Spin size={"large"} spinning={loading} tip={"Loading..."}>
-     {/* <Loader 
-     visible={loading}
-     type="Grid"
-        color="#00BFFF"
-        height={100}
-        width={100}
-        
-       ></Loader> */}
+     <Spin size={"large"} spinning={spining}  >
     <div style={{    display: "grid",
     gridTemplateColumns: "50% 50%"}}>
-       <div>
+      <div>
         <img src={restaurant.image=restaurant.image!=""?restaurant.image:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"} height={400} width={600.59} />
         </div>
         <div style={{padding:40,display:'grid',gridTemplateColumns:"30% 70%"}}>
-          <div style={{    gridColumnStart: 1,
+          <div  style={{    gridColumnStart: 1,
     gridColumnEnd: 3,
     display: "flex",
     alignItems: "center"}}>
@@ -101,14 +88,11 @@ function RestaurantDetails(props) {
       }
       </div>
         {/* <h3 style={{color:currentRestaurantStatus=="Open"?"green":"red"}}>{currentRestaurantStatus}</h3>  */}
-     
         <h3>Description :-</h3> 
-        <p>{ describedWords.map((word)=>{return word.charAt(0).toUpperCase()+word.slice(1)}).join(",") }</p>
-        {/* description.charAt(0).toUpperCase()+description.slice(1) */}
-       {/* describedWords.map((word)=>{return word[0].toUpperCase()+word.slice(1)}).join(",") */}
+        {/* restaurant.restaurantDescription */}
+        <p>{describedWords.map((word)=>{return word.charAt(0).toUpperCase()+word.slice(1)}).join(",") }</p>
         <h3>Address :-</h3>
-        {/* address.charAt(0).toUpperCase()+address.slice(1) */}
-        <p> {address.charAt(0).toUpperCase()+address.slice(1) } </p>
+        <p> {address.charAt(0).toUpperCase()+address.slice(1)} </p>
             
         <h3>Time:-</h3>
        
@@ -122,6 +106,7 @@ function RestaurantDetails(props) {
         </Spin>
          </Card>
         </div>
+        
         <Footer style={{ background: ' #036'}}>
             <div style={{textAlign:"left",color:"white"}}>
               {footerText}
@@ -131,4 +116,4 @@ function RestaurantDetails(props) {
     )
 }
 
-export default RestaurantDetails
+export default RestaurantInfo

@@ -55,6 +55,11 @@ Axios.post(`http://localhost:1337/user/login`,{email,password},{headers:headers,
       return successfulLogin()
     
     }
+    if(res.data.status==401&&res.data.user.role!=="Admin"){
+        history.push('/userhomepage')
+      return message.error("Please Login")
+    
+    }
 if(res.data.status==200&&res.data.user.role==="Admin") {
     console.log('admin successful login to home page')
 history.push('/home') 
@@ -98,7 +103,7 @@ return (
 <div className="gx-login-container">
 <Modal visible={isModalVisible} onCancel={handelCancel} destroyOnClose footer={null}>
 <div className="gx-login-header gx-text-center">
-<h1 className="gx-login-title">Sign In</h1>
+<h1 className="gx-login-title">Login</h1>
 </div>
 <Form
 name="basic"
@@ -124,7 +129,7 @@ placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)
 </FormItem> */}
 <FormItem className="gx-text-center">
 <Button type="primary" htmlType="submit" onClick={handleLogin}>
-Log in
+Login
 </Button>
 </FormItem>
 </Form>

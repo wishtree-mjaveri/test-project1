@@ -84,24 +84,32 @@ const HorizontalDark = (props) => {
   };
 
   const handleSearch= async()=>{
-    await  Axios.get(`http://localhost:1337/api/description/restaurants?text=${props.search}`)
+    let search=props.search.toLowerCase()
+    await  Axios.get(`http://localhost:1337/api/description/restaurants?text=${search}`,{withCredentials:true})
     .then(result=>{
         console.log(result.data.restaurants)
         props.setrestaurants(result.data.restaurants)
+      
     })
     .catch(error=>console.log(error))
+    setSearchText("")
   }
 
   useEffect(() => {
-    Axios.get(`http://localhost:1337/api/description/restaurants?text=${props.search}`)
+    Axios.get(`http://localhost:1337/api/description/restaurants?text=${props.search}`,{withCredentials:true})
     .then(result=>{
-        console.log(result.data.restaurants)
+        console.log(result.data)
+        if(result.data.status==300){
+          history.push('/userHome')
+          message.error('Please Login')
+        }
         props.setrestaurants(result.data.restaurants)
     })
     .catch(error=>console.log(error))
   
     
   }, [])
+  const handleChange=(e)=>props.setSearch((e.target.value))
   return (
     <div className="gx-header-horizontal gx-header-horizontal-dark"   >
       {/* <div className="gx-header-horizontal-top">
@@ -140,7 +148,7 @@ const HorizontalDark = (props) => {
 
               <SearchBox styleName="gx-lt-icon-search-bar-lg"
                          placeholder="Search in app for dish,city"
-                         onChange={e=>{props.setSearch(e.target.value)}}
+                         onChange={handleChange}
                          value={props.search}/>
               <Button onClick={handleSearch}>Search</Button>
               {/* <Select defaultValue="lucy" style={{width: 120}} onChange={handleChange}>

@@ -32,7 +32,11 @@ module.exports = {
     isActive:{
       type:"boolean",
       defaultsTo:true
-    }
+    },
+    // ratings:{
+    //   type:'json',
+    //   columnType:'array'
+    // }
   },
   beforeCreate(valuesToSet, proceed) {
     // Generate unique id using npm module uniqid
@@ -67,9 +71,9 @@ module.exports = {
   
   },
 
-  async getAllRestaurants(page,pagination,callback) {
+  async getAllRestaurants(page,pagination,sortOrder,callback) {
     try {
-        const allRestaurants = await Restaurant.find().where({isActive:true}).skip((page-1)*pagination).limit(pagination)
+        const allRestaurants = await Restaurant.find().where({isActive:true}).skip((page-1)*pagination).limit(pagination).sort(`restaurantName ${sortOrder}`)
         return callback(null,allRestaurants)
     } catch (error) {
         return callback(error)
@@ -77,7 +81,7 @@ module.exports = {
   },
   async getRestaurants(callback) {
     try {
-        const allRestaurants = await Restaurant.find({isActive:true})
+        const allRestaurants = await Restaurant.find({isActive:true}).sort('restaurantName ASC')
         return callback(null,allRestaurants)
     } catch (error) {
         return callback(error)
@@ -94,6 +98,7 @@ module.exports = {
   },
 
   async searchRestaurantByText(searchText,callback){
+    
     Logger.verbose('Restaurant Model')
     try {
      
@@ -110,7 +115,12 @@ module.exports = {
       return callback(error)
     }
      
-  }
+  },
+  // async setRestaurantRating(restaurantId, restaurantData, callback) {
+
+  //   const updatedRecord = await Restaurant.updateOne().where({ _id:restaurantId }).set({ratings:restaurantData});
+  //   return callback(null, updatedRecord);
+  // },
 
 };
 

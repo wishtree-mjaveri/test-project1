@@ -12,6 +12,7 @@ import Documents from "./documents/index";
 import Home from "./admin/Home";
 import UserHome from "./user/UserHome";
 import RestaurantDetails from "./user/RestaurantDetails";
+import Error404 from '../routes/customViews/errorPages/404/index'
 
 const App = ({match}) => (
   <div className="gx-main-content-wrapper">
@@ -26,7 +27,7 @@ const App = ({match}) => (
       <Route path={`${match.url}documents`} component={Documents}/>
        */}
       <Route path={`${match.url}userhome`} component={UserHome} />
-      
+      <Route component={Error404} />
       {/* <Route path={`${match.url}home`} component={Home}/> */}
       
       {/* <Route path={`${match.url}restaurant-details`} component={RestaurantDetails} /> */}

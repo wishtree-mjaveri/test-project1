@@ -186,10 +186,12 @@ module.exports = {
     Logger.verbose("pagination", pagination);
     const page = req.query.page ? parseInt(req.query.page) : 1;
     Logger.verbose("page", page);
-
+    const sortOrder= req.query.order
+    Logger.debug("Sort order",sortOrder)
     RestaurantServices.getAllRestaurants(
       page,
       pagination,
+      sortOrder,
       (error, restaurantList) => {
         if (error) {
           res.send({ status: 300, message: messages.serverError });
@@ -253,4 +255,19 @@ module.exports = {
       }
     );
   },
+
+  // setRestaurantRating(req,res){
+  //   Logger.verbose('RestaurantController.getRating')
+  //   const restaurantId = req.body.id
+  //   const totalRating=req.body.rating
+  //   const email = req.body.email
+  //   const userData={totalRating,email}
+  //   RestaurantServices.setRestaurantRating(restaurantId,userData,(error,updatedRestaurant)=>{
+  //     if (error) {
+  //       res.send({status:300,message:messages.serverError})
+  //     } else {
+  //       res.send({status:200,message:"restaurant rating added successfully"})
+  //     }
+  //   })
+  // }
 };

@@ -20,10 +20,11 @@ module.exports.policies = {
   // '*': true,
   RestaurantController:{
     '*':['isAuthenticated'],
+    '*':['isAdmin'],
     'getRestaurants':true,
     'getRestaurant':true,
     'getAllRestaurant':true,
-    'searchRestaurantsByText':true
+    'searchRestaurantsByText':['isAuthenticated']
     
   },
   AuthController:{
