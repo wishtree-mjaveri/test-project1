@@ -8,6 +8,8 @@
  * https://sailsjs.com/anatomy/config/routes-js
  */
 
+const { policies } = require("./policies");
+
 module.exports.routes = {
 
   /***************************************************************************
@@ -51,10 +53,23 @@ module.exports.routes = {
   action:'getRestaurants'
 },
 
+'GET /api/description/restaurants':{
+  controller:'RestaurantController',
+  action:'searchRestaurantsByText'
+},
+
 'PUT /api/restaurant':{
   controller:'RestaurantController',
   action:'updateRestaurant'
 },
+
+'GET /api/admin/restaurants':[
+ { policy:'isAdmin'},
+
+  // {controller:'RestaurantController'},
+  'RestaurantController.getAllRestaurant',
+],
+
 
 'DELETE /api/restaurant':{
   controller:"RestaurantController",
@@ -73,6 +88,11 @@ module.exports.routes = {
 'POST /user/registration':{
   controller:"UserController",
   action:"registration"
+},
+
+'PUT /restaurant/rating':{
+  controller:"RestaurantController",
+  action:"setRestaurantRating"
 }
 
 };

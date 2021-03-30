@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import {Button, Dropdown, Layout, Menu, message, Popover, Select} from 'antd';
 import Icon from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
@@ -83,6 +83,33 @@ const HorizontalDark = (props) => {
       .catch((error) => console.log(error));
   };
 
+  const handleSearch= async()=>{
+    let search=props.search.toLowerCase()
+    await  Axios.get(`http://localhost:1337/api/description/restaurants?text=${search}`,{withCredentials:true})
+    .then(result=>{
+        console.log(result.data.restaurants)
+        props.setrestaurants(result.data.restaurants)
+      
+    })
+    .catch(error=>console.log(error))
+    setSearchText("")
+  }
+
+  useEffect(() => {
+    Axios.get(`http://localhost:1337/api/description/restaurants?text=${props.search}`,{withCredentials:true})
+    .then(result=>{
+        console.log(result.data)
+        if(result.data.status==300){
+          history.push('/userHome')
+          message.error('Please Login')
+        }
+        props.setrestaurants(result.data.restaurants)
+    })
+    .catch(error=>console.log(error))
+  
+    
+  }, [])
+  const handleChange=(e)=>props.setSearch((e.target.value))
   return (
     <div className="gx-header-horizontal gx-header-horizontal-dark"   >
       {/* <div className="gx-header-horizontal-top">
@@ -120,10 +147,10 @@ const HorizontalDark = (props) => {
             <div className="gx-header-search gx-d-none gx-d-lg-flex">
 
               <SearchBox styleName="gx-lt-icon-search-bar-lg"
-                         placeholder="Search in app..."
-                         onChange={e=>{props.setSearch(e.target.value)}}
+                         placeholder="Search in app for dish,city"
+                         onChange={handleChange}
                          value={props.search}/>
-
+              <Button onClick={handleSearch}>Search</Button>
               {/* <Select defaultValue="lucy" style={{width: 120}} onChange={handleChange}>
                 <Option value="jack">City</Option>
                 <Option value="lucy">cousine</Option>

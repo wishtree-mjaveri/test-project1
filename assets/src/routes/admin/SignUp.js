@@ -74,7 +74,7 @@ const [errorState, setErrorState] = useState(false)
       <Modal visible={ isModalVisible} onCancel={handelCancel} destroyOnClose footer={null} >
       
         <div className="gx-login-header gx-text-center">
-          <h1 className="gx-login-title">Sign Up</h1>
+          <h1 className="gx-login-title">Signup</h1>
         </div>
         <Form
        
@@ -110,7 +110,7 @@ const [errorState, setErrorState] = useState(false)
         </FormItem>
           <FormItem className="gx-text-center">
             <Button type="primary" htmlType="submit" onClick={handleSignup}>
-              Sign Up
+              Signup
             </Button>
           </FormItem>
         </Form>

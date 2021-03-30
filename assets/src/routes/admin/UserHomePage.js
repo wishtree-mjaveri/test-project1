@@ -10,24 +10,25 @@ function UserHomePage() {
     const [search, setSearch] = useState('')
     const [restaurants, setrestaurants] = useState([])
 
-    useEffect(() => {
-        Axios.get('http://localhost:1337/api/card/restaurants')
-        .then(result=>{
-            console.log(result.data.list)
-            setrestaurants(result.data.list)
-        })
-        .catch(error=>console.log(error))
-    }, [])
+    // useEffect(() => {
+    //     Axios.get(`http://localhost:1337/api/description/restaurants?text=${search}`,{withCredentials:true})
+    //     .then(result=>{
+    //         console.log(result.data.list)
+    //         setrestaurants(result.data.list)
+    //     })
+    //     .catch(error=>console.log(error))
+    // }, [])
+    const restaurantList=restaurants.length!=0?restaurants.map(restaurant=><Col key={restaurant.id} xl={6} md={8} sm={12} xs={24}><Link to={{pathname:"/restaurantinfo",restaurantId:restaurant.id }}><RestaurantCard name={restaurant.restaurantName} description={restaurant.restaurantDescription} hotelImage={restaurant.image} address={restaurant.restaurantAddress}  grid />  </Link></Col>):<h2>No restaurants Found</h2>
     return (
         <div>
-            <HorizontalDark setSearch={setSearch} search={search}/>
+            <HorizontalDark setSearch={setSearch} search={search} setrestaurants={setrestaurants}/>
             <div className="ant-layout-content gx-layout-content gx-container-wrap ">
           <div className="gx-main-content-wrapper ">
           <Row>
         {
+    //  restaurantList=restaurants.length!=0?restaurants.map(restaurant=><Col key={restaurant.id} xl={6} md={8} sm={12} xs={24}><Link to={{pathname:"/restaurantdetails",restaurantId:restaurant.id }}><RestaurantCard name={restaurant.restaurantName} description={restaurant.restaurantDescription} hotelImage={restaurant.image}  grid />  </Link></Col>):<h2>No restaurants Found</h2>
+         restaurantList
         //  restaurants.map(restaurant=><Col key={restaurant.id} xl={6} md={8} sm={12} xs={24}><Link to={{pathname:"/restaurantdetails",restaurantId:restaurant.id }}><RestaurantCard name={restaurant.restaurantName} description={restaurant.restaurantDescription} hotelImage={restaurant.image}  grid />  </Link></Col>)
-         
-         restaurants.filter(restaurant=>restaurant.restaurantDescription.includes(search)).map(restaurant=><Col key={restaurant.id} xl={6} md={8} sm={12} xs={24}><Link to={{pathname:"/restaurantdetails",restaurantId:restaurant.id }}><RestaurantCard name={restaurant.restaurantName} description={restaurant.restaurantDescription} hotelImage={restaurant.image}  grid />  </Link></Col>)
         }
 
         </Row>

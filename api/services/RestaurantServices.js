@@ -31,9 +31,9 @@ module.exports={
         })
     },
 
-    getAllRestaurants(page,pagination,callback){
+    getAllRestaurants(page,pagination,sortOrder,callback){
         Logger.debug('RestaurantServices.getALlRestaurant')
-        Restaurant.getAllRestaurants(page,pagination,(error,restaurantList)=>{
+        Restaurant.getAllRestaurants(page,pagination,sortOrder,(error,restaurantList)=>{
             if (error) {
                 callback(error)
             } else {
@@ -50,6 +50,18 @@ module.exports={
                 callback(null,restaurantList)
             }
         })
+    },
+
+    searchRestaurantBytext(searchText,callback){
+        Logger.debug('RestaurantServices.searchRestaurantByText')
+        Restaurant.searchRestaurantByText(searchText,(error,restaurantsFound)=>{
+            if (error) {
+                callback(error)
+            } else {
+                callback(null,restaurantsFound)
+            }
+        })
+
     },
 
     updateRestaurant(restaurantId,restaurantData,callback){
@@ -77,5 +89,16 @@ module.exports={
             }
         })
 
-    }
+    },
+
+    // setRestaurantRating(restaurantId,userData,callback){
+    //     Restaurant.updateRestaurant(restaurantId,userData,(error,updatedRestaurant)=>{
+    //         if (error) {
+    //             Logger.error(`RestaurantServices.setRestaurantRating at Restaurant.updateRestaurant${error}`)
+    //         } else {
+    //             Logger.info('Restaurant rating added')
+    //             callback(null,updatedRestaurant)
+    //         }
+    //     })
+    // }
 }

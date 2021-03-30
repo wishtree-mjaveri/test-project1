@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Divider, Table, Tooltip, Layout, message,Pagination,PaginationProps ,TablePaginationConfig} from "antd";
+import { Button, Card, Divider, Table, Tooltip, Layout, message,Pagination,PaginationProps ,TablePaginationConfig,Popconfirm,Spin} from "antd";
 import Icon from "@ant-design/icons";
 import AddRestaurant from "./AddRestaurant";
 import Modal from "antd/lib/modal/Modal";
 import EditRestaurant from "./EditRestaurant";
 import { Link } from "react-router-dom";
 import Axios from "axios";
-import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
+import { EditTwoTone, DeleteTwoTone ,ArrowDownOutlined,ArrowUpOutlined} from "@ant-design/icons";
 import { footerText } from "../../util/config";
 import './index.css'
 import { refresh } from "less";
+import DeleteModal from "./DeleteModal";
 
 const pleaseLogin = () => {
-  message.error("Unauthorized access please login");
+  message.error("Session expired please login");
 };
 const successfulDelete = () => {
   message.success("Restaurant Deleted");
@@ -29,6 +30,8 @@ function Home(props) {
   const [total, setTotal] = useState()
   const [current, setCurrent] = useState(1)
   const [pageNum, setPageNum] = useState(1)
+  const [loading, setLoading] = useState(true)
+  const [sortorder, setSortorder] = useState('ASC')
   const TablePaginationConfig={
  showSizeChanger: false,
             showQuickJumper: false,
@@ -39,23 +42,31 @@ function Home(props) {
             onChange: (e) => handleChange(e),
   }
 
+
+
   useEffect( () => {
-    Axios.get(`http://localhost:1337/api/restaurants?page=${page}`).then((res) => {
-      console.log(res.data.list);
-      setRestaurantList(res.data.list);
+    Axios.get(`http://localhost:1337/api/admin/restaurants?page=${page}&order=${sortorder}`,{withCredentials:true}).then((res) => {
+      
+    console.log(res.data);
+    if(res.data.status==401){
+     props.history.push("/userHome");
+      pleaseLogin();
+    }
+    setRestaurantList(res.data.list);
+      setLoading(false)
       Axios.get(`http://localhost:1337/api/card/restaurants`).then(res=>{console.log(res.data.list.length) ,setTotal(Math.ceil(res.data.list.length/4))  })
     }).catch(error=>console.log(error)
       );
-  }, [page,total]);
+  }, [page,total,sortorder]);
 
 
 
   const refreshData = async() => {
-   await Axios.get(`http://localhost:1337/api/restaurants?page=${page}`).then((res) => {
+   await Axios.get(`http://localhost:1337/api/restaurants?page=${page}&order=${sortorder}`).then((res) => {
       console.log(res.data.list);
       setRestaurantList(res.data.list);
       Axios.get(`http://localhost:1337/api/card/restaurants`).then(res=>{console.log(res.data.list.length) ,setTotal(Math.ceil(res.data.list.length/4))  })
-
+      setLoading(false)
     });
   };
   const { Footer } = Layout;
@@ -72,26 +83,49 @@ function Home(props) {
         if (res.data.status == 300 && res.data.message == "Please Login") {
           props.history.push("/userHome");
           pleaseLogin();
-        } else {
+        } 
+        if (res.data.status == 401 && res.data.message == "Please login") {
+          history.push("/userHome");
+          pleaseLogin();
+        }else {
           refreshData();
           successfulDelete();
         }
       })
       .catch((error) => console.log(error));
   }
+   function sortMethod(sortorder){
+    if (sortorder=='ASC') {
+      setSortorder('DESC')
+    } else {
+      setSortorder('ASC')
+    }
+  }
   const columns = [
     {
-      title: "Restaurant-Name",
+      title:<span>Restaurant Name <Tooltip title={"Ascending Order"} placement={"topLeft"} > <ArrowUpOutlined onClick={()=>setSortorder("ASC")}/></Tooltip> <Tooltip title={"Descending Order"} placement={"topLeft"} > <ArrowDownOutlined onClick={()=>setSortorder("DESC")} /> </Tooltip> </span>,
+       
       dataIndex: "restaurantName",
       key: "name",
       width: "25%",
+      ellipsis:{
+        showTitle:false
+      },
+     
+     
+      
+      // sorter:{handleChange},
+    
+
       render: (text, record) => (
         <span className="gx-link">
+          <Tooltip placement={"topLeft"} title={text}>
           <Link
-            to={{ pathname: "/restaurantdetails", restaurantId: record.id }}
+            to={{ pathname: `/restaurantdetails/${record.uid}`, restaurantId: record.id }}
           >
             {text}
           </Link>
+          </Tooltip>
         </span>
       ),
     },
@@ -102,9 +136,10 @@ function Home(props) {
       ellipsis: {
         showTitle: false,
       },
+
       render: (restaurantDescription) => (
         <Tooltip placement={"topLeft"} title={restaurantDescription}>
-          {restaurantDescription}
+          {restaurantDescription.charAt(0).toUpperCase()+restaurantDescription.slice(1)}
         </Tooltip>
       ),
       width: "30%",
@@ -119,18 +154,18 @@ function Home(props) {
       width: "30%",
       render: (restaurantAddress) => (
         <Tooltip placement={"topLeft"} title={restaurantAddress}>
-          {restaurantAddress}
+          {restaurantAddress=restaurantAddress!=''?restaurantAddress.charAt(0).toUpperCase()+restaurantAddress.slice(1):"N/A"}
         </Tooltip>
       ),
     },
     {
-      title: "Opening-Time",
+      title: "Opening Time",
       dataIndex: "restaurantOpeningTime",
       key: "time",
       width: "15%",
     },
     {
-      title: "Closing-Time",
+      title: "Closing Time",
       dataIndex: "restaurantClosingTime",
       key: "time",
       width: "15%",
@@ -140,8 +175,9 @@ function Home(props) {
       key: "action",
       render: (text, record) => ( 
         <div style={{ display: "inline-flex" }}>
-         
+        
           <EditRestaurant
+          
             name={record.restaurantName}
             id={record.id}
             desc={record.restaurantDescription}
@@ -151,8 +187,10 @@ function Home(props) {
             image={record.image}
             refresh={refreshData}
           />
+       
           <Divider type="vertical" />
-          <DeleteTwoTone onClick={() => handleDelete(record.uid)} />
+         <DeleteModal uid={record.uid} handleDelete={handleDelete} pleaseLogin={pleaseLogin} refreshData={refreshData}/>
+
           {/* <Divider type="vertical"/> */}
           {/* <span className="gx-link ant-dropdown-link">
               More actions <Icon type="down"/>
@@ -189,7 +227,10 @@ const handleChange=(e)=>{
   //     console.log(res.data.list);
   //     setRestaurantList(res.data.list);
   //   });
-  refreshData()
+  // setSortorder(e)
+console.log(sortorder)
+  // refreshData()
+
 
 }
   return (
@@ -211,20 +252,24 @@ const handleChange=(e)=>{
             Zonions
           </h1>
         </Link>
+        <Tooltip title={"Logout"} placement={"topLeft"}>
         <Button onClick={handleLogout} style={{ float: "right" }}>
+
           Logout
         </Button>
+        </Tooltip>
       </header>
       <div style={{ padding: 80 }}>
         <Card bordered={true}>
+<Spin spinning={loading} >
+
           <header>
             <h1 style={{ float: "left" }}>Admin Home</h1>
             <div style={{ float: "right" }}>
-              {" "}
+             
               <AddRestaurant refresh={refreshData} />{" "}
             </div>
           </header>
-
           <Table
             className="gx-table-responsive"
             columns={columns}
@@ -235,10 +280,14 @@ const handleChange=(e)=>{
             //   change:{handleChange}
             // }}
             pagination={false}
+            showSorterTooltip={false}
           />
-         <Pagination style={{float:'right'}} defaultPageSize={page} defaultCurrent={current} total={total} onChange={handleChange} />
+         <Pagination style={{float:'right',paddingTop:'20px'}}  defaultPageSize={page} defaultCurrent={current} total={total} onChange={handleChange} />
+       </Spin>
         </Card>
+     
       </div>
+     
       <Footer style={{ background: " #036" ,position: 'absolute' ,
     bottom: '0' ,
     width: '100%',

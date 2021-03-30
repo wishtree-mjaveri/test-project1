@@ -3,8 +3,10 @@ import StarRatingComponent from 'react-star-rating-component'
 import {Button} from 'antd'
 import RestaurantDetails from './RestaurantDetails'
 
-function RestaurantCard({name,description,rating,grid,hotelImage}) {
+function RestaurantCard({name,description,rating,grid,hotelImage,address}) {
    
+  //  let addr=address.charAt(0).toUpperCase()+address.slice(1)
+  //  console.log(addr.charAt(0).toLocaleUpperCase()+addr.slice(1))
     return (
        
         <div className={`gx-product-item   'gx-product-vertical' `}>
@@ -16,8 +18,8 @@ function RestaurantCard({name,description,rating,grid,hotelImage}) {
           </div>
         </div>
   
-        <div className="gx-product-body">
-          <h3 className="gx-product-title">{name}
+        <div className="gx-product-body"  >
+          <h3 className="gx-product-title"  >{name}
             {/* <small className="gx-text-grey">{", " + variant}</small> */}
           </h3>
           {/* <div className="ant-row-flex">
@@ -35,7 +37,7 @@ function RestaurantCard({name,description,rating,grid,hotelImage}) {
               editing={false}/>
             <strong className="gx-d-inline-block gx-ml-2">{rating}</strong>
           </div> */}
-          {/* <p>{description}</p> */}
+          <p>{address!=""?address:<h4>N/A</h4>}</p>
         </div>
   
         <div className="gx-product-footer">

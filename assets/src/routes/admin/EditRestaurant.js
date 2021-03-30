@@ -1,10 +1,11 @@
 import Modal from 'antd/lib/modal/Modal'
 import React,{useState,useEffect} from 'react'
-import {Button, Input,TimePicker,Form,message} from 'antd'
+import {Button, Input,TimePicker,Form,message, Upload,Tooltip} from 'antd'
 import Axios from 'axios'
 import {EditTwoTone} from '@ant-design/icons'
 import moment from 'moment'
 import {useHistory} from 'react-router-dom'
+
 const FormItem =Form.Item
 
 
@@ -15,7 +16,9 @@ function EditRestaurant({visible,name,id,desc,address,openingTime,closingTime,re
     const [restaurantAddress, setrestaurantAddress] = useState()
     const [restaurantOpeningTime, setRestaurantOpeningTime] = useState()
     const [restaurantClosingTime, setRestaurantClosingTime] = useState()
-    const [restaurantImage, setRestaurantImage] = useState()
+    const [restaurantImage, setRestaurantImage] = useState('')
+    const [errorimage, seterrorimage] = useState(false)
+    const [errorMessage, seterrorMessage] = useState('')
     const [restaurant, setRestaurant] = useState({})
     const [requiredMark, setRequiredMark] = useState('optional')
     const history=useHistory()
@@ -24,18 +27,70 @@ function EditRestaurant({visible,name,id,desc,address,openingTime,closingTime,re
       message.success("Edit successful !")
     }
     const pleaseLogin=()=>{
-      message.error("Unauthorized access please login")
+      message.error("Session expired please login")
     }
     const onFileChange = (event) => {
-      var file = event.target.files[0];
+      setRestaurantImage('')
+      var file = event.file;
       var reader = new FileReader();
-      reader.onloadend = function () {
-        console.log("RESULT", reader.result);
-        setRestaurantImage(reader.result);
-      };
+      var maxSize=2000000;
+      if (file.size<=maxSize) {
+        reader.onload = function (e) {
+          const img = new Image()
+          img.onload=()=>{
+            seterrorimage(false)
+            // seterrorMessage('')
+            setRestaurantImage(reader.result)
+          }
+          img.onerror=(error)=>{
+            console.log(error)
+            seterrorimage(true)
+            seterrorMessage('Unable to store this image')
+          }
+          img.src=e.target.result
+          console.log("RESULT", reader.result);
+        };
+      } 
+      else if(file.size>maxSize){
+        seterrorimage(true)
+        seterrorMessage('unable to store image file greater than 2 mb')
+       
+      }
+      else {
+        seterrorimage(true)
+        // seterrorMessage('Please select another file')
+      }
       var res = reader.readAsDataURL(file);
       console.log("asd", res);
     };
+    // const onFileChange = (event) => {
+    //   setRestaurantImage('')
+    //   var file = event.target.files[0];
+    //   var reader = new FileReader();
+    //   var maxSize=2000000;
+    //   if (file.size<=maxSize) {
+    //     reader.onload = function (e) {
+    //       const img = new Image()
+    //       img.onload=()=>{
+    //         seterrorimage(false)
+    //         // seterrorMessage('')
+    //         setRestaurantImage(reader.result)
+    //       }
+    //       img.onerror=(error)=>{
+    //         console.log(error)
+    //         seterrorimage(true)
+    //         seterrorMessage('Unable to store this image')
+    //       }
+    //       img.src=e.target.result
+    //       console.log("RESULT", reader.result);
+    //     };
+    //   } else {
+    //     seterrorimage(true)
+    //     seterrorMessage('unable to store image file greater than 2 mb')
+    //   }
+    //   var res = reader.readAsDataURL(file);
+    //   console.log("asd", res);
+    // };
 
 const headers={
   headers: {
@@ -49,12 +104,13 @@ const headers={
           console.log(res.data.restaurant)
           setRestaurant(res.data.restaurant)
           setRestaurantName(res.data.restaurant.restaurantName)
-          setrestaurantAddress(res.data.restaurant.restaurantAddress)
+          setrestaurantAddress(res.data.restaurant.restaurantAddress.charAt(0).toUpperCase()+res.data.restaurant.restaurantAddress.slice(1))
           setdescription(res.data.restaurant.restaurantDescription)
           setRestaurantOpeningTime(res.data.restaurant.restaurantOpeningTime)
           setRestaurantClosingTime(res.data.restaurant.restaurantClosingTime)
           setRestaurantImage(res.data.restaurant.image)
           console.log(restaurant)
+          console.log(restaurantImage)
       })
       .catch(error=>console.log(error))
   
@@ -63,12 +119,13 @@ const headers={
         setIsEditModelVisible(true)
     }
     const handleOk=async ()=>{
-     
-      if (restaurantName.length==0||restaurantDescription.length==0||restaurantClosingTime.length==0||restaurantOpeningTime.length==0) {
+     let address=restaurantAddress.toLowerCase()
+    let description=restaurantDescription.toLowerCase()
+      if (restaurantName.length==0||restaurantDescription.length==0||restaurantClosingTime.length==0||restaurantOpeningTime.length==0||restaurantName.length>20) {
         setIsEditModelVisible(true)
         
       } else {
-       await Axios.put(`http://localhost:1337/api/restaurant`,{id,restaurantName,restaurantAddress,restaurantClosingTime,restaurantOpeningTime,restaurantDescription,image:restaurantImage},{headers:headers,withCredentials:true})
+       await Axios.put(`http://localhost:1337/api/restaurant`,{id,restaurantName,restaurantAddress:address,restaurantClosingTime,restaurantOpeningTime,restaurantDescription:description,image:restaurantImage},{headers:headers,withCredentials:true})
         .then(res=>{console.log(res.data)
           if (res.data.status=300&&res.data.message=="Please Login") {
             history.push('/userHome')
@@ -96,13 +153,16 @@ const headers={
       setRestaurantOpeningTime(openingTime)
       setRestaurantClosingTime(closingTime)
       setdescription(desc)
+      seterrorMessage('')
     }
-   
-    return (
+  //  let imageUrl=restaurantImage!=""?restaurantImage:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60";
+  // let imageUrl=restaurantImage!=""?restaurantImage:null;
+   let defaultFileList=restaurantImage!=''?[{uid:-1,status:"done",url:restaurantImage}]:null;
+  return (
         <div>
             {/* <Button onClick={showModel}>Edit-{restaurantName} </Button> */}
-           <EditTwoTone onClick={showModel} />
-            <Modal visible={isEditModelVisible} title={"Edit Restaurant"} onOk={handleOk} onCancel={handelCancel} afterClose={handleOnClose} destroyOnClose footer={null}>
+        <Tooltip placement={"topLeft"} title={"Edit Restaurant"}>  <EditTwoTone onClick={showModel} /></Tooltip> 
+            <Modal visible={isEditModelVisible} title={"Edit Restaurant"} onOk={handleOk} onCancel={handelCancel} afterClose={handleOnClose} destroyOnClose bodyStyle={{overflowY:'auto',maxHeight:'500px',}} footer={null}>
                
                 <div className="gx-modal-box-form-item">
                   <Form
@@ -111,6 +171,8 @@ const headers={
                     restaurantDescription:restaurantDescription,
                   restaurantOpeningTime:moment(restaurantOpeningTime, "HH:mm "),
                 restaurantClosingTime:moment(restaurantClosingTime, "HH:mm "),
+                restaurantImage:restaurantImage,
+                
               }}
                   
                  layout="vertical"
@@ -118,7 +180,7 @@ const headers={
             <div className="gx-form-group">
               
 
-<FormItem rules={[{ required: true, message: 'Please enter restaurant name!' }]} label="Restaurant Name"  name="restaurantName">
+<FormItem rules={[{ required: true, message: 'Please enter restaurant name!' },{max:20,message:"Restaurant name must be less than or equal to 20 characters"}]} label="Restaurant Name"  name="restaurantName">
            
               <Input
                 value={restaurantName}
@@ -197,27 +259,47 @@ const headers={
             <div className="gx-form-group">
             <FormItem  label="Update Restaurant Image"  name="restaurantImage">
               
-              <Input
-                value={restaurantImage}
+              {/* <Input
+                accept="image/*"
+                // value={restaurantImage}
                 type='file'
                 placeholder="Select image"
                 onChange={(e) =>{onFileChange(e)} }
                 
                 margin="normal"
-              />
+              /> */}
+              <Upload
+              defaultFileList={defaultFileList}
+              accept="image/*"
+              type="select"
+              listType="picture-card"
+             showUploadList={{showRemoveIcon:true,showPreviewIcon:false}}
+              onRemove={()=>seterrorMessage("No image selected")}
+              className="avatar-uploader"
+              maxCount={1}
+              beforeUpload={()=>false}
+              onChange={onFileChange}
+              >
+
+                <Button>Upload</Button>
+              </Upload>
+              <p >Note:-Selected image-size should be less than 2 mb and file extension of .jpg, .jpeg, .png </p>
+            
+              {errorimage?errorMessage:null}
+
               </FormItem>
             </div>
-            <div className="gx-form-group">
+            {/* <div className="gx-form-group">
             <FormItem  label="Restaurant Image"  name="restaurantImage">
               
               <img src={restaurantImage} alt="Some Image" style={{height:"30%",width:"30%"}} />
               </FormItem>
-            </div>
+            </div> */}
             
             <div  className="gx-form-group" style={{alignItems:"center",display: "grid",justifyContent: "center"}} >
             <Button type="primary" htmlType='submit'  onClick={handleOk}>
             
-           submit
+           Submit
           </Button>
           </div>
           </Form>

@@ -1,10 +1,11 @@
 import React,{useState} from 'react'
-import {Modal,Button,Input,Form,message,TimePicker} from 'antd'
+import {Modal,Button,Input,Form,message,TimePicker, Upload,Tooltip} from 'antd'
 import moment from 'moment'
 import axios from 'axios'
 import {useHistory} from 'react-router-dom'
 const FormItem=Form.Item
 import './index.css'
+
 
 function AddRestaurant(props) {
   const history=useHistory()
@@ -17,6 +18,7 @@ function AddRestaurant(props) {
     const [email, setEmail] = useState('')
     const [errorMessage, seterrorMessage] = useState()
     const [errorStatus, setErrorStatus] = useState(false)
+    const [errorimage, setErrorimage] = useState(false)
     const [image, setImage] = useState()
     const showModel = ()=>{
         setIsModelVisible(true)
@@ -37,11 +39,15 @@ const headers={
 }
 
     const handleOk = async()=>{
-     if (restaurantName.length==0||restaurantDescription.length==0||restaurantClosingTime.length==0||restaurantOpeningTime.length==0) {
+
+     if (restaurantName.length==0||restaurantDescription.length==0||restaurantClosingTime.length==0||restaurantOpeningTime.length==0||restaurantName.length>20) {
        setErrorStatus(true)
        setIsModelVisible(true)
      } else {
-     await axios.post('http://localhost:1337/api/registration',{restaurantName,restaurantDescription,restaurantAddress,restaurantOpeningTime,restaurantClosingTime,image},{headers:headers,withCredentials:true})
+       let address = restaurantAddress.toLowerCase().trim()
+       let description = restaurantDescription.toLowerCase().trim()
+       console.log('new address',address)
+     await axios.post('http://localhost:1337/api/registration',{restaurantName,restaurantDescription:description,restaurantAddress:address,restaurantOpeningTime,restaurantClosingTime,image},{headers:headers,withCredentials:true})
       .then(res=>{console.log(res.data)
         if (res.data.status==300||res.data.message=='Please Login') {
          history.push('/userHome')
@@ -56,6 +62,7 @@ const headers={
           setrestaurantAddress('')
           setrestaurantDescription('')
           setRestaurantName('')
+          setImage('')
         }
       
       })  
@@ -68,29 +75,88 @@ const headers={
         setIsModelVisible(false)
     }
     const onFileChange = (event) => {
-      var file = event.target.files[0];
+      setImage('')
+      var file = event.file;
       var reader = new FileReader();
-      reader.onloadend = function () {
-        console.log("RESULT", reader.result);
-        setImage(reader.result);
-      };
+      var maxSize=2000000;
+      if (file.size<=maxSize) {
+        reader.onload = function (e) {
+          const img = new Image()
+          img.onload=()=>{
+            setErrorimage(false)
+            // seterrorMessage('')
+            setImage(reader.result)
+          }
+          img.onerror=(error)=>{
+            console.log(error)
+            setErrorimage(true)
+            seterrorMessage('Unable to store this image')
+          }
+          img.src=e.target.result
+          console.log("RESULT", reader.result);
+        };
+      } else if(file.size>maxSize) {
+        setErrorimage(true)
+        seterrorMessage('unable to store image file greater than 2 mb')
+      } else{
+        seterrorimage(true)
+        seterrorMessage("")
+      }
+     
+
       var res = reader.readAsDataURL(file);
       console.log("asd", res);
     };
+    // const onFileChange = (event) => {
+    //   setImage('')
+    //   var file = event.target.files[0];
+    //   var reader = new FileReader();
+    //   var maxSize=2000000;
+    //   if (file.size<=maxSize) {
+    //     reader.onload = function (e) {
+    //       const img = new Image()
+    //       img.onload=()=>{
+    //         setErrorimage(false)
+    //         // seterrorMessage('')
+    //         setImage(reader.result)
+    //       }
+    //       img.onerror=(error)=>{
+    //         console.log(error)
+    //         setErrorimage(true)
+    //         seterrorMessage('Unable to store this image')
+    //       }
+    //       img.src=e.target.result
+    //       console.log("RESULT", reader.result);
+    //     };
+    //   } else {
+    //     setErrorimage(true)
+    //     seterrorMessage('unable to store image file greater than 2 mb')
+    //   }
+     
+
+    //   var res = reader.readAsDataURL(file);
+    //   console.log("asd", res);
+    // };
+
+    const handleAfterClose=()=>{
+      setImage('')
+      seterrorMessage('')
+    }
 
     return (
         <div>
-         
+         <Tooltip placement={"topLeft"} title={"Add New Restaurant"}>
             <Button onClick={showModel}>Add New Restaurant</Button>
-            <Modal title="Add New Restaurant" visible={isModelVisible} onCancel={handleCancel} onOk={handleOk} destroyOnClose footer={null}>
+            </Tooltip>
+            <Modal title="Add New Restaurant" visible={isModelVisible} onCancel={handleCancel} onOk={handleOk} destroyOnClose afterClose={handleAfterClose} bodyStyle={{overflowY:'auto',maxHeight:'500px',}} footer={null}>
             <div className="gx-modal-box-form-item">
       <Form layout="vertical">
           
             <div className="gx-form-group">
-<FormItem rules={[{ required: true, message: 'Please enter restaurant name!' },]} label="Restaurant Name" name="restaurantName">
+<FormItem rules={[{ required: true, message: 'Please enter restaurant name!' },{max:20,message:"Restaurant name must be less than or equal to 20 characters"}]} label="Restaurant Name" name="restaurantName">
             
               <Input
-                
+               
                 placeholder="Enter name"
                 onChange={(event) => setRestaurantName(event.target.value)}
                 value={restaurantName}
@@ -119,7 +185,7 @@ const headers={
               <Input
                
                 placeholder="Enter Address"
-                onChange={(event) => setrestaurantAddress( event.target.value)}
+                onChange={(event) => setrestaurantAddress( (event.target.value))}
                 value={restaurantAddress}
                 margin="normal"
               />
@@ -158,29 +224,48 @@ const headers={
               </FormItem>
             </div>
             <div className="gx-form-group">
-            <FormItem  label="Restaurant Image"  name="restaurantImage">
+            <FormItem  label="Restaurant Image"   name="restaurantImage">
               
-              <Input
-               
+              {/* <Input
+                accept='image/*'
                 type='file'
                 placeholder="Select image"
                 onChange={(e) =>{onFileChange(e)} }
                 
                 margin="normal"
-              />
+              /> */}
+              <Upload
+              // defaultFileList={[{uid:-1,status:"success",url:image}]}
+              accept='image/*'
+              type='select'
+              listType="picture-card"
+              className="avatar-uploader"
+            
+              showUploadList={{showRemoveIcon:true}}
+              maxCount={1}
+              onRemove={()=>{seterrorMessage("")}}
+              beforeUpload={()=>false}
+            onChange={onFileChange}              
+              >
+                <Button>Upload</Button>
+              </Upload>
+              <p >Note:-Selected image-size should be less than 2 mb and file extension of .jpg, .jpeg, .png </p>
+
+              {errorimage?errorMessage:null}
+
               </FormItem>
             </div>
-            <div className="gx-form-group">
+            {/* <div className="gx-form-group">
             <FormItem  label="Restaurant Image"  name="restaurantImage">
               
              <img src={image} alt="No Image Selected" style={{height:"30%",width:"30%"}}  />
               </FormItem>
-            </div>
-            {errorStatus?errorMessage:null}
+            </div> */}
+
             <FormItem className="gx-text-center">
           
           <Button type="primary" htmlType='submit' onClick={handleOk}>
-           submit
+           Submit
           </Button>
           
         </FormItem>
