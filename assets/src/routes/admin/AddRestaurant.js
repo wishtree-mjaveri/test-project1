@@ -5,7 +5,7 @@ import axios from 'axios'
 import {useHistory} from 'react-router-dom'
 const FormItem=Form.Item
 import './index.css'
-
+import IntlMessages from '../../util/IntlMessages'
 
 function AddRestaurant(props) {
   const history=useHistory()
@@ -146,14 +146,14 @@ const headers={
     return (
         <div>
          <Tooltip placement={"topLeft"} title={"Add New Restaurant"}>
-            <Button onClick={showModel}>Add New Restaurant</Button>
+            <Button onClick={showModel}> <IntlMessages id={"Addnewrestaurant.button"} /> </Button>
             </Tooltip>
             <Modal title="Add New Restaurant" visible={isModelVisible} onCancel={handleCancel} onOk={handleOk} destroyOnClose afterClose={handleAfterClose} bodyStyle={{overflowY:'auto',maxHeight:'500px',}} footer={null}>
             <div className="gx-modal-box-form-item">
       <Form layout="vertical">
           
             <div className="gx-form-group">
-<FormItem rules={[{ required: true, message: 'Please enter restaurant name!' },{max:20,message:"Restaurant name must be less than or equal to 20 characters"}]} label="Restaurant Name" name="restaurantName">
+<FormItem rules={[{ required: true, message: 'Please enter restaurant name!' },{max:20,message:"Restaurant name must be less than or equal to 20 characters"}]} label={<IntlMessages id={"Addrestaurant.label.name"}/>} name="restaurantName">
             
               <Input
                
@@ -168,7 +168,7 @@ const headers={
 
 
             <div className="gx-form-group">
-<FormItem rules={[{ required: true, message: 'Please enter description!' },]} label="Restaurant Description" name="restaurantDescription">
+<FormItem rules={[{ required: true, message: 'Please enter description!' },]} label={<IntlMessages id={"Addrestaurant.label.description"}/>} name="restaurantDescription">
 
               <Input
                 
@@ -180,7 +180,7 @@ const headers={
             </div>
 
             <div className="gx-form-group">
-<FormItem rules={[{ required: true, message: 'Please enter address!' },]} label="Restaurant Address" name="restaurantAddress">
+<FormItem rules={[{ required: true, message: 'Please enter address!' },]} label={<IntlMessages id={"Addrestaurant.label.address"}/>} name="restaurantAddress">
 
               <Input
                
@@ -192,23 +192,39 @@ const headers={
               </FormItem>
             </div>
             <div  style={{display:"inline-flex" ,flexWrap: 'wrap',gap: '60px'}} >
-            <FormItem rules={[{ required: true, message: 'Please enter opening time!' },]}  label="Restaurant Opening Time" name="restaurantOpeningTime">
+            <FormItem rules={[{ required: true, message: 'Please enter opening time!' },]}  label={<IntlMessages id={"Addrestaurant.label.time"}/>} name="restaurantOpeningTime">
 
-              <TimePicker
+              <TimePicker.RangePicker
              
                format="HH:mm "
-                placeholder="Enter Opening Time"
-                onChange={(value) => {
-                  const timeString = moment(value).format("HH:mm ");
+                // placeholder="Enter Opening Time"
+                onChange={(e) => {
+                  const start = new Date(e[0]._d)
+                  console.log(start.toLocaleTimeString(navigator.language,{hour:"2-digit",minute:"2-digit"}))
+                 
+                  const timeString = start.toLocaleTimeString(navigator.language,{hour:"2-digit",minute:"2-digit"})
                   setRestaurantOpeningTime(timeString)
+                 
+                  // const timeString = moment(e[0]._d).format("HH:mm");
+                  const end = new Date(e[1]._d)
+                  console.log('opens-',restaurantOpeningTime)
+                  const timeString2 = end.toLocaleTimeString(navigator.language,{hour:"2-digit",minute:"2-digit"})
+                  console.log(end.toLocaleTimeString(navigator.language,{hour:"2-digit",minute:"2-digit"}))
+                  
+                  setRestaurantCLosingTime(timeString2)
+                  console.log('closes-',restaurantClosingTime)
+                 
+                  // const timeString2 = moment(value[1]).format("HH:mm");
+
+
             }}
-                value={moment(restaurantOpeningTime,"HH:mm ")}
+                value={[moment(restaurantOpeningTime,"HH:mm"),moment(restaurantClosingTime,"HH:mm")]}
               
               />
               </FormItem>
             
             
-            <FormItem rules={[{ required: true, message: 'Please enter closing time!' },]} label="Restaurant Closing Time"  name="restaurantClosingTime">
+            {/* <FormItem rules={[{ required: true, message: 'Please enter closing time!' },{}]} label="Restaurant Closing Time"  name="restaurantClosingTime">
 
               <TimePicker
                 format="HH:mm "
@@ -221,10 +237,10 @@ const headers={
               
                 margin="normal"
               />
-              </FormItem>
+              </FormItem> */}
             </div>
             <div className="gx-form-group">
-            <FormItem  label="Restaurant Image"   name="restaurantImage">
+            <FormItem  label={<IntlMessages id={"Addrestaurant.label.image"}/>}  name="restaurantImage">
               
               {/* <Input
                 accept='image/*'
@@ -247,7 +263,7 @@ const headers={
               beforeUpload={()=>false}
             onChange={onFileChange}              
               >
-                <Button>Upload</Button>
+                <Button><IntlMessages id={"Addrestaurant.button.upload"}/> </Button>
               </Upload>
               <p >Note:-Selected image-size should be less than 2 mb and file extension of .jpg, .jpeg, .png </p>
 
@@ -265,7 +281,7 @@ const headers={
             <FormItem className="gx-text-center">
           
           <Button type="primary" htmlType='submit' onClick={handleOk}>
-           Submit
+          <IntlMessages id={"Addrestaurant.button.submit"}/>
           </Button>
           
         </FormItem>

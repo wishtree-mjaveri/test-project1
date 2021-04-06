@@ -34,7 +34,16 @@ const languageData = [
     locale: 'ar',
     name: 'Arabic',
     icon: 'sa'
+  },
+  {
+    languageId: 'Hindi',
+    locale: 'hi',
+    name: 'Hindi',
+    icon: 'in'
   }
 
 ];
+
+export const setlanguageData={}
+
 export default languageData;

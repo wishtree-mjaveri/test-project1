@@ -46,7 +46,7 @@ function DeleteModal({uid,handleDelete,refreshData,pleaseLogin},props) {
                 pleaseLogin();
               } else {
               refreshData();
-            //   successfulDelete();
+              successfulDelete();
             }
           })
           .catch((error) => console.log(error));

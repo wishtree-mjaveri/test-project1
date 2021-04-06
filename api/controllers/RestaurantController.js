@@ -167,12 +167,13 @@ module.exports = {
     const id = req.allParams()._id;
     RestaurantServices.getRestaurant(id, (err, restaurantFound) => {
       if (err) {
-        res.send({ status: 300, message: messages.serverError });
+        // res.send({ status: 300, message: messages.serverError });
+        res.serverError(err)
       } else {
-        res.send({
+        res.json({
           status: 200,
           message: messages.restaurantFound,
-          restaurant: restaurantFound,
+          restaurant: {name:restaurantFound.restaurantName,description:restaurantFound.restaurantDescription,address:restaurantFound.restaurantAddress,image:restaurantFound.image,openingTime:restaurantFound.restaurantOpeningTime,closingTime:restaurantFound.restaurantClosingTime,uid:restaurantFound.uid},
         });
       }
     });
@@ -211,11 +212,13 @@ module.exports = {
     RestaurantServices.getRestaurants((error, restaurantList) => {
       if (error) {
         res.send({ status: 300, message: messages.serverError });
+        
       } else {
         res.send({
           status: 200,
           message: messages.restaurantList,
-          list: restaurantList,
+          list: restaurantList
+          ,
         });
       }
     });

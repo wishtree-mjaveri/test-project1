@@ -1,4 +1,4 @@
-import React, {memo, useEffect} from "react";
+import React, {memo, useEffect,useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import URLSearchParams from 'url-search-params'
 import {Redirect, Route, Switch, useHistory, useLocation, useRouteMatch} from "react-router-dom";
@@ -11,7 +11,8 @@ import SignIn from "../SignIn";
 import SignUp from "../SignUp";
 import {setInitUrl} from "../../appRedux/actions/Auth";
 import {onLayoutTypeChange, onNavStyleChange, setThemeType} from "../../appRedux/actions/Setting";
-
+import localforage from 'localforage'
+import {localobject} from '../../appRedux/reducers/Settings'
 import {
   LAYOUT_TYPE_BOXED,
   LAYOUT_TYPE_FRAMED,
@@ -49,7 +50,7 @@ const App = (props) => {
   const dispatch = useDispatch();
   const {locale, themeType, navStyle, layoutType} = useSelector(({settings}) => settings);
   const {authUser, initURL} = useSelector(({auth}) => auth);
-
+const [defaultLang, setDefaultLang] = useState({})
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
@@ -72,7 +73,7 @@ const App = (props) => {
     }
     setLayoutType(layoutType);
     setNavStyle(navStyle);
-  });
+  },);
 
 
   const setLayoutType = (layoutType) => {
@@ -111,13 +112,13 @@ const App = (props) => {
       //   history.push('/signin');
       // } 
        if (initURL === '' || initURL === '/' || initURL === '/signin') {
-        history.push('/userHome');
+        history.push('/restaurants');
       } else {
         history.push(initURL);
       }
     }
   }, [authUser, initURL, location, history]);
-
+  
   useEffect(() => {
     if (themeType === THEME_TYPE_DARK) {
       console.log("adding dark class")
@@ -131,9 +132,38 @@ const App = (props) => {
       document.body.appendChild(link);
     }}
   ,[]);
+//   let defcurrentAppLocale=null ;
 
-  const currentAppLocale = AppLocale[locale.locale];
-    const someid=""
+ 
+//  localforage.getItem('setlanguageData').then(res=>{console.log(res),setDefaultLang(res)}).catch(err=>console.log(err))
+//  console.log(defaultLang)
+// if (defaultLang==null) {
+//   defcurrentAppLocale =  AppLocale[locale.locale];
+//   console.log('empty',defaultLang)
+// } else {
+//  defcurrentAppLocale =  AppLocale[defaultLang.locale];
+//   console.log(defaultLang)
+// }
+// let currentAppLocale={}
+// currentAppLocale =  localforage.getItem('setlanguageData').then(res=>{console.log(res)}).catch(err=>console.log(err))
+// console.log(currentAppLocale)
+let currentAppLocale=null
+
+localforage.getItem('setlanguageData').then(result=>{console.log(result),setDefaultLang(result.locale)}).catch(err=>console.log('in catch',err))
+console.log('defaultLang = ',defaultLang)
+console.log('locale from settings',locale)
+if (defaultLang.length>0) {
+ 
+  currentAppLocale=AppLocale[defaultLang]
+  console.log('in if',currentAppLocale)
+
+} else {
+  currentAppLocale=AppLocale[locale.locale]
+  console.log('in else',currentAppLocale)
+ 
+}
+console.log(currentAppLocale)
+const someid=""
   return (
     <ConfigProvider locale={currentAppLocale.antd}>
       <IntlProvider
@@ -143,7 +173,7 @@ const App = (props) => {
         <Switch>
           <Route exact path='/signin' component={SignIn}/>
           <Route exact path='/signup' component={SignUp}/>
-          <Route path="/home" component={Home} />
+          <Route path="/admin-home" component={Home} />
           <Route path="/userhomepage" component={UserHomePage}/>
           <Route path={`/restaurantdetails/${someid}`}  component={RestaurantDetails} />
           <Route path="/restaurantinfo" component={RestaurantInfo}/>

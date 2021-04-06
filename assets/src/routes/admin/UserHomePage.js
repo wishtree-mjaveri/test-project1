@@ -3,10 +3,11 @@ import UserHome from '../user/UserHome'
 import HorizontalDark from './HorizontalDarkTheme'
 import Axios from 'axios'
 import RestaurantCard from '../user/RestaurantCard'
-import {Row,Col} from 'antd'
+import {Row,Col,Layout} from 'antd'
 import {Link} from 'react-router-dom'
+import {footerText} from '../../util/config'
 function UserHomePage() {
-
+const{Footer} =Layout
     const [search, setSearch] = useState('')
     const [restaurants, setrestaurants] = useState([])
 
@@ -33,6 +34,15 @@ function UserHomePage() {
 
         </Row>
               </div>
+              <Footer  style={{ background: " #036" ,position: 'absolute' ,
+    bottom: '0' ,
+    width: '100%',
+    height: '2.5rem',}}>
+                  <div style={{textAlign:"left",color:"white"}} >
+                  {footerText}
+
+                  </div>
+              </Footer>
           </div>
         </div>
     )

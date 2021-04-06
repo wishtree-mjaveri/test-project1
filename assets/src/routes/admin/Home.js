@@ -11,6 +11,7 @@ import { footerText } from "../../util/config";
 import './index.css'
 import { refresh } from "less";
 import DeleteModal from "./DeleteModal";
+import IntlMessages from '../../util/IntlMessages'
 
 const pleaseLogin = () => {
   message.error("Session expired please login");
@@ -50,7 +51,7 @@ function Home(props) {
     console.log(res.data);
     if(res.data.status==401){
      props.history.push("/userHome");
-      pleaseLogin();
+      message.error("Anauthorized access")
     }
     setRestaurantList(res.data.list);
       setLoading(false)
@@ -103,7 +104,7 @@ function Home(props) {
   }
   const columns = [
     {
-      title:<span>Restaurant Name <Tooltip title={"Ascending Order"} placement={"topLeft"} > <ArrowUpOutlined onClick={()=>setSortorder("ASC")}/></Tooltip> <Tooltip title={"Descending Order"} placement={"topLeft"} > <ArrowDownOutlined onClick={()=>setSortorder("DESC")} /> </Tooltip> </span>,
+      title:<span> <IntlMessages id={"Adminhome.table.restaurantname"} /> <Tooltip title={"Ascending Order"} placement={"topLeft"} > <ArrowUpOutlined onClick={()=>setSortorder("ASC")}/></Tooltip> <Tooltip title={"Descending Order"} placement={"topLeft"} > <ArrowDownOutlined onClick={()=>setSortorder("DESC")} /> </Tooltip> </span>,
        
       dataIndex: "restaurantName",
       key: "name",
@@ -130,7 +131,7 @@ function Home(props) {
       ),
     },
     {
-      title: "Description",
+      title: <IntlMessages id={"Adminhome.table.restaurantaddress"} />,
       dataIndex: "restaurantDescription",
       key: "age",
       ellipsis: {
@@ -145,7 +146,7 @@ function Home(props) {
       width: "30%",
     },
     {
-      title: "Address",
+      title: <IntlMessages id={"Adminhome.table.restaurantaddress"} />,
       dataIndex: "restaurantAddress",
       key: "address",
       ellipsis: {
@@ -159,19 +160,19 @@ function Home(props) {
       ),
     },
     {
-      title: "Opening Time",
+      title: <IntlMessages id={"Adminhome.table.openingtime"} />,
       dataIndex: "restaurantOpeningTime",
       key: "time",
       width: "15%",
     },
     {
-      title: "Closing Time",
+      title: <IntlMessages id={"Adminhome.table.closingtime"} />,
       dataIndex: "restaurantClosingTime",
       key: "time",
       width: "15%",
     },
     {
-      title: "Action",
+      title: <IntlMessages id={"Adminhome.table.action"} />,
       key: "action",
       render: (text, record) => ( 
         <div style={{ display: "inline-flex" }}>
@@ -217,7 +218,7 @@ function Home(props) {
       .then((res) => {
         console.log(res.data);
 
-        props.history.push("/userHome");
+        props.history.push("/restaurants");
       })
       .catch((error) => console.log(error));
   };
@@ -255,7 +256,7 @@ console.log(sortorder)
         <Tooltip title={"Logout"} placement={"topLeft"}>
         <Button onClick={handleLogout} style={{ float: "right" }}>
 
-          Logout
+        <IntlMessages id={"Adminhome.logout"} /> 
         </Button>
         </Tooltip>
       </header>

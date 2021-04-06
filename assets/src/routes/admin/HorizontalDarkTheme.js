@@ -78,7 +78,7 @@ const HorizontalDark = (props) => {
       .then((res) => {
         console.log(res.data);
 
-        history.push("/userHome");
+        history.push("/restaurants");
       })
       .catch((error) => console.log(error));
   };
@@ -100,7 +100,7 @@ const HorizontalDark = (props) => {
     .then(result=>{
         console.log(result.data)
         if(result.data.status==300){
-          history.push('/userHome')
+          history.push('/restaurants')
           message.error('Please Login')
         }
         props.setrestaurants(result.data.restaurants)

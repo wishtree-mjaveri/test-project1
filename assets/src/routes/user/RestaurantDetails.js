@@ -1,11 +1,16 @@
 import React,{useState,useEffect} from 'react'
-import {Button, Card, Divider,Layout,Spin} from 'antd'
+import {Button, Card, Divider,Layout,Spin,Tooltip} from 'antd'
 import ScrollAutomatically from '../components/dataDisplay/Carousel/ScrollAutomatically'
 import Gallery from 'react-grid-gallery'
 import Axios from 'axios'
 import {footerText} from '../../util/config'
 import Loader from 'react-loader-spinner'
+import IntlMessages from "../../util/IntlMessages"
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import ShowMoreText from 'react-show-more-text';
+import ShowMore from 'react-show-more';
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  import ReadMore from 'read-more-react'
 
 
 function RestaurantDetails(props) {
@@ -17,6 +22,7 @@ function RestaurantDetails(props) {
    const [spining, setSpining] = useState()
    const [description, setDescription] = useState('')
    const [loading, setLoading] = useState(true)
+   const [showToolTip, setShowToolTip] = useState(true)
     useEffect(() => {
       
      async function fetchRestaurants(){
@@ -25,11 +31,11 @@ function RestaurantDetails(props) {
         then(res=>{
             console.log(res.data.restaurant)
             setRestaurant(res.data.restaurant)
-            setDescription(res.data.restaurant.restaurantDescription)
-            if (res.data.restaurant.restaurantAddress=="") {
+            setDescription(res.data.restaurant.description)
+            if (res.data.restaurant.address=="") {
               setAddress("N/A")
             } else {
-              setAddress(res.data.restaurant.restaurantAddress)
+              setAddress(res.data.restaurant.address)
             }
             setLoading(false)
         })
@@ -66,11 +72,17 @@ function RestaurantDetails(props) {
       console.log("close time",parseInt(restaurant.restaurantClosingTime))   
       setRestaurantStatus('Closed')
     } }
+   const handleTooltip=()=>{
+    setShowToolTip(false)
+    }
+
+    document.title="Zonions | Restaurant Details"
     return (
         <div>
+          
               <header style={style}>
       <h1 style={{float:'left',color:"white",fontFamily: 'Paytone One, sans-serif',fontSize:"40px",fontWeight:"bold"}}>Zonions</h1>
-      <Button style={{float:"right"}} onClick={()=>{props.history.push('/userHome')}}>Home</Button>  
+      <Button style={{float:"right"}} onClick={()=>{props.history.push('/restaurants')}}><IntlMessages id={"restaurantDetails.homebutton"} /> </Button>  
 
       </header> 
         <div style={{backgroundColor:"#f5f5f5",padding:80 }}>
@@ -94,27 +106,40 @@ function RestaurantDetails(props) {
     gridColumnEnd: 3,
     display: "flex",
     alignItems: "center"}}>
-        <h1>{restaurant.restaurantName}</h1>
-        { (parseInt(currentTime) >=parseInt(restaurant.restaurantOpeningTime)&&parseInt(currentTime)<=parseInt(restaurant.restaurantClosingTime))?  
+        <h1>{restaurant.name}</h1>
+        { (parseInt(currentTime) >=parseInt(restaurant.openingTime)&&parseInt(currentTime)<=parseInt(restaurant.closingTime))?  
         <h3 style={{color:'green',paddingLeft:"10px"}}>(Open now)</h3> 
         : <h3 style={{color:"red",paddingLeft:"10px"}}>(Closed)</h3> 
       }
       </div>
         {/* <h3 style={{color:currentRestaurantStatus=="Open"?"green":"red"}}>{currentRestaurantStatus}</h3>  */}
      
-        <h3>Description :-</h3> 
-        <p>{ describedWords.map((word)=>{return word.charAt(0).toUpperCase()+word.slice(1)}).join(",") }</p>
+        <h3><IntlMessages id={"restaurantDetails.description"}/>:-</h3> 
+        <p style={{ wordBreak:"break-all",}} >
+        <Tooltip placement="topLeft" overlayInnerStyle={{overflowY:"scroll",textSizeAdjust:"auto",height:"60px"}} title={describedWords.map((word)=>{return word.charAt(0).toUpperCase()+word.slice(1)}).join(",") } >
+          {/* <ReadMore text={description}  r{eadMoreText={"read more"} /> */}
+          <ShowMore lines={3} more={"more"} less={"less"} >
+          { describedWords.map((word)=>{return word.charAt(0).toUpperCase()+word.slice(1)}).join(",") }
+         {/* {description} */}
+          </ShowMore>
+        </Tooltip>
+          
+          </p>
         {/* description.charAt(0).toUpperCase()+description.slice(1) */}
        {/* describedWords.map((word)=>{return word[0].toUpperCase()+word.slice(1)}).join(",") */}
-        <h3>Address :-</h3>
+        <h3><IntlMessages id={"restaurantDetails.address"}/>:-</h3>
         {/* address.charAt(0).toUpperCase()+address.slice(1) */}
-        <p> {address.charAt(0).toUpperCase()+address.slice(1) } </p>
+        <p style={{overflowY:"auto",wordBreak:"break-all",height:"100px"}}> 
+          <Tooltip placement="topLeft" destroyTooltipOnHide title={address.charAt(0).toUpperCase()+address.slice(1)}>
+          {address.charAt(0).toUpperCase()+address.slice(1) } 
+          </Tooltip>
+          </p>
             
-        <h3>Time:-</h3>
+        <h3><IntlMessages id={"restaurantDetails.time"}/>:-</h3>
        
         <div>
-        <p>Opening Time:-{restaurant.restaurantOpeningTime}</p>
-        <p>Closing Time:-{restaurant.restaurantClosingTime}</p>
+        <p><IntlMessages id={"restaurantDetails.time.openingtime"}/>:-{restaurant.openingTime}</p>
+        <p><IntlMessages id={"restaurantDetails.time.closingtime"} />:-{restaurant.closingTime}</p>
         
         </div>
         </div>

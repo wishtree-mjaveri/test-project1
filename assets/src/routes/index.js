@@ -26,7 +26,7 @@ const App = ({match}) => (
       <Route path={`${match.url}social-apps`} component={SocialApps}/>
       <Route path={`${match.url}documents`} component={Documents}/>
        */}
-      <Route path={`${match.url}userhome`} component={UserHome} />
+      <Route path={`${match.url}restaurants`} component={UserHome} />
       <Route component={Error404} />
       {/* <Route path={`${match.url}home`} component={Home}/> */}
       
