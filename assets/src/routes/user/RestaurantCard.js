@@ -1,12 +1,12 @@
 import React from 'react'
 import StarRatingComponent from 'react-star-rating-component'
-import {Button} from 'antd'
+import {Button,Tooltip} from 'antd'
 import RestaurantDetails from './RestaurantDetails'
 
 function RestaurantCard({name,description,rating,grid,hotelImage,address}) {
    
-  //  let addr=address.charAt(0).toUpperCase()+address.slice(1)
-  //  console.log(addr.charAt(0).toLocaleUpperCase()+addr.slice(1))
+   let addr=address.charAt(0).toUpperCase()+address.slice(1)
+   console.log(addr)
     return (
        
         <div className={`gx-product-item   'gx-product-vertical' `}>
@@ -37,7 +37,11 @@ function RestaurantCard({name,description,rating,grid,hotelImage,address}) {
               editing={false}/>
             <strong className="gx-d-inline-block gx-ml-2">{rating}</strong>
           </div> */}
-          <p>{address!=""?address:<h4>N/A</h4>}</p>
+          <p style={{overflow:"hidden",textOverflow:"ellipsis"}}>
+            <Tooltip placement={"bottom"} arrowPointAtCenter  title={address!=""?addr:<h4>N/A</h4>}>
+            {address!=""?addr:<h4>N/A</h4>}
+            </Tooltip>
+            </p>
         </div>
   
         <div className="gx-product-footer">

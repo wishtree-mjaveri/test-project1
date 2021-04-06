@@ -9,8 +9,33 @@ import {
   THEME_TYPE_SEMI_DARK,
   NAV_STYLE_DARK_HORIZONTAL
 } from "../../constants/ThemeSetting";
+import {languageData} from '../../containers/Topbar/languageData'
+import localforage from 'localforage'
 
-const initialSettings = {
+
+
+let localobject={ 
+  
+}
+
+const defaultLocal = ()=>{
+  localforage.getItem('languageData',(err,val)=>{
+    if(err){
+      localobject={languageId: 'english',
+      locale: 'en',
+      name: 'English',
+      icon: 'us'}
+      console.log("bydefault lang eng")
+    }else{
+      localobject={val}
+      console.log("last selected lang")
+    }
+  })
+}
+ 
+  localforage.getItem('setlanguageData').then(result=>{console.log(result), localobject=result}).catch(err=>console.log(err))
+
+let initialSettings = {
   navCollapsed: true,
   navStyle: NAV_STYLE_DARK_HORIZONTAL,
   layoutType: LAYOUT_TYPE_FULL,
@@ -20,13 +45,18 @@ const initialSettings = {
   pathname: '/',
   width: window.innerWidth,
   isDirectionRTL: false,
-  locale: {
-    languageId: 'english',
-    locale: 'en',
-    name: 'English',
-    icon: 'us'
-  }
+  locale: {languageId: 'english',
+  locale: 'en',
+  name: 'English',
+  icon: 'us'}
+  
+
 };
+
+// initialSettings.locale=localobject==null?{  languageId: 'english',
+// locale: 'en',
+// name: 'English',
+// icon: 'us'}:localobject;
 
 const settings = (state = initialSettings, action) => {
   switch (action.type) {
@@ -70,6 +100,9 @@ const settings = (state = initialSettings, action) => {
       };
 
     case SWITCH_LANGUAGE:
+      localforage.setItem('setlanguageData',action.payload,()=>{
+        console.log(languageData)
+      })
       return {
         ...state,
         locale: action.payload,

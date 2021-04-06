@@ -1,6 +1,6 @@
 import Modal from 'antd/lib/modal/Modal'
 import React,{useState,useEffect} from 'react'
-import {Button, Input,TimePicker,Form,message, Upload,Tooltip} from 'antd'
+import {Button, Input,TimePicker,Form,message, Upload,Tooltip,Spin} from 'antd'
 import Axios from 'axios'
 import {EditTwoTone} from '@ant-design/icons'
 import moment from 'moment'
@@ -14,13 +14,14 @@ function EditRestaurant({visible,name,id,desc,address,openingTime,closingTime,re
     const [restaurantName, setRestaurantName] = useState()
     const [restaurantDescription, setdescription] = useState()
     const [restaurantAddress, setrestaurantAddress] = useState()
-    const [restaurantOpeningTime, setRestaurantOpeningTime] = useState()
-    const [restaurantClosingTime, setRestaurantClosingTime] = useState()
+    const [restaurantOpeningTime, setRestaurantOpeningTime] = useState('')
+    const [restaurantClosingTime, setRestaurantClosingTime] = useState('')
     const [restaurantImage, setRestaurantImage] = useState('')
     const [errorimage, seterrorimage] = useState(false)
     const [errorMessage, seterrorMessage] = useState('')
     const [restaurant, setRestaurant] = useState({})
     const [requiredMark, setRequiredMark] = useState('optional')
+    const [loading, setLoading] = useState(true)
     const history=useHistory()
 
     const succesfulEdit = ()=>{
@@ -98,25 +99,80 @@ const headers={
       'Content-Type': 'application/json',
     }
 }
+// useEffect(() => {
+      
+//   async function fetchRestaurants(){
+
+//     await Axios.get(`http://localhost:1337/api/restaurant?_id=${id}`).
+//      then(res=>{
+//          console.log(res.data.restaurant)
+//          setRestaurant(res.data.restaurant)
+//          setRestaurantName(res.data.restaurant.restaurantName)
+//          setrestaurantAddress(res.data.restaurant.restaurantAddress.charAt(0).toUpperCase()+res.data.restaurant.restaurantAddress.slice(1))
+//          setdescription(res.data.restaurant.restaurantDescription)
+//          setRestaurantOpeningTime(res.data.restaurant.restaurantOpeningTime)
+//          setRestaurantClosingTime(res.data.restaurant.restaurantClosingTime)
+//          setRestaurantImage(res.data.restaurant.image)
+
+//          if (res.data.restaurant.restaurantAddress=="") {
+//            setrestaurantAddress("N/A")
+//          } else {
+//            setrestaurantAddress(res.data.restaurant.restaurantAddress)
+//          }
+//          setLoading(false)
+//      })
+//      .catch(error=>console.log(error))
+//     .finally(()=>setLoading(false))
+//    }
+//    fetchRestaurants()
+    
+//  }, [id])
+ async function fetchRestaurants(){
+
+  await Axios.get(`http://localhost:1337/api/restaurant?_id=${id}`).
+   then(res=>{
+       console.log(res.data.restaurant)
+       setRestaurant(res.data.restaurant)
+       setRestaurantName(res.data.restaurant.name)
+       setrestaurantAddress(res.data.restaurant.address.charAt(0).toUpperCase()+res.data.restaurant.restaurantAddress.slice(1))
+       setdescription(res.data.restaurant.description)
+       setRestaurantOpeningTime(res.data.restaurant.openingTime)
+       setRestaurantClosingTime(res.data.restaurant.closingTime)
+       setRestaurantImage(res.data.restaurant.image)
+       if (res.data.restaurant.address=="") {
+         setrestaurantAddress("N/A")
+       } else {
+         setrestaurantAddress(res.data.restaurant.address)
+       }
+       setLoading(false)
+   })
+   .catch(error=>console.log(error))
+  .finally(()=>setLoading(false))
+ }
     const showModel=async()=>{
+      // fetchRestaurants()
      await Axios.get(`http://localhost:1337/api/restaurant?_id=${id}`).
       then(res=>{
           console.log(res.data.restaurant)
           setRestaurant(res.data.restaurant)
-          setRestaurantName(res.data.restaurant.restaurantName)
-          setrestaurantAddress(res.data.restaurant.restaurantAddress.charAt(0).toUpperCase()+res.data.restaurant.restaurantAddress.slice(1))
-          setdescription(res.data.restaurant.restaurantDescription)
-          setRestaurantOpeningTime(res.data.restaurant.restaurantOpeningTime)
-          setRestaurantClosingTime(res.data.restaurant.restaurantClosingTime)
+          setRestaurantName(res.data.restaurant.name)
+          setrestaurantAddress(res.data.restaurant.address.charAt(0).toUpperCase()+res.data.restaurant.address.slice(1))
+          setdescription(res.data.restaurant.description)
+          setRestaurantOpeningTime(res.data.restaurant.openingTime)
+          setRestaurantClosingTime(res.data.restaurant.closingTime)
           setRestaurantImage(res.data.restaurant.image)
-          console.log(restaurant)
-          console.log(restaurantImage)
+          // console.log(restaurant)
+          // console.log(restaurantImage)
+console.log(res.data.restaurant.openingTime)
+
       })
       .catch(error=>console.log(error))
   
       console.log(id)
       console.log(restaurantName)
         setIsEditModelVisible(true)
+        setLoading(false)
+
     }
     const handleOk=async ()=>{
      let address=restaurantAddress.toLowerCase()
@@ -160,17 +216,20 @@ const headers={
    let defaultFileList=restaurantImage!=''?[{uid:-1,status:"done",url:restaurantImage}]:null;
   return (
         <div>
-            {/* <Button onClick={showModel}>Edit-{restaurantName} </Button> */}
+        
+          {/* <Button onClick={showModel}>Edit-{restaurantName} </Button> */}
+
         <Tooltip placement={"topLeft"} title={"Edit Restaurant"}>  <EditTwoTone onClick={showModel} /></Tooltip> 
+           
             <Modal visible={isEditModelVisible} title={"Edit Restaurant"} onOk={handleOk} onCancel={handelCancel} afterClose={handleOnClose} destroyOnClose bodyStyle={{overflowY:'auto',maxHeight:'500px',}} footer={null}>
                
                 <div className="gx-modal-box-form-item">
+                <Spin spinning={loading} tip="loading...">
+
                   <Form
                   initialValues={
                     {restaurantName:restaurantName,
                     restaurantDescription:restaurantDescription,
-                  restaurantOpeningTime:moment(restaurantOpeningTime, "HH:mm "),
-                restaurantClosingTime:moment(restaurantClosingTime, "HH:mm "),
                 restaurantImage:restaurantImage,
                 
               }}
@@ -215,18 +274,22 @@ const headers={
               </FormItem>
             </div>
             <div className="gx-form-group" style={{display:"inline-flex",flexWrap:"wrap",gap:"60px"}}>
-<FormItem rules={[{ required: true, message: 'Please enter closing time!' },]} label="Opening Time" name="restaurantOpeningTime">
+<FormItem rules={[{ required: true, message: 'Please enter closing time!' },]} label="Restaurant Time" name="restaurantOpeningTime">
 
-              <TimePicker
+              <TimePicker.RangePicker
              
                clearIcon
                 format="HH:mm"
                
                 placeholder="Enter Opening Time"
-                value={moment(restaurantOpeningTime,"HH:mm")}
+               defaultValue={[moment(restaurantOpeningTime,"HH:mm"),moment(restaurantClosingTime,"HH:mm")]} 
 
-                onChange={(value) => {
-                  const timeString = moment(value).format("HH:mm");
+                onChange={(e) => {
+                  const start = new Date(e[0]._d)
+                  const end = new Date(e[1]._d)
+                  const timeString = start.toLocaleTimeString(navigator.language,{hour:"2-digit",minute:"2-digit"})
+                  const timeString2 = end.toLocaleTimeString(navigator.language,{hour:"2-digit",minute:"2-digit"})
+                 setRestaurantClosingTime(timeString2)
                   setRestaurantOpeningTime(timeString)}}
                 margin="normal"
               />
@@ -240,7 +303,7 @@ const headers={
                 value={restaurantClosingTime}
                 margin="normal"
               /> */}
-<FormItem rules={[{ required: true, message: 'Please enter closing time!' },]} label="Closing Time" name="restaurantClosingTime">
+{/* <FormItem rules={[{ required: true, message: 'Please enter closing time!' },]} label="Closing Time" name="restaurantClosingTime">
 
                <TimePicker
                clearIcon
@@ -254,7 +317,7 @@ const headers={
               
                 margin="normal"
               />
-              </FormItem>
+              </FormItem> */}
             </div>
             <div className="gx-form-group">
             <FormItem  label="Update Restaurant Image"  name="restaurantImage">
@@ -303,8 +366,12 @@ const headers={
           </Button>
           </div>
           </Form>
+        
+          </Spin>
           </div>
+
             </Modal>
+
         </div>
     )
 }

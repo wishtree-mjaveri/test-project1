@@ -4,6 +4,8 @@ import ScrollAutomatically from '../components/dataDisplay/Carousel/ScrollAutoma
 import Gallery from 'react-grid-gallery'
 import Axios from 'axios'
 import {footerText} from '../../util/config'
+import IntlMessages from '../..//util/IntlMessages'
+import RestaurantDetails from './RestaurantDetails'
 
 
 function RestaurantInfo(props) {
@@ -22,12 +24,12 @@ function RestaurantInfo(props) {
         then(res=>{
             console.log(res.data.restaurant)
             setRestaurant(res.data.restaurant)
-            setDescription(res.data.restaurant.restaurantDescription)
+            setDescription(res.data.restaurant.description)
 
-            if (res.data.restaurant.restaurantAddress=="") {
+            if (res.data.restaurant.address=="") {
               setAddress("N/A")
             } else {
-              setAddress(res.data.restaurant.restaurantAddress)
+              setAddress(res.data.restaurant.address)
             }
             setSpining(false)
         })
@@ -65,7 +67,7 @@ function RestaurantInfo(props) {
         <div>
               <header style={style}>
       <h1 style={{float:'left',color:"white",fontFamily: 'Paytone One, sans-serif',fontSize:"40px",fontWeight:"bold"}}>Zonions</h1>
-      <Button style={{float:"right"}} onClick={()=>{props.history.push('/UserHomePage')}}>Home</Button>  
+      <Button style={{float:"right"}} onClick={()=>{props.history.push('/UserHomePage')}}><IntlMessages id={"restaurantDetails.homebutton"}/></Button>  
 
       </header> 
         <div style={{backgroundColor:"#f5f5f5",padding:80 }}>
@@ -81,24 +83,24 @@ function RestaurantInfo(props) {
     gridColumnEnd: 3,
     display: "flex",
     alignItems: "center"}}>
-        <h1>{restaurant.restaurantName}</h1>
-        { (parseInt(currentTime) >=parseInt(restaurant.restaurantOpeningTime)&&parseInt(currentTime)<=parseInt(restaurant.restaurantClosingTime))?  
+        <h1>{restaurant.name}</h1>
+        { (parseInt(currentTime) >=parseInt(restaurant.openingTime)&&parseInt(currentTime)<=parseInt(restaurant.closingTime))?  
         <h3 style={{color:'green',paddingLeft:"10px"}}>(Open now)</h3> 
         : <h3 style={{color:"red",paddingLeft:"10px"}}>(Closed)</h3> 
       }
       </div>
         {/* <h3 style={{color:currentRestaurantStatus=="Open"?"green":"red"}}>{currentRestaurantStatus}</h3>  */}
-        <h3>Description :-</h3> 
+        <h3><IntlMessages id={"restaurantDetails.description"}/> :-</h3> 
         {/* restaurant.restaurantDescription */}
         <p>{describedWords.map((word)=>{return word.charAt(0).toUpperCase()+word.slice(1)}).join(",") }</p>
-        <h3>Address :-</h3>
+        <h3><IntlMessages id={"restaurantDetails.address"}/>:-</h3>
         <p> {address.charAt(0).toUpperCase()+address.slice(1)} </p>
             
-        <h3>Time:-</h3>
+        <h3><IntlMessages id={"restaurantDetails.time"} /> :-</h3>
        
         <div>
-        <p>Opening Time:-{restaurant.restaurantOpeningTime}</p>
-        <p>Closing Time:-{restaurant.restaurantClosingTime}</p>
+        <p><IntlMessages id={"restaurantDetails.time.openingtime"}/>:-{restaurant.openingTime}</p>
+        <p><IntlMessages id={"restaurantDetails.time.closingtime"}/>:-{restaurant.closingTime}</p>
         
         </div>
         </div>
@@ -107,7 +109,10 @@ function RestaurantInfo(props) {
          </Card>
         </div>
         
-        <Footer style={{ background: ' #036'}}>
+        <Footer  style={{ background: " #036" ,position: 'absolute' ,
+    bottom: '0' ,
+    width: '100%',
+    height: '2.5rem',}}>
             <div style={{textAlign:"left",color:"white"}}>
               {footerText}
             </div>

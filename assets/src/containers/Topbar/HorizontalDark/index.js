@@ -3,7 +3,7 @@ import {Button, Dropdown, Layout, Menu, message, Popover, Select} from 'antd';
 import Icon from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
 import CustomScrollbars from "../../../util/CustomScrollbars";
-import languageData from "../languageData";
+import languageData,{setlanguageData} from "../languageData";
 import SearchBox from "../../../components/SearchBox";
 import UserInfo from "../../../components/UserInfo";
 import AppNotification from "../../../components/AppNotification";
@@ -17,7 +17,8 @@ import SignIn from "../../../routes/admin/SignIn";
 import Z_logo from "../../../assets/images/Z-Letter-PNG.png"
 import Home from "../../../routes/admin/Home"
 import SignUP from '../../../routes/admin/SignUp'
-
+import {GlobalOutlined} from '@ant-design/icons'
+import localforage from 'localforage'
  
 
 const {Header} = Layout;
@@ -38,7 +39,7 @@ function handleMenuClick(e) {
 function handleChange(value) {
   console.log(`selected ${value}`);
 }
-
+// localforage.setDriver(localforage.LOCALSTORAGE)
 const HorizontalDark = () => {
 
   const dispatch = useDispatch();
@@ -52,8 +53,11 @@ const HorizontalDark = () => {
     <CustomScrollbars className="gx-popover-lang-scroll">
       <ul className="gx-sub-popover">
         {languageData.map(language =>
-          <li className="gx-media gx-pointer" key={JSON.stringify(language)} onClick={(e) =>
-            dispatch(switchLanguage(language))
+          <li className="gx-media gx-pointer" key={JSON.stringify(language)} onClick={(e) =>{
+            // localforage.setItem('setlanguageData',language,()=>{
+            //   console.log(languageData)
+            // })
+            dispatch(switchLanguage(language))}
           }>
             <i className={`flag flag-24 gx-mr-2 flag-${language.icon}`}/>
             <span className="gx-language-text">{language.name}</span>
@@ -152,18 +156,27 @@ const HorizontalDark = () => {
                 </span>
                 </Popover>
               </li> */}
-              {/* <li className="gx-language">
-                <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight"
+              <li className="gx-language gx-pointer gx-flex-row " style={{gap:"5px"}} >
+                <Popover overlayClassName="gx-popover-horizantal" placement="leftTop"
                          content={languageMenu()} trigger="click">
-              <span className="gx-pointer gx-flex-row gx-align-items-center"><i
-                className={`flag flag-24 flag-${locale.icon}`}/>
+              <span className="gx-pointer gx-flex-row ">
+              <Button>
+              <GlobalOutlined />
+
+                Choose language</Button>
+           
               </span>
                 </Popover>
-              </li> */}
+              {/* <span className="gx-pointer gx-flex-row "> */}
+
+               
+            {/* </span> */}
+              {/* </li> */}
               {/* <li className="gx-user-nav"><UserInfo/></li> */}
              
-           <li><SignIn /></li>
-             <li><SignUP /></li>
+              {/* <li className="gx-language">  */}
+               <span className="gx-pointer gx-flex-row "><SignIn />
+              <SignUP /></span> </li> 
           
             </ul>
           </div>

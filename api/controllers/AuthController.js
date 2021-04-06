@@ -38,7 +38,7 @@ module.exports = {
             */
     
             Logger.info('Login successfully');
-            return res.send({ status: 200, message: messages.loginSuccess, user });
+            return res.json({ status: 200, message: messages.loginSuccess, user:{email:user.email,role:user.role} });
           });
         })(req, res);
       },

@@ -57,7 +57,7 @@ module.exports = {
   },
   async getRestaurant(id,callback){
       try {
-          const restaurantFound = await Restaurant.findOne({_id:id})
+          const restaurantFound = await Restaurant.findOne({id:id})
           if (restaurantFound==undefined) {
               return callback(error)
           } else {
@@ -81,7 +81,12 @@ module.exports = {
   },
   async getRestaurants(callback) {
     try {
-        const allRestaurants = await Restaurant.find({isActive:true}).sort('restaurantName ASC')
+        const allRestaurants = await Restaurant.find({
+          select:['restaurantName','restaurantDescription','restaurantOpeningTime','restaurantClosingTime','uid','image','restaurantAddress'],
+        where:{ isActive:true},
+         
+        }).sort('restaurantName ASC')
+        Logger.verbose('all restaurants',allRestaurants)
         return callback(null,allRestaurants)
     } catch (error) {
         return callback(error)
@@ -89,7 +94,7 @@ module.exports = {
   },
 
   async updateRestaurant(restaurantId, restaurantData, callback) {
-    const updatedRecord = await Restaurant.updateOne().where({ _id:restaurantId }).set(restaurantData);
+    const updatedRecord = await Restaurant.updateOne().where({ id:restaurantId }).set(restaurantData);
     return callback(null, updatedRecord);
   },
   async deleteRestaurant(restaurantId, restaurantData,callback) {

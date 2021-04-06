@@ -10,6 +10,7 @@ import GithubOutlined from "@ant-design/icons/lib/icons/GithubOutlined";
 import TwitterOutlined from "@ant-design/icons/lib/icons/TwitterOutlined";
 import {useDispatch} from "react-redux";
 import Axios from "axios"
+import IntlMessages from "../../util/IntlMessages";
 
 
 const FormItem = Form.Item;
@@ -69,12 +70,12 @@ const [errorState, setErrorState] = useState(false)
   }
   return (
     <div> 
-      <Button onClick={showModal}>Signup</Button>
+      <Button onClick={showModal}><IntlMessages id="mainapp.signup"/></Button>
     <div className="gx-login-container">
       <Modal visible={ isModalVisible} onCancel={handelCancel} destroyOnClose footer={null} >
       
         <div className="gx-login-header gx-text-center">
-          <h1 className="gx-login-title">Signup</h1>
+          <h1 className="gx-login-title"><IntlMessages id="mainapp.signup"/></h1>
         </div>
         <Form
        
@@ -82,24 +83,24 @@ const [errorState, setErrorState] = useState(false)
         layout="vertical"
         className="gx-signin-form gx-form-row0">
 
-        <FormItem rules={[{ required: true, message: 'Please input your username!\'}' }]} label="Username" name="username">
+        <FormItem rules={[{ required: true, message: 'Please input your username!\'}' }]} label={<IntlMessages id="mainapp.signup.username"/>} name="username">
 
           <Input prefix={<UserOutlined style={{color: 'rgba(0,0,0,.25)'}}/>}
                  placeholder="Username" value={"username"} onChange={e=>{setUsername(e.target.value)}} />
         </FormItem>
-        <FormItem rules={[{ required: true, message: 'Please input your E-mail!' },{type:'email'}]} label="E-mail" name="email">
+        <FormItem rules={[{ required: true, message: 'Please input your E-mail!' },{type:'email'}]} label={<IntlMessages id="mainapp.signup.e-mail"/>} name="email">
 
           <Input prefix={<UserOutlined style={{color: 'rgba(0,0,0,.25)'}}/>}
                  placeholder="Email" value={"email"} onChange={e=>{setEmail(e.target.value)}} />
         </FormItem>
-        <FormItem rules= {[{required: true, message: 'Please input your Password!'}]} label="Password" name="password">
+        <FormItem rules= {[{required: true, message: 'Please input your Password!'}]} label={<IntlMessages id="mainapp.signup.password"/>} name="password">
 
           <Input prefix={<LockOutlined style={{color: 'rgba(0,0,0,.25)'}}/>}
                  type="password"
                  placeholder="Password" value={"password"} onChange={e=>setPassword(e.target.value)} />
         </FormItem>
 
-          <FormItem rules= {[{required: true, message: 'Please input your Password!'},({getFieldValue})=>({validator(_,value){ if(!value||getFieldValue('password')===value){return Promise.resolve()} return Promise.reject(new Error("confirm password dosen't match"))}})]} label="Confirm Password" name="confirm-password" dependencies={['password']}  hasFeedback>
+          <FormItem rules= {[{required: true, message: 'Please input your Password!'},({getFieldValue})=>({validator(_,value){ if(!value||getFieldValue('password')===value){return Promise.resolve()} return Promise.reject(new Error("confirm password dosen't match"))}})]} label={<IntlMessages id="mainapp.signup.confirm-password"/>} name="confirm-password" dependencies={['password']}  hasFeedback>
               <Input prefix={<LockOutlined style={{color: 'rgba(0,0,0,.25)'}}/>} type="password"
                      placeholder="Confirm Password" value={"confirmpassword"} onChange={e=>setConfirmPassword(e.target.value)} />
           </FormItem>
@@ -110,7 +111,7 @@ const [errorState, setErrorState] = useState(false)
         </FormItem>
           <FormItem className="gx-text-center">
             <Button type="primary" htmlType="submit" onClick={handleSignup}>
-              Signup
+            {<IntlMessages id="mainapp.signup.signupbutton"/>}
             </Button>
           </FormItem>
         </Form>

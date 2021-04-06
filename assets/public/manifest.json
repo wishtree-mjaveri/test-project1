@@ -1,6 +1,7 @@
 {
-  "short_name": "Wieldy",
   "name": "Wieldy- Admin Dashboard",
+  
+  "short_name": "Wieldy",
   "icons": [
     {
       "src": "favicon.ico",

@@ -4,6 +4,8 @@ import {Link,useHistory} from "react-router-dom";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 import LockOutlined from "@ant-design/icons/lib/icons/LockOutlined";
 import Axios from 'axios'
+import {injectIntl,FormattedMessage} from 'react-intl'
+import IntlMessages from '../../util/IntlMessages'
 const FormItem = Form.Item;
 
 
@@ -56,13 +58,13 @@ Axios.post(`http://localhost:1337/user/login`,{email,password},{headers:headers,
     
     }
     if(res.data.status==401&&res.data.user.role!=="Admin"){
-        history.push('/userhomepage')
+        history.push('/restaurants')
       return message.error("Please Login")
     
     }
 if(res.data.status==200&&res.data.user.role==="Admin") {
     console.log('admin successful login to home page')
-history.push('/home') 
+history.push('/admin-home') 
 successfulLogin()
 
 } 
@@ -97,13 +99,15 @@ setIsModalVisible(false)
 // email: '${label} is not a valid email!',
 // },
 // };
+const stringEmail =<FormattedMessage id={"mainapp.login.e-mail"}/>
+console.log("email",stringEmail)
 return (
 <div>
-<Button onClick={showModal}>Login</Button>
+<Button onClick={showModal}><IntlMessages id="mainapp.login"/></Button>
 <div className="gx-login-container">
 <Modal visible={isModalVisible} onCancel={handelCancel} destroyOnClose footer={null}>
 <div className="gx-login-header gx-text-center">
-<h1 className="gx-login-title">Login</h1>
+<h1 className="gx-login-title"><IntlMessages id="mainapp.login"></IntlMessages></h1>
 </div>
 <Form
 name="basic"
@@ -111,12 +115,12 @@ onFinish={onFinish}
 layout="vertical"
 onFinishFailed={onFinishFailed}
 className="gx-signin-form gx-form-row0">
-<FormItem rules={[{ required: true, message: 'Please input your E-mail!' },{type:'email'}]} label="E-mail"  name="email">
+<FormItem rules={[{ required: true, message: 'Please input your E-mail!' },{type:'email'}]} label={<IntlMessages id="mainapp.login.e-mail"/>}   name="email">
 
 <Input type={email} prefix={<UserOutlined style={{color: 'rgba(0,0,0,.25)'}}/>}
-placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} />
+placeholder="email" value={email} onChange={e=>setEmail(e.target.value)} />
 </FormItem>
-<FormItem rules= {[{required: true, message: 'Please input your Password!'}]} label="Password" name="password">
+<FormItem rules= {[{required: true, message: 'Please input your Password!'}]} label={<IntlMessages id="mainapp.login.password"/>} name="password">
 
 <Input prefix={<LockOutlined style={{color: 'rgba(0,0,0,.25)'}}/>}
 type="password"
@@ -129,7 +133,7 @@ placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)
 </FormItem> */}
 <FormItem className="gx-text-center">
 <Button type="primary" htmlType="submit" onClick={handleLogin}>
-Login
+<IntlMessages id="mainapp.login.loginbutton"/>
 </Button>
 </FormItem>
 </Form>

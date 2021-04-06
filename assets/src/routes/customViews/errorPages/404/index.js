@@ -24,7 +24,7 @@ const Error404 = () => {
         </div>
       </form> */}
       <p className="gx-text-center">
-        <Link className="gx-btn gx-btn-primary" to="/userHome"><IntlMessages id="extraPages.goHome"/></Link>
+        <Link className="gx-btn gx-btn-primary" to="/restaurants"><IntlMessages id="extraPages.goHome"/></Link>
       </p>
     
      
