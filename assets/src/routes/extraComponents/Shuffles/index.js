@@ -1,22 +1,22 @@
-import React, {Component} from "react";
+import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
 import shuffle from 'lodash/shuffle';
-import ProductItem from "../../../components/eCommerce/ProductItem";
-import productData from "../../../routes/customViews/eCommerce/productData";
-import {Button, Col, Row} from "antd";
+import { Button, Col, Row } from 'antd';
+import ProductItem from '../../../components/eCommerce/ProductItem';
+import productData from '../../customViews/eCommerce/productData';
 
-import Auxiliary from "../../../util/Auxiliary";
+import Auxiliary from '../../../util/Auxiliary';
 
 const customEnterAnimation = {
-  from: {transform: 'scale(0.5, 1)'},
-  to: {transform: 'scale(1, 1)'}
+  from: { transform: 'scale(0.5, 1)' },
+  to: { transform: 'scale(1, 1)' },
 };
 
 class Shuffles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: productData
+      products: productData,
     };
 
     this.sortRotate = this.sortRotate.bind(this);
@@ -26,7 +26,7 @@ class Shuffles extends Component {
   sortShuffle() {
     this.setState({
       sortingMethod: 'shuffle',
-      products: shuffle(this.state.products)
+      products: shuffle(this.state.products),
     });
   }
 
@@ -34,10 +34,9 @@ class Shuffles extends Component {
     const products = this.state.products.slice();
     products.unshift(products.pop());
     this.setState({
-      products
+      products,
     });
   }
-
 
   render() {
     return (
@@ -49,11 +48,12 @@ class Shuffles extends Component {
         <FlipMove
           staggerDurationBy="30"
           duration={500}
-          enterAnimation={customEnterAnimation}>
+          enterAnimation={customEnterAnimation}
+        >
           <Row>
             {this.state.products.map((product, index) => (
               <Col key={index} xl={6} md={8} sm={12} xs={24}>
-                <ProductItem key={index} grid product={product}/>
+                <ProductItem key={index} grid product={product} />
               </Col>
             ))}
           </Row>
@@ -64,5 +64,3 @@ class Shuffles extends Component {
 }
 
 export default Shuffles;
-
-

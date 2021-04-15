@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Pagination} from "antd";
+import React from 'react';
+import { Card, Pagination } from 'antd';
 
 const Changer = () => {
   function onShowSizeChange(current, pageSize) {
@@ -8,7 +8,7 @@ const Changer = () => {
 
   return (
     <Card className="gx-card" title="Changer Pagination">
-      <Pagination showSizeChanger onShowSizeChange={onShowSizeChange} defaultCurrent={3} total={500}/>
+      <Pagination showSizeChanger onShowSizeChange={onShowSizeChange} defaultCurrent={3} total={500} />
     </Card>
   );
 };

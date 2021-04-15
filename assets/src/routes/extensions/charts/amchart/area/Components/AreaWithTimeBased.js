@@ -1,56 +1,54 @@
-import React from "react";
-import AmCharts from "@amcharts/amcharts3-react";
+import React from 'react';
+import AmCharts from '@amcharts/amcharts3-react';
 
 const AreaWithTimeBased = () => {
-
   const chartData = generateChartData();
   const config = {
-    "type": "serial",
-    "theme": "light",
-    "marginRight": 80,
-    "dataProvider": chartData,
-    "valueAxes": [{
-      "position": "left",
-      "title": "Unique visitors"
+    type: 'serial',
+    theme: 'light',
+    marginRight: 80,
+    dataProvider: chartData,
+    valueAxes: [{
+      position: 'left',
+      title: 'Unique visitors',
     }],
-    "graphs": [{
-      "id": "g1",
-      "fillAlphas": 0.4,
-      "valueField": "visits",
-      "balloonText": "<div style='margin:5px; font-size:19px;'>Visits:<b>[[value]]</b></div>"
+    graphs: [{
+      id: 'g1',
+      fillAlphas: 0.4,
+      valueField: 'visits',
+      balloonText: "<div style='margin:5px; font-size:19px;'>Visits:<b>[[value]]</b></div>",
     }],
-    "chartScrollbar": {
-      "graph": "g1",
-      "scrollbarHeight": 80,
-      "backgroundAlpha": 0,
-      "selectedBackgroundAlpha": 0.1,
-      "selectedBackgroundColor": "#888888",
-      "graphFillAlpha": 0,
-      "graphLineAlpha": 0.5,
-      "selectedGraphFillAlpha": 0,
-      "selectedGraphLineAlpha": 1,
-      "autoGridCount": true,
-      "color": "#AAAAAA"
+    chartScrollbar: {
+      graph: 'g1',
+      scrollbarHeight: 80,
+      backgroundAlpha: 0,
+      selectedBackgroundAlpha: 0.1,
+      selectedBackgroundColor: '#888888',
+      graphFillAlpha: 0,
+      graphLineAlpha: 0.5,
+      selectedGraphFillAlpha: 0,
+      selectedGraphLineAlpha: 1,
+      autoGridCount: true,
+      color: '#AAAAAA',
     },
-    "chartCursor": {
-      "categoryBalloonDateFormat": "JJ:NN, DD MMMM",
-      "cursorPosition": "mouse"
+    chartCursor: {
+      categoryBalloonDateFormat: 'JJ:NN, DD MMMM',
+      cursorPosition: 'mouse',
     },
-    "categoryField": "date",
-    "categoryAxis": {
-      "minPeriod": "mm",
-      "parseDates": true
+    categoryField: 'date',
+    categoryAxis: {
+      minPeriod: 'mm',
+      parseDates: true,
     },
-    "export": {
-      "enabled": true,
-      "dateFormat": "YYYY-MM-DD HH:NN:SS"
-    }
+    export: {
+      enabled: true,
+      dateFormat: 'YYYY-MM-DD HH:NN:SS',
+    },
   };
 
-
-// generate some random data, quite different range
+  // generate some random data, quite different range
   function generateChartData() {
-    let chartData = [];
+    const chartData = [];
     // current date
     const firstDate = new Date();
     // now set 500 minutes back
@@ -67,7 +65,7 @@ const AreaWithTimeBased = () => {
       // add data item to the array
       chartData.push({
         date: newDate,
-        visits: visits
+        visits,
       });
     }
     return chartData;
@@ -75,9 +73,9 @@ const AreaWithTimeBased = () => {
 
   return (
     <div className="App">
-      <AmCharts.React style={{width: "100%", height: "500px"}} options={config}/>
+      <AmCharts.React style={{ width: '100%', height: '500px' }} options={config} />
     </div>
-  )
-}
+  );
+};
 
 export default AreaWithTimeBased;

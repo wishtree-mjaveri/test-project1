@@ -1,8 +1,7 @@
-import React from "react";
-import {Card, Select} from "antd";
+import React from 'react';
+import { Card, Select } from 'antd';
 
-const Option = Select.Option;
-
+const { Option } = Select;
 
 const children = [];
 for (let i = 10; i < 36; i++) {
@@ -18,7 +17,7 @@ const SelectMultiple = () => {
     <Card className="gx-card" title="Select Multiple">
       <Select
         mode="multiple"
-        style={{width: '100%'}}
+        style={{ width: '100%' }}
         placeholder="Please select"
         defaultValue={['a10', 'c12']}
         onChange={handleChange}

@@ -1,10 +1,9 @@
-import React from "react";
-import {Card, Collapse} from "antd";
+import React from 'react';
+import { Card, Collapse } from 'antd';
 
-import "./basic.less";
+import './basic.less';
 
-const Panel = Collapse.Panel;
-
+const { Panel } = Collapse;
 
 const text = `
   A dog is a type of domesticated animal.

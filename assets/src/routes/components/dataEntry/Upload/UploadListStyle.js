@@ -1,6 +1,6 @@
-import React from "react";
-import {Button, Card, Upload} from "antd";
-import UploadOutlined from "@ant-design/icons/lib/icons/UploadOutlined";
+import React from 'react';
+import { Button, Card, Upload } from 'antd';
+import UploadOutlined from '@ant-design/icons/lib/icons/UploadOutlined';
 
 const fileList = [{
   uid: -1,
@@ -29,23 +29,25 @@ const props2 = {
   className: 'upload-list-inline',
 };
 
-const UploadListStyle = () => {
-  return (
-    <Card className="gx-card" title="Upload ListS tyle">
-      <Upload {...props}>
-        <Button>
-          <UploadOutlined /> upload
-        </Button>
-      </Upload>
-      <br/>
-      <br/>
-      <Upload {...props2}>
-        <Button>
-          <UploadOutlined /> upload
-        </Button>
-      </Upload>
-    </Card>
-  );
-};
+const UploadListStyle = () => (
+  <Card className="gx-card" title="Upload ListS tyle">
+    <Upload {...props}>
+      <Button>
+        <UploadOutlined />
+        {' '}
+        upload
+      </Button>
+    </Upload>
+    <br />
+    <br />
+    <Upload {...props2}>
+      <Button>
+        <UploadOutlined />
+        {' '}
+        upload
+      </Button>
+    </Upload>
+  </Card>
+);
 
 export default UploadListStyle;

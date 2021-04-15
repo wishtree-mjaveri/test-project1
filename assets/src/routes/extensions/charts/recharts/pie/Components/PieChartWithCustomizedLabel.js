@@ -1,12 +1,16 @@
-import React, {Component} from "react";
-import {Cell, Pie, PieChart, ResponsiveContainer} from "recharts";
+import React, { Component } from 'react';
+import {
+  Cell, Pie, PieChart, ResponsiveContainer,
+} from 'recharts';
 
-import data from "./data";
+import data from './data';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({cx, cy, midAngle, innerRadius, outerRadius, percent, index}) => {
+const renderCustomizedLabel = ({
+  cx, cy, midAngle, innerRadius, outerRadius, percent, index,
+}) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -23,15 +27,16 @@ class PieChartWithCustomizedLabel extends Component {
     return (
       <ResponsiveContainer width="100%" height={300}>
         <PieChart onMouseEnter={this.onPieEnter}>
-          <Pie dataKey="value"
-               data={data}
-               labelLine={false}
-               label={renderCustomizedLabel}
-               outerRadius={80}
-               fill="#003366"
+          <Pie
+            dataKey="value"
+            data={data}
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={80}
+            fill="#003366"
           >
             {
-              data.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]}/>)
+              data.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)
             }
           </Pie>
         </PieChart>
@@ -40,4 +45,4 @@ class PieChartWithCustomizedLabel extends Component {
   }
 }
 
-export default PieChartWithCustomizedLabel
+export default PieChartWithCustomizedLabel;

@@ -1,28 +1,29 @@
-import React, {useState} from "react";
-import {Button} from "antd";
-import {useSelector} from "react-redux";
-import Auxiliary from "../../../util/Auxiliary";
+import React, { useState } from 'react';
+import { Button } from 'antd';
+import { useSelector } from 'react-redux';
+import Auxiliary from '../../../util/Auxiliary';
 
 const Profile = (props) => {
-
   const [isFollow, setIsFollow] = useState(false);
 
-  const authUser = useSelector(({auth}) => auth.authUser);
+  const authUser = useSelector(({ auth }) => auth.authUser);
 
   const handleToggle = () => {
     setIsFollow((previousState) => ({
-      isFollow: !previousState.isFollow
+      isFollow: !previousState.isFollow,
     }));
   };
 
-  const {user, userInfo} = props;
-  const {id, name, image, address} = user;
-  const {followers, following, frinds} = userInfo;
+  const { user, userInfo } = props;
+  const {
+    id, name, image, address,
+  } = user;
+  const { followers, following, frinds } = userInfo;
   return (
     <Auxiliary>
       <div className="gx-profileon">
         <div className="gx-profileon-thumb gx-profileon-thumb-htctrcrop">
-          <img src={image} alt=''/>
+          <img src={image} alt="" />
         </div>
         <div className="gx-profileon-content">
           <p className="gx-profileon-title">{name}</p>
@@ -47,14 +48,23 @@ const Profile = (props) => {
         </ul>
       </div>
       <div className="gx-mb-xl-4 gx-mb-3">
-        <p>You are following {name}</p>
-        {authUser === id ? null :
-          <Button className="gx-btn-sm gx-mb-0" type="primary"
-                  onClick={handleToggle}>{isFollow === true ? 'Follow' : 'Unfollow'}</Button>
-        }
+        <p>
+          You are following
+          {name}
+        </p>
+        {authUser === id ? null
+          : (
+            <Button
+              className="gx-btn-sm gx-mb-0"
+              type="primary"
+              onClick={handleToggle}
+            >
+              {isFollow === true ? 'Follow' : 'Unfollow'}
+            </Button>
+          )}
       </div>
     </Auxiliary>
-  )
+  );
 };
 
-export default Profile
+export default Profile;

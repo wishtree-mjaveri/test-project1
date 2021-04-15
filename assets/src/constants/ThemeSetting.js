@@ -4,7 +4,6 @@ export const THEME_TYPE_LITE = 'THEME_TYPE_LITE';
 export const THEME_TYPE_DARK = 'THEME_TYPE_DARK';
 export const THEME_TYPE_SEMI_DARK = 'THEME_TYPE_SEMI_DARK';
 
-
 export const THEME_COLOR = 'THEME_COLOR';
 
 export const HORIZONTAL_NAVIGATION = 'HORIZONTAL_NAVIGATION';
@@ -23,7 +22,6 @@ export const LAYOUT_TYPE_FRAMED = 'LAYOUT_TYPE_FRAMED';
 export const LAYOUT_TYPE_BOXED = 'LAYOUT_TYPE_BOXED';
 export const LAYOUT_TYPE_FULL = 'LAYOUT_TYPE_FULL';
 
-
 export const NAV_STYLE = 'NAV_STYLE';
 
 export const NAV_STYLE_FIXED = 'NAV_STYLE_FIXED';
@@ -37,7 +35,6 @@ export const NAV_STYLE_DARK_HORIZONTAL = 'NAV_STYLE_DARK_HORIZONTAL';
 export const NAV_STYLE_INSIDE_HEADER_HORIZONTAL = 'NAV_STYLE_INSIDE_HEADER_HORIZONTAL';
 export const NAV_STYLE_BELOW_HEADER = 'NAV_STYLE_BELOW_HEADER';
 export const NAV_STYLE_ABOVE_HEADER = 'NAV_STYLE_ABOVE_HEADER';
-
 
 export const LIGHT_PURPLE = 'light_purple';
 export const LIGHT_PURPLE_SEC = '#00B378';
@@ -63,7 +60,6 @@ export const LIGHT_BLUE = 'light_blue';
 export const LIGHT_BLUE_SEC = '#59DCFF';
 export const LIGHT_BLUE_DARK_TEXT_COLOR = '#92A2C8';
 
-
 export const DEEP_ORANGE = 'deep_orange';
 export const DEEP_ORANGE_SEC = '#70A288';
 export const DEEP_ORANGE_DARK_TEXT_COLOR = '#97B8C7';
@@ -75,6 +71,5 @@ export const LIGHT_PURPLE_1_DARK_TEXT_COLOR = '#8288B4';
 export const LIGHT_PURPLE_2 = 'light_purple_2';
 export const LIGHT_PURPLE_2_SEC = '#64D7D6';
 export const LIGHT_PURPLE_2_DARK_TEXT_COLOR = '#5782BB';
-
 
 export const TAB_SIZE = 992;

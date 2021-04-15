@@ -1,15 +1,14 @@
-import React, {useState} from "react";
-import {Card, Select, Tabs} from "antd";
+import React, { useState } from 'react';
+import { Card, Select, Tabs } from 'antd';
 
-const TabPane = Tabs.TabPane;
-const Option = Select.Option;
+const { TabPane } = Tabs;
+const { Option } = Select;
 
 const Position = () => {
-
   const [tabPosition, setTabPosition] = useState('top');
 
   const changeTabPosition = (tabPosition) => {
-    setTabPosition(tabPosition)
+    setTabPosition(tabPosition);
   };
 
   return (

@@ -1,8 +1,7 @@
-import React from "react";
-import {Button} from "antd";
+import React from 'react';
+import { Button } from 'antd';
 
-import Widget from "../../components/Widget/index";
-
+import Widget from '../Widget/index';
 
 const SocialMedia = () => {
   const ButtonGroup = Button.Group;

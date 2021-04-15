@@ -1,7 +1,6 @@
 // const HtmlWebpackPlugin = require("html-webpack-plugin");
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-
 // module.exports = {
 //   entry: {
 //     entry: "./assets/src/index.js",
@@ -136,7 +135,7 @@
 //           plugins: ["transform-class-properties"],
 //         },
 //       },
-    
+
 //       {
 //         test: /\.scss$/,
 //         exclude: /node_modules/,
@@ -181,97 +180,95 @@
 //   ],
 // };
 
-
 // module.exports = [browserConfig];
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const webpack = require('webpack')
-const InterpolateHtmlPlugin = require("interpolate-html-plugin")
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
+const InterpolateHtmlPlugin = require('interpolate-html-plugin');
+
 module.exports = {
   entry: {
-    entry: "./assets/src/index.js",
+    entry: './assets/src/index.js',
   },
 
-output: {
-  path: __dirname + "/.tmp/public",
+  output: {
+    path: `${__dirname}/.tmp/public`,
     filename: 'bundle.js',
   },
   devServer: {
     port: 8080, // most common port
-    contentBase: "./public",
+    contentBase: './public',
     inline: true,
     historyApiFallback: true,
   },
   resolve: {
-        // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
-      },
+    // Add '.ts' and '.tsx' as resolvable extensions.
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+  },
   module: {
     rules: [
-           
-      {
-                test: /\.(js|jsx|ts|tsx)$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: "babel-loader",
-                options: {
-                  // presets: ["react", ["es2015", { modules: false }]],
-                  plugins: ["transform-class-properties"],
-                },
-              },
-              {
-                test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
-                exclude: /node_modules/,
-                use: ['file-loader?name=[name].[ext]'] // ?name=[name].[ext] is only necessary to preserve the original file name
-              },
-              {
-              test: /\.scss$/,
-              exclude: /node_modules/,
-      
-              use: ["style-loader", "css-loader", "sass-loader"],
-            },
-            {
-              test: /\.css$/,
-              use: ["style-loader", "css-loader"],
-            },
-            {
-              test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg|gif)$/,
-              loader: "url-loader",
-              options:{limit:100000},
-            }, // this is to read fonts
-            {
-              test: /\.less$/,
-              use: [
-                {
-                  loader: "style-loader", // creates style nodes from JS strings
-                },
-                {
-                  loader: "css-loader", // translates CSS into CommonJS
-                },
-                {
-                  loader: "less-loader", // compiles Less to CSS
-                  options: {
-                    lessOptions:{
-                      javascriptEnabled: true,
 
-                    }
-                  },
-                },
-              ],
+      {
+        test: /\.(js|jsx|ts|tsx)$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel-loader',
+        options: {
+          // presets: ["react", ["es2015", { modules: false }]],
+          plugins: ['transform-class-properties'],
+        },
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
+        exclude: /node_modules/,
+        use: ['file-loader?name=[name].[ext]'], // ?name=[name].[ext] is only necessary to preserve the original file name
+      },
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg|gif)$/,
+        loader: 'url-loader',
+        options: { limit: 100000 },
+      }, // this is to read fonts
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader', // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'less-loader', // compiles Less to CSS
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+
+              },
             },
-          ],
+          },
+        ],
+      },
+    ],
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: "assets/public/index.html",
+      template: 'assets/public/index.html',
       // favicon: "assets/public/favicon.ico" //new change 25-02-2021
     }),
     new webpack.ProvidePlugin({
       process: 'process/browser',
-}),
-new InterpolateHtmlPlugin(  {'NODE_ENV': 'development'})
-   
+    }),
+    new InterpolateHtmlPlugin({ NODE_ENV: 'development' }),
+
   ],
 };
-
-

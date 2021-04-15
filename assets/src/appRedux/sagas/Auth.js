@@ -1,11 +1,18 @@
-import {all, call, fork, put, takeEvery} from "redux-saga/effects";
+/* eslint-disable no-shadow */
+/* eslint-disable no-multiple-empty-lines */
+/* eslint-disable no-return-await */
+/* eslint-disable max-len */
+/* eslint-disable no-trailing-spaces */
+import {
+  all, call, fork, put, takeEvery, 
+} from 'redux-saga/effects';
 import {
   auth,
   facebookAuthProvider,
   githubAuthProvider,
   googleAuthProvider,
-  twitterAuthProvider
-} from "../../firebase/firebase";
+  twitterAuthProvider,
+} from '../../firebase/firebase';
 import {
   SIGNIN_FACEBOOK_USER,
   SIGNIN_GITHUB_USER,
@@ -13,54 +20,48 @@ import {
   SIGNIN_TWITTER_USER,
   SIGNIN_USER,
   SIGNOUT_USER,
-  SIGNUP_USER
-} from "../../constants/ActionTypes";
-import {showAuthMessage, userSignInSuccess, userSignOutSuccess, userSignUpSuccess} from "../../appRedux/actions/Auth";
+  SIGNUP_USER,
+} from '../../constants/ActionTypes';
 import {
+  showAuthMessage, userSignInSuccess, userSignOutSuccess, userSignUpSuccess, 
+
   userFacebookSignInSuccess,
   userGithubSignInSuccess,
   userGoogleSignInSuccess,
-  userTwitterSignInSuccess
-} from "../actions/Auth";
-
-const createUserWithEmailPasswordRequest = async (email, password) =>
-  await  auth.createUserWithEmailAndPassword(email, password)
-    .then(authUser => authUser)
-    .catch(error => error);
-
-const signInUserWithEmailPasswordRequest = async (email, password) =>
-  await  auth.signInWithEmailAndPassword(email, password)
-    .then(authUser => authUser)
-    .catch(error => error);
-
-const signOutRequest = async () =>
-  await  auth.signOut()
-    .then(authUser => authUser)
-    .catch(error => error);
+  userTwitterSignInSuccess,
+} from '../actions/Auth';
 
 
-const signInUserWithGoogleRequest = async () =>
-  await  auth.signInWithPopup(googleAuthProvider)
-    .then(authUser => authUser)
-    .catch(error => error);
+const createUserWithEmailPasswordRequest = async (email, password) => await auth.createUserWithEmailAndPassword(email, password)
+  .then((authUser) => authUser)
+  .catch((error) => error);
 
-const signInUserWithFacebookRequest = async () =>
-  await  auth.signInWithPopup(facebookAuthProvider)
-    .then(authUser => authUser)
-    .catch(error => error);
+const signInUserWithEmailPasswordRequest = async (email, password) => await auth.signInWithEmailAndPassword(email, password)
+  .then((authUser) => authUser)
+  .catch((error) => error);
 
-const signInUserWithGithubRequest = async () =>
-  await  auth.signInWithPopup(githubAuthProvider)
-    .then(authUser => authUser)
-    .catch(error => error);
+const signOutRequest = async () => await auth.signOut()
+  .then((authUser) => authUser)
+  .catch((error) => error);
 
-const signInUserWithTwitterRequest = async () =>
-  await  auth.signInWithPopup(twitterAuthProvider)
-    .then(authUser => authUser)
-    .catch(error => error);
+const signInUserWithGoogleRequest = async () => await auth.signInWithPopup(googleAuthProvider)
+  .then((authUser) => authUser)
+  .catch((error) => error);
 
-function* createUserWithEmailPassword({payload}) {
-  const {email, password} = payload;
+const signInUserWithFacebookRequest = async () => await auth.signInWithPopup(facebookAuthProvider)
+  .then((authUser) => authUser)
+  .catch((error) => error);
+
+const signInUserWithGithubRequest = async () => await auth.signInWithPopup(githubAuthProvider)
+  .then((authUser) => authUser)
+  .catch((error) => error);
+
+const signInUserWithTwitterRequest = async () => await auth.signInWithPopup(twitterAuthProvider)
+  .then((authUser) => authUser)
+  .catch((error) => error);
+
+function* createUserWithEmailPassword({ payload }) {
+  const { email, password } = payload;
   try {
     const signUpUser = yield call(createUserWithEmailPasswordRequest, email, password);
     if (signUpUser.message) {
@@ -88,7 +89,6 @@ function* signInUserWithGoogle() {
   }
 }
 
-
 function* signInUserWithFacebook() {
   try {
     const signUpUser = yield call(signInUserWithFacebookRequest);
@@ -103,7 +103,6 @@ function* signInUserWithFacebook() {
   }
 }
 
-
 function* signInUserWithGithub() {
   try {
     const signUpUser = yield call(signInUserWithGithubRequest);
@@ -117,7 +116,6 @@ function* signInUserWithGithub() {
     yield put(showAuthMessage(error));
   }
 }
-
 
 function* signInUserWithTwitter() {
   try {
@@ -137,8 +135,8 @@ function* signInUserWithTwitter() {
   }
 }
 
-function* signInUserWithEmailPassword({payload}) {
-  const {email, password} = payload;
+function* signInUserWithEmailPassword({ payload }) {
+  const { email, password } = payload;
   try {
     const signInUser = yield call(signInUserWithEmailPasswordRequest, email, password);
     if (signInUser.message) {

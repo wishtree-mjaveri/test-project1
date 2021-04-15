@@ -1,6 +1,6 @@
-import React from "react";
-import {Card, Dropdown, Menu} from "antd";
-import {DownOutlined} from '@ant-design/icons';
+import React from 'react';
+import { Card, Dropdown, Menu } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
 const menu = (
   <Menu>
@@ -10,21 +10,21 @@ const menu = (
     <Menu.Item key="1">
       <a href="http://www.taobao.com/">2nd menu item</a>
     </Menu.Item>
-    <Menu.Divider/>
+    <Menu.Divider />
     <Menu.Item key="3">3rd menu item</Menu.Item>
   </Menu>
 );
 
-const TriggerMode = () => {
-  return (
-    <Card className="gx-card" title="Trigger Mode">
-      <Dropdown overlay={menu} trigger={['click']}>
-        <span className="gx-link ant-dropdown-link">
-          Click me <DownOutlined/>
-        </span>
-      </Dropdown>
-    </Card>
-  );
-};
+const TriggerMode = () => (
+  <Card className="gx-card" title="Trigger Mode">
+    <Dropdown overlay={menu} trigger={['click']}>
+      <span className="gx-link ant-dropdown-link">
+        Click me
+        {' '}
+        <DownOutlined />
+      </span>
+    </Dropdown>
+  </Card>
+);
 
 export default TriggerMode;

@@ -1,10 +1,10 @@
-import React from "react";
-import {Button, Card, Upload} from "antd";
-import UploadOutlined from "@ant-design/icons/lib/icons/UploadOutlined";
+import React from 'react';
+import { Button, Card, Upload } from 'antd';
+import UploadOutlined from '@ant-design/icons/lib/icons/UploadOutlined';
 
 const props = {
   action: '//jsonplaceholder.typicode.com/posts/',
-  onChange({file, fileList}) {
+  onChange({ file, fileList }) {
     if (file.status !== 'uploading') {
       console.log(file, fileList);
     }
@@ -29,17 +29,15 @@ const props = {
   }],
 };
 
-const UploadDefault = () => {
-    return (
-      <Card className="gx-card" title="Upload Default">
-        <Upload {...props}>
-          <Button>
-            <UploadOutlined /> Upload
-          </Button>
-        </Upload>
-      </Card>
-    );
-  }
-;
-
+const UploadDefault = () => (
+  <Card className="gx-card" title="Upload Default">
+    <Upload {...props}>
+      <Button>
+        <UploadOutlined />
+        {' '}
+        Upload
+      </Button>
+    </Upload>
+  </Card>
+);
 export default UploadDefault;

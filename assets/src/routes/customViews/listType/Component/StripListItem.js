@@ -1,11 +1,13 @@
-import React from "react";
+import React from 'react';
 
-const ListItem =({styleName, data})=> {
-  const {image, name, description, buttonList} = data;
+const ListItem = ({ styleName, data }) => {
+  const {
+    image, name, description, buttonList,
+  } = data;
   return (
     <div className={`gx-user-list ${styleName}`}>
       <img
-        alt='avatar'
+        alt="avatar"
         src={image}
         className="gx-avatar-img gx-avatar-img-lg gx-border-0"
       />

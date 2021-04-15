@@ -1,42 +1,41 @@
-import React from "react";
-import AmCharts from "@amcharts/amcharts3-react";
+import React from 'react';
+import AmCharts from '@amcharts/amcharts3-react';
 
 const PieChartWithBrokenDownSlices = () => {
-
   let selected;
 
   const types = [{
-    type: "Fossil Energy",
+    type: 'Fossil Energy',
     percent: 70,
-    color: "#ff9e01",
+    color: '#ff9e01',
     subs: [{
-      type: "Oil",
-      percent: 15
+      type: 'Oil',
+      percent: 15,
     }, {
-      type: "Coal",
-      percent: 35
+      type: 'Coal',
+      percent: 35,
     }, {
-      type: "Nuclear",
-      percent: 20
-    }]
+      type: 'Nuclear',
+      percent: 20,
+    }],
   }, {
-    type: "Green Energy",
+    type: 'Green Energy',
     percent: 30,
-    color: "#b0de09",
+    color: '#b0de09',
     subs: [{
-      type: "Hydro",
-      percent: 15
+      type: 'Hydro',
+      percent: 15,
     }, {
-      type: "Wind",
-      percent: 10
+      type: 'Wind',
+      percent: 10,
     }, {
-      type: "Other",
-      percent: 5
-    }]
+      type: 'Other',
+      percent: 5,
+    }],
   }];
 
   function generateChartData() {
-    let chartData = [];
+    const chartData = [];
     for (let i = 0; i < types.length; i++) {
       if (i === selected) {
         for (let x = 0; x < types[i].subs.length; x++) {
@@ -44,7 +43,7 @@ const PieChartWithBrokenDownSlices = () => {
             type: types[i].subs[x].type,
             percent: types[i].subs[x].percent,
             color: types[i].color,
-            pulled: true
+            pulled: true,
           });
         }
       } else {
@@ -52,7 +51,7 @@ const PieChartWithBrokenDownSlices = () => {
           type: types[i].type,
           percent: types[i].percent,
           color: types[i].color,
-          id: i
+          id: i,
         });
       }
     }
@@ -60,26 +59,26 @@ const PieChartWithBrokenDownSlices = () => {
   }
 
   const config = {
-    "type": "pie",
-    "theme": "light",
+    type: 'pie',
+    theme: 'light',
 
-    "dataProvider": generateChartData(),
-    "labelText": "[[title]]: [[value]]",
-    "balloonText": "[[title]]: [[value]]",
-    "titleField": "type",
-    "valueField": "percent",
-    "outlineColor": "#FFFFFF",
-    "outlineAlpha": 0.8,
-    "outlineThickness": 2,
-    "colorField": "color",
-    "pulledField": "pulled",
-    "titles": [{
-      "text": "Click a slice to see the details"
+    dataProvider: generateChartData(),
+    labelText: '[[title]]: [[value]]',
+    balloonText: '[[title]]: [[value]]',
+    titleField: 'type',
+    valueField: 'percent',
+    outlineColor: '#FFFFFF',
+    outlineAlpha: 0.8,
+    outlineThickness: 2,
+    colorField: 'color',
+    pulledField: 'pulled',
+    titles: [{
+      text: 'Click a slice to see the details',
     }],
-    "listeners": [{
-      "event": "clickSlice",
-      "method": function (event) {
-        var chart = event.chart;
+    listeners: [{
+      event: 'clickSlice',
+      method(event) {
+        const { chart } = event;
         if (event.dataItem.dataContext.id !== undefined) {
           selected = event.dataItem.dataContext.id;
         } else {
@@ -87,18 +86,18 @@ const PieChartWithBrokenDownSlices = () => {
         }
         chart.dataProvider = generateChartData();
         chart.validateData();
-      }
+      },
     }],
-    "export": {
-      "enabled": true
-    }
+    export: {
+      enabled: true,
+    },
   };
 
   return (
     <div className="App">
-      <AmCharts.React style={{width: "100%", height: "500px"}} options={config}/>
+      <AmCharts.React style={{ width: '100%', height: '500px' }} options={config} />
     </div>
-  )
-}
+  );
+};
 
 export default PieChartWithBrokenDownSlices;

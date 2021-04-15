@@ -1,8 +1,7 @@
-import React from "react";
-import {Card, Select} from "antd";
+import React from 'react';
+import { Card, Select } from 'antd';
 
-const Option = Select.Option;
-
+const { Option } = Select;
 
 const children = [];
 for (let i = 10; i < 36; i++) {
@@ -18,7 +17,7 @@ const AutomaticCompletion = () => {
     <Card className="gx-card" title="Automatic Completion">
       <Select
         mode="tags"
-        style={{width: '100%'}}
+        style={{ width: '100%' }}
         onChange={handleChange}
         tokenSeparators={[',']}
       >

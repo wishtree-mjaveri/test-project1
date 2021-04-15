@@ -1,15 +1,15 @@
-import React from "react";
-import {Card, message, Upload} from "antd";
-import InboxOutlined from "@ant-design/icons/lib/icons/InboxOutlined";
+import React from 'react';
+import { Card, message, Upload } from 'antd';
+import InboxOutlined from '@ant-design/icons/lib/icons/InboxOutlined';
 
-const Dragger = Upload.Dragger;
+const { Dragger } = Upload;
 
 const props = {
   name: 'file',
   multiple: true,
   action: '//jsonplaceholder.typicode.com/posts/',
   onChange(info) {
-    const status = info.file.status;
+    const { status } = info.file;
     if (status !== 'uploading') {
       console.log(info.file, info.fileList);
     }
@@ -21,20 +21,18 @@ const props = {
   },
 };
 
-const DragDrop = () => {
-    return (
-      <Card className="gx-card" title="DragDrop">
-        <Dragger {...props}>
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-          <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company
-            data or other band files</p>
-        </Dragger>
-      </Card>
-    );
-  }
-;
-
+const DragDrop = () => (
+  <Card className="gx-card" title="DragDrop">
+    <Dragger {...props}>
+      <p className="ant-upload-drag-icon">
+        <InboxOutlined />
+      </p>
+      <p className="ant-upload-text">Click or drag file to this area to upload</p>
+      <p className="ant-upload-hint">
+        Support for a single or bulk upload. Strictly prohibit from uploading company
+        data or other band files
+      </p>
+    </Dragger>
+  </Card>
+);
 export default DragDrop;

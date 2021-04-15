@@ -1,12 +1,10 @@
-import React from "react";
-import {Card, Input} from "antd";
+import React from 'react';
+import { Card, Input } from 'antd';
 
-const Basic = () => {
-  return (
-    <Card className="gx-card" title="Basic">
-      <Input placeholder="Basic usage"/>
-    </Card>
-  );
-};
+const Basic = () => (
+  <Card className="gx-card" title="Basic">
+    <Input placeholder="Basic usage" />
+  </Card>
+);
 
 export default Basic;

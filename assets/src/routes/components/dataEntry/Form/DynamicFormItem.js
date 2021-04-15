@@ -1,6 +1,8 @@
-import { Form, Input, Button ,Card} from 'antd';
+import {
+  Form, Input, Button, Card,
+} from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import React from "react";
+import React from 'react';
 
 const formItemLayout = {
   labelCol: {
@@ -20,16 +22,15 @@ const formItemLayoutWithOutLabel = {
 };
 
 const DynamicFormItem = () => {
-  const onFinish = values => {
+  const onFinish = (values) => {
     console.log('Received values of form:', values);
   };
 
   return (
     <Card className="gx-card" title="Dynamic Form Item">
-    <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish}>
-      <Form.List name="names">
-        {(fields, { add, remove }) => {
-          return (
+      <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish}>
+        <Form.List name="names">
+          {(fields, { add, remove }) => (
             <div>
               {fields.map((field, index) => (
                 <Form.Item
@@ -71,21 +72,22 @@ const DynamicFormItem = () => {
                   }}
                   style={{ width: '60%' }}
                 >
-                  <PlusOutlined /> Add field
+                  <PlusOutlined />
+                  {' '}
+                  Add field
                 </Button>
               </Form.Item>
             </div>
-          );
-        }}
-      </Form.List>
+          )}
+        </Form.List>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </Card>
   );
 };
-export  default  DynamicFormItem;
+export default DynamicFormItem;

@@ -1,5 +1,5 @@
-import React from "react";
-import {Avatar, Card, List} from "antd";
+import React from 'react';
+import { Avatar, Card, List } from 'antd';
 
 const data = [
   {
@@ -16,24 +16,22 @@ const data = [
   },
 ];
 
-const BasicList = () => {
-  return (
-    <Card className="gx-card" title="Basic List">
-      <List
-        itemLayout="horizontal"
-        dataSource={data}
-        renderItem={item => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
-              title={<a href="https://ant.design">{item.title}</a>}
-              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-            />
-          </List.Item>
-        )}
-      />
-    </Card>
-  );
-};
+const BasicList = () => (
+  <Card className="gx-card" title="Basic List">
+    <List
+      itemLayout="horizontal"
+      dataSource={data}
+      renderItem={(item) => (
+        <List.Item>
+          <List.Item.Meta
+            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+            title={<a href="https://ant.design">{item.title}</a>}
+            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+          />
+        </List.Item>
+      )}
+    />
+  </Card>
+);
 
 export default BasicList;

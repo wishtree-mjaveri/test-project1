@@ -1,6 +1,6 @@
-import React from "react";
-import {Card, Dropdown, Menu} from "antd";
-import {DownOutlined} from '@ant-design/icons';
+import React from 'react';
+import { Card, Dropdown, Menu } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
 const menu = (
   <Menu>
@@ -16,16 +16,16 @@ const menu = (
   </Menu>
 );
 
-const Basic = () => {
-  return (
-    <Card className="gx-card" title="Basic">
-      <Dropdown overlay={menu}>
-        <span className="gx-link ant-dropdown-link">
-          Hover me <DownOutlined/>
-        </span>
-      </Dropdown>
-    </Card>
-  );
-};
+const Basic = () => (
+  <Card className="gx-card" title="Basic">
+    <Dropdown overlay={menu}>
+      <span className="gx-link ant-dropdown-link">
+        Hover me
+        {' '}
+        <DownOutlined />
+      </span>
+    </Dropdown>
+  </Card>
+);
 
 export default Basic;

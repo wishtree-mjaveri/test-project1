@@ -1,20 +1,21 @@
-import React from "react";
-import {Route, Switch} from "react-router-dom";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-import Components from "./components/index";
-import CustomViews from "./customViews/index";
-import Extensions from "./extensions/index";
-import ExtraComponents from "./extraComponents/index";
-import InBuiltApps from "./inBuiltApps/index";
-import SocialApps from "./socialApps/index";
-import Main from "./main/index";
-import Documents from "./documents/index";
-import Home from "./admin/Home";
-import UserHome from "./user/UserHome";
-import RestaurantDetails from "./user/RestaurantDetails";
-import Error404 from '../routes/customViews/errorPages/404/index'
+import Components from './components/index';
+import CustomViews from './customViews/index';
+import Extensions from './extensions/index';
+import ExtraComponents from './extraComponents/index';
+import InBuiltApps from './inBuiltApps/index';
+import SocialApps from './socialApps/index';
+import Main from './main/index';
+import Documents from './documents/index';
+import Home from './admin/Home';
+import UserHome from './user/UserHome';
+import RestaurantDetails from './user/RestaurantDetails';
+import Error404 from './customViews/errorPages/404/index';
+import UserVerification from './user/UserVerification';
 
-const App = ({match}) => (
+const App = ({ match }) => (
   <div className="gx-main-content-wrapper">
     <Switch>
       {/* <Route path={`${match.url}main`} component={Main}/>
@@ -27,9 +28,10 @@ const App = ({match}) => (
       <Route path={`${match.url}documents`} component={Documents}/>
        */}
       <Route path={`${match.url}restaurants`} component={UserHome} />
+      {/* <Route path={`${match.url}verify/:uniqueString`} component={UserVerification}/> */}
       <Route component={Error404} />
       {/* <Route path={`${match.url}home`} component={Home}/> */}
-      
+
       {/* <Route path={`${match.url}restaurant-details`} component={RestaurantDetails} /> */}
     </Switch>
   </div>

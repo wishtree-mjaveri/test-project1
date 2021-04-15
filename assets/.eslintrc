@@ -17,7 +17,7 @@
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   "extends": [
-    "../.eslintrc"
+    // "/home/mjaveri/test_project_1 (copy)/test-project1/.eslintrc.json"
   ],
 
   "env": {

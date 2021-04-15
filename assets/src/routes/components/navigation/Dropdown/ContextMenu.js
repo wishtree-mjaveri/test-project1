@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Dropdown, Menu} from "antd";
+import React from 'react';
+import { Card, Dropdown, Menu } from 'antd';
 
 const menu = (
   <Menu>
@@ -9,15 +9,12 @@ const menu = (
   </Menu>
 );
 
-const ContextMenu = () => {
-  return (
-    <Card className="gx-card" title="Context Menu">
-      <Dropdown overlay={menu} trigger={['contextMenu']}>
-        <span style={{userSelect: 'none'}}>Right Click on Me</span>
-      </Dropdown>
-    </Card>
-  );
-};
+const ContextMenu = () => (
+  <Card className="gx-card" title="Context Menu">
+    <Dropdown overlay={menu} trigger={['contextMenu']}>
+      <span style={{ userSelect: 'none' }}>Right Click on Me</span>
+    </Dropdown>
+  </Card>
+);
 
 export default ContextMenu;
-

@@ -1,3 +1,10 @@
+/* eslint-disable max-len */
+/* eslint-disable radix */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable eqeqeq */
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /**
  * RestaurantController
  *
@@ -5,53 +12,54 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-const RestaurantServices = require("../services/RestaurantServices");
-const Logger = require("../services/Logger");
-const ValidationServices = require("../services/ValidationServices");
-const { deleteRestaurant } = require("../services/RestaurantServices");
-const { loggers } = require("winston");
-const messages = sails.config.messages;
+const { loggers } = require('winston');
+const RestaurantServices = require('../services/RestaurantServices');
+const Logger = require('../services/Logger');
+const ValidationServices = require('../services/ValidationServices');
+const { deleteRestaurant } = require('../services/RestaurantServices');
+
+const { messages } = sails.config;
 module.exports = {
   registration(req, res) {
-    Logger.verbose("RegisterationController.registeration");
-    console.log("in controller");
+    Logger.verbose('RegisterationController.registeration');
+    console.log('in controller');
     const registerationData = req.body;
     Logger.verbose(registerationData);
 
     const args = [
       {
-        name: "Restaurant Name",
+        name: 'Restaurant Name',
         value: registerationData.restaurantName,
         validations: [
-          { validation: "notEmpty", message: "Restaurant-Name empty" },
+          { validation: 'notEmpty', message: 'Restaurant-Name empty' },
         ],
       },
       {
-        name: "Restaurant Description",
+        name: 'Restaurant Description',
         value: registerationData.restaurantDescription,
         validations: [
-          { validation: "notEmpty", message: "Restaurant-Description empty" },
+          { validation: 'notEmpty', message: 'Restaurant-Description empty' },
         ],
       },
       {
-        name: "Restaurant OpeningTime",
+        name: 'Restaurant OpeningTime',
         value: registerationData.restaurantOpeningTime,
         validations: [
-          { validation: "notEmpty", message: "Restaurant-Opening-Time empty" },
+          { validation: 'notEmpty', message: 'Restaurant-Opening-Time empty' },
         ],
       },
       {
-        name: "Restaurant ClosingTime",
+        name: 'Restaurant ClosingTime',
         value: registerationData.restaurantClosingTime,
         validations: [
-          { validation: "notEmpty", message: "Restaurant-Closing-Time empty" },
+          { validation: 'notEmpty', message: 'Restaurant-Closing-Time empty' },
         ],
       },
     ];
     ValidationServices.validate(args, (validationError, validationErrMsg) => {
       if (validationError) {
         Logger.error(
-          `RestaurantController.registration at ValidationServices.validate${validationError}`
+          `RestaurantController.registration at ValidationServices.validate${validationError}`,
         );
         res.send({ status: 300, message: messages.serverError });
       } else if (validationErrMsg.length == 0) {
@@ -68,21 +76,21 @@ module.exports = {
           (getValidateMsgErr, errMsgs) => {
             if (getValidateMsgErr) {
               Logger.error(
-                `RestaurantController.registeration at ValidateService.getValidateMsg ${getValidateMsgErr}`
+                `RestaurantController.registeration at ValidateService.getValidateMsg ${getValidateMsgErr}`,
               );
-              res.send({ status: 300, message: "serverError" });
+              res.send({ status: 300, message: 'serverError' });
             } else {
               Logger.verbose(errMsgs);
               res.send({ status: 422, message: errMsgs });
             }
-          }
+          },
         );
       }
     });
   },
 
   updateRestaurant(req, res) {
-    Logger.verbose("RegisterationController.registeration");
+    Logger.verbose('RegisterationController.registeration');
     const restaurantData = req.body;
     Logger.verbose(restaurantData);
     const restaurantId = restaurantData.id;
@@ -90,31 +98,31 @@ module.exports = {
     Logger.verbose(restaurantId);
     const args = [
       {
-        name: "Restaurant Name",
+        name: 'Restaurant Name',
         value: restaurantData.restaurantName,
         validations: [
-          { validation: "notEmpty", message: "Restaurant-Name empty" },
+          { validation: 'notEmpty', message: 'Restaurant-Name empty' },
         ],
       },
       {
-        name: "Restaurant Description",
+        name: 'Restaurant Description',
         value: restaurantData.restaurantDescription,
         validations: [
-          { validation: "notEmpty", message: "Restaurant-Description empty" },
+          { validation: 'notEmpty', message: 'Restaurant-Description empty' },
         ],
       },
       {
-        name: "Restaurant OpeningTime",
+        name: 'Restaurant OpeningTime',
         value: restaurantData.restaurantOpeningTime,
         validations: [
-          { validation: "notEmpty", message: "Restaurant-Opening-Time empty" },
+          { validation: 'notEmpty', message: 'Restaurant-Opening-Time empty' },
         ],
       },
       {
-        name: "Restaurant ClosingTime",
+        name: 'Restaurant ClosingTime',
         value: restaurantData.restaurantClosingTime,
         validations: [
-          { validation: "notEmpty", message: "Restaurant-Closing-Time empty" },
+          { validation: 'notEmpty', message: 'Restaurant-Closing-Time empty' },
         ],
       },
     ];
@@ -122,7 +130,7 @@ module.exports = {
     ValidationServices.validate(args, (validationError, validationErrMsg) => {
       if (validationError) {
         Logger.error(
-          `RestaurantController.updateRestaurant at ValidationServices.validate ${validationError}`
+          `RestaurantController.updateRestaurant at ValidationServices.validate ${validationError}`,
         );
         res.send({ status: 300, message: messages.serverError });
       } else if (validationErrMsg.length == 0) {
@@ -133,14 +141,14 @@ module.exports = {
             if (error) {
               res.send({ status: 300, message: messages.serverError });
             } else {
-              Logger.info("restaurant updated successfully");
+              Logger.info('restaurant updated successfully');
               res.send({
                 status: 200,
                 message: messages.updatedRestaurant,
                 restaurant: updatedRestaurant,
               });
             }
-          }
+          },
         );
       } else {
         ValidationServices.getValidateMsg(
@@ -148,47 +156,49 @@ module.exports = {
           (getValidateMsgErr, errMsgs) => {
             if (getValidateMsgErr) {
               Logger.error(
-                `RestaurantController.registeration at ValidateService.getValidateMsg ${getValidateMsgErr}`
+                `RestaurantController.registeration at ValidateService.getValidateMsg ${getValidateMsgErr}`,
               );
-              res.send({ status: 300, message: "serverError" });
+              res.send({ status: 300, message: 'serverError' });
             } else {
               Logger.verbose(errMsgs);
               res.send({ status: 422, message: errMsgs });
             }
-          }
+          },
         );
       }
     });
   },
 
   getRestaurant(req, res) {
-    Logger.verbose("RestaurantController.getRestaurant");
+    Logger.verbose('RestaurantController.getRestaurant');
 
     const id = req.allParams()._id;
     RestaurantServices.getRestaurant(id, (err, restaurantFound) => {
       if (err) {
         // res.send({ status: 300, message: messages.serverError });
-        res.serverError(err)
+        res.serverError(err);
       } else {
         res.json({
           status: 200,
           message: messages.restaurantFound,
-          restaurant: {name:restaurantFound.restaurantName,description:restaurantFound.restaurantDescription,address:restaurantFound.restaurantAddress,image:restaurantFound.image,openingTime:restaurantFound.restaurantOpeningTime,closingTime:restaurantFound.restaurantClosingTime,uid:restaurantFound.uid},
+          restaurant: {
+            name: restaurantFound.restaurantName, description: restaurantFound.restaurantDescription, address: restaurantFound.restaurantAddress, image: restaurantFound.image, openingTime: restaurantFound.restaurantOpeningTime, closingTime: restaurantFound.restaurantClosingTime, uid: restaurantFound.uid,
+          },
         });
       }
     });
   },
 
   getAllRestaurant(req, res) {
-    Logger.verbose("RestaurantController.getAllRestaurant");
+    Logger.verbose('RestaurantController.getAllRestaurant');
     const pagination = req.query.pagination
       ? parseInt(req.query.pagination)
       : 4;
-    Logger.verbose("pagination", pagination);
+    Logger.verbose('pagination', pagination);
     const page = req.query.page ? parseInt(req.query.page) : 1;
-    Logger.verbose("page", page);
-    const sortOrder= req.query.order
-    Logger.debug("Sort order",sortOrder)
+    Logger.verbose('page', page);
+    const sortOrder = req.query.order;
+    Logger.debug('Sort order', sortOrder);
     RestaurantServices.getAllRestaurants(
       page,
       pagination,
@@ -203,16 +213,15 @@ module.exports = {
             list: restaurantList,
           });
         }
-      }
+      },
     );
   },
   getRestaurants(req, res) {
-    Logger.verbose("RestaurantController.getAllRestaurant");
+    Logger.verbose('RestaurantController.getAllRestaurant');
 
     RestaurantServices.getRestaurants((error, restaurantList) => {
       if (error) {
         res.send({ status: 300, message: messages.serverError });
-        
       } else {
         res.send({
           status: 200,
@@ -224,38 +233,40 @@ module.exports = {
     });
   },
 
-  searchRestaurantsByText(req,res){
-      Logger.verbose('RestaurantController.searchRestaurantsByText');
-      const searchText = req.allParams().text
-      RestaurantServices.searchRestaurantBytext(searchText,(error,restaurantsFound)=>{
-        if (error) {
-          res.send({status:200,message:messages.serverError})
-        } else {
-          res.send({
-            status:200,
-            message:messages.restaurantList,
-            restaurants:restaurantsFound
-          })
-        }
-      })
+  searchRestaurantsByText(req, res) {
+    Logger.verbose('RestaurantController.searchRestaurantsByText');
+    const searchText = req.allParams().text;
+    RestaurantServices.searchRestaurantBytext(searchText, (error, restaurantsFound) => {
+      if (error) {
+   res.send({ status: 200, message: messages.serverError });
+        ;
+      } else {
+ res.send({
+          status: 200,
+          message: messages.restaurantList,
+          restaurants: restaurantsFound,
+        });
+        
+      }
+    });
   },
 
   deleteRestaurant(req, res) {
-    Logger.verbose("RestaurantController.deleteRestaurant");
+    Logger.verbose('RestaurantController.deleteRestaurant');
     const restaurantId = req.allParams().uid;
     RestaurantServices.deleteRestaurant(
-      restaurantId,{isActive:false},
+      restaurantId, { isActive: false },
       (error, deletedRestaurant) => {
         if (error) {
-          res.send({ status: 200, message: messages.serverError });
+         return res.send({ status: 200, message: messages.serverError });
         } else {
-          res.send({
+         return res.send({
             status: 200,
             message: messages.restaurantDeleted,
             restaurant: deletedRestaurant,
           });
         }
-      }
+      },
     );
   },
 

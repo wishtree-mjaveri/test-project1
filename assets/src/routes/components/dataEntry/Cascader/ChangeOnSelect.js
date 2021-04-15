@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Cascader} from "antd";
+import React from 'react';
+import { Card, Cascader } from 'antd';
 
 const options = [{
   value: 'zhejiang',
@@ -38,11 +38,22 @@ const ChangeOnSelect = () => {
     if (i === labels.length - 1) {
       return (
         <span key={option.value}>
-        {label} (<span className="gx-link" onClick={e => handleAreaClick(e, label, option)}>{option.code}</span>)
-      </span>
+          {label}
+          {' '}
+          (
+          <span className="gx-link" onClick={(e) => handleAreaClick(e, label, option)}>{option.code}</span>
+          )
+        </span>
       );
     }
-    return <span key={option.value}>{label} / </span>;
+    return (
+      <span key={option.value}>
+        {label}
+        {' '}
+        /
+        {' '}
+      </span>
+    );
   });
   return (
     <Card className="gx-card" title="Change On Select">
@@ -50,7 +61,7 @@ const ChangeOnSelect = () => {
         options={options}
         defaultValue={['zhejiang', 'hangzhou', 'xihu']}
         displayRender={displayRender}
-        style={{width: '100%'}}
+        style={{ width: '100%' }}
       />
     </Card>
   );

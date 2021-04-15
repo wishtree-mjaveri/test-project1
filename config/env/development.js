@@ -1,19 +1,19 @@
-module.exports={
-    baseURL: 'http://192.168.1.15:8080',
+module.exports = {
+  baseURL: 'http://192.168.1.15:8080',
 
   APIURL: 'http://192.168.1.15:1337',
 
-  datastores:{
+  datastores: {
     mongoServer: {
-        // adapter: 'sails-mongo',
-        // host: 'localhost',
-        // port: 27017,
-        // database: 'zonions',
-        // user: '',
-        // password: '',
-        adapter: 'sails-mongo',
+      // adapter: 'sails-mongo',
+      // host: 'localhost',
+      // port: 27017,
+      // database: 'zonions',
+      // user: '',
+      // password: '',
+      adapter: 'sails-mongo',
       url: 'mongodb://127.0.0.1:27017/zonions',
-      },
+    },
   },
   logger: {
     channels: {
@@ -50,7 +50,7 @@ module.exports={
       },
     },
   },
-   security: {
+  security: {
     cors: {
       allRoutes: true,
       // allowOrigins: '*',
@@ -61,5 +61,10 @@ module.exports={
       allowRequestHeaders: 'Access-Control-*, Origin, X-Requested-With, Content-Type, Accept, Authorization,Access-Control-Allow-Origin',
       allowResponseHeaders: 'Access-Control-*, Origin, X-Requested-With, Content-Type, Accept, Authorization,Access-Control-Allow-Origin',
     },
-  }, 
-}
+  },
+  redis: {
+    port: 6379,
+    host: 'localhost',
+    password: '',
+  },
+};

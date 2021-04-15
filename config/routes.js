@@ -8,23 +8,22 @@
  * https://sailsjs.com/anatomy/config/routes-js
  */
 
-const { policies } = require("./policies");
+const { policies } = require('./policies');
 
 module.exports.routes = {
 
-  /***************************************************************************
+  /** *************************************************************************
   *                                                                          *
   * Make the view located at `views/homepage.ejs` your home page.            *
   *                                                                          *
   * (Alternatively, remove this and add an `index.html` file in your         *
   * `assets` directory)                                                      *
   *                                                                          *
-  ***************************************************************************/
+  ************************************************************************** */
 
   '/': { view: 'pages/homepage' },
 
-
-  /***************************************************************************
+  /** *************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
   * (See https://sailsjs.com/config/routes for examples.)                    *
@@ -33,66 +32,78 @@ module.exports.routes = {
   * is matched against "shadow routes" (e.g. blueprint routes).  If it does  *
   * not match any of those, it is matched against static assets.             *
   *                                                                          *
-  ***************************************************************************/
- 'POST /api/registration': {
-  controller: 'RestaurantController',
-  action: 'registration',
-},
+  ************************************************************************** */
+  'POST /api/registration': {
+    controller: 'RestaurantController',
+    action: 'registration',
+  },
 
-'GET /api/restaurant':{
-  controller:'RestaurantController',
-  action:'getRestaurant'
-},
+  'GET /api/restaurant': {
+    controller: 'RestaurantController',
+    action: 'getRestaurant',
+  },
 
-'GET /api/restaurants':{
-  controller:'RestaurantController',
-  action:'getAllRestaurant'
-},
-'GET /api/card/restaurants':{
-  controller:'RestaurantController',
-  action:'getRestaurants'
-},
+  'GET /api/restaurants': {
+    controller: 'RestaurantController',
+    action: 'getAllRestaurant',
+  },
+  'GET /api/card/restaurants': {
+    controller: 'RestaurantController',
+    action: 'getRestaurants',
+  },
 
-'GET /api/description/restaurants':{
-  controller:'RestaurantController',
-  action:'searchRestaurantsByText'
-},
+  'GET /api/description/restaurants': {
+    controller: 'RestaurantController',
+    action: 'searchRestaurantsByText',
+  },
 
-'PUT /api/restaurant':{
-  controller:'RestaurantController',
-  action:'updateRestaurant'
-},
+  'PUT /api/restaurant': {
+    controller: 'RestaurantController',
+    action: 'updateRestaurant',
+  },
 
-'GET /api/admin/restaurants':[
- { policy:'isAdmin'},
+  'GET /api/admin/restaurants': [
+    { policy: 'isAdmin' },
 
-  // {controller:'RestaurantController'},
-  'RestaurantController.getAllRestaurant',
-],
+    // {controller:'RestaurantController'},
+    'RestaurantController.getAllRestaurant',
+  ],
 
+  'DELETE /api/restaurant': {
+    controller: 'RestaurantController',
+    action: 'deleteRestaurant',
+  },
 
-'DELETE /api/restaurant':{
-  controller:"RestaurantController",
-  action:'deleteRestaurant'
-},
+  'POST /user/login': {
+    controller: 'AuthController',
+    action: 'login',
+  },
+  'POST /user/logout': {
+    controller: 'AuthController',
+    action: 'logout',
+  },
+  'POST /user/registration': {
+    controller: 'UserController',
+    action: 'registration',
+  },
 
+  // 'GET /user/verify/email/:email': {
+  //   controller:'UserController',
+  //   action: 'findByEmail'
+  // },
+  'GET /user/email':{
+    controller: 'UserController',
+    action: 'findByEmail'
+  },
 
-'POST /user/login':{
-  controller:"AuthController",
-  action:"login"
-},
-'POST /user/logout':{
-  controller:"AuthController",
-  action:"logout"
-},
-'POST /user/registration':{
-  controller:"UserController",
-  action:"registration"
-},
+  'GET /verify/:uniqueString': {
+    controller: 'UserController',
+    action: 'verify',
+  },
 
-'PUT /restaurant/rating':{
-  controller:"RestaurantController",
-  action:"setRestaurantRating"
-}
+  'PUT /restaurant/rating': {
+    controller: 'RestaurantController',
+    action: 'setRestaurantRating',
+  },
 
 };

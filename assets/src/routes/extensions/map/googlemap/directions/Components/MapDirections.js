@@ -1,14 +1,14 @@
-import React, {Component} from "react";
-import {DirectionsRenderer, GoogleMap, withGoogleMap} from "react-google-maps";
+import React, { Component } from 'react';
+import { DirectionsRenderer, GoogleMap, withGoogleMap } from 'react-google-maps';
 
-const google = window.google;
+const { google } = window;
 
-const DirectionsExampleGoogleMap = withGoogleMap(props => (
+const DirectionsExampleGoogleMap = withGoogleMap((props) => (
   <GoogleMap
     defaultZoom={7}
     defaultCenter={props.center}
   >
-    {props.directions && <DirectionsRenderer directions={props.directions}/>}
+    {props.directions && <DirectionsRenderer directions={props.directions} />}
   </GoogleMap>
 ));
 
@@ -16,7 +16,6 @@ const DirectionsExampleGoogleMap = withGoogleMap(props => (
  * Add <script src="https://maps.googleapis.com/maps/api/js"></script> to your HTML to provide google.maps reference
  */
 export default class MapDirections extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -47,9 +46,9 @@ export default class MapDirections extends Component {
   render() {
     return (
       <DirectionsExampleGoogleMap
-        loadingElement={<div style={{height: `100%`}}/>}
-        containerElement={<div style={{height: `550px`}}/>}
-        mapElement={<div style={{height: `100%`}}/>}
+        loadingElement={<div style={{ height: '100%' }} />}
+        containerElement={<div style={{ height: '550px' }} />}
+        mapElement={<div style={{ height: '100%' }} />}
         center={this.state.origin}
         directions={this.state.directions}
       />

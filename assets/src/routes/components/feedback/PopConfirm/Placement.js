@@ -1,5 +1,7 @@
-import React from "react";
-import {Button, Card, message, Popconfirm} from "antd";
+import React from 'react';
+import {
+  Button, Card, message, Popconfirm,
+} from 'antd';
 
 const text = 'Are you sure delete this task?';
 
@@ -11,7 +13,7 @@ const Placement = () => {
   return (
     <Card title="Placement" className="gx-card">
       <div className="gx-overflow-auto">
-        <div style={{marginLeft: 70, whiteSpace: 'nowrap'}}>
+        <div style={{ marginLeft: 70, whiteSpace: 'nowrap' }}>
           <Popconfirm placement="topLeft" title={text} onConfirm={confirm} okText="Yes" cancelText="No">
             <Button>TL</Button>
           </Popconfirm>
@@ -22,7 +24,7 @@ const Placement = () => {
             <Button>TR</Button>
           </Popconfirm>
         </div>
-        <div style={{width: 70, float: 'left'}}>
+        <div style={{ width: 70, float: 'left' }}>
           <Popconfirm placement="leftTop" title={text} onConfirm={confirm} okText="Yes" cancelText="No">
             <Button>LT</Button>
           </Popconfirm>
@@ -33,7 +35,7 @@ const Placement = () => {
             <Button>LB</Button>
           </Popconfirm>
         </div>
-        <div style={{width: 70, marginLeft: 304}}>
+        <div style={{ width: 70, marginLeft: 304 }}>
           <Popconfirm placement="rightTop" title={text} onConfirm={confirm} okText="Yes" cancelText="No">
             <Button>RT</Button>
           </Popconfirm>
@@ -44,7 +46,7 @@ const Placement = () => {
             <Button>RB</Button>
           </Popconfirm>
         </div>
-        <div style={{marginLeft: 70, clear: 'both', whiteSpace: 'nowrap'}}>
+        <div style={{ marginLeft: 70, clear: 'both', whiteSpace: 'nowrap' }}>
           <Popconfirm placement="bottomLeft" title={text} onConfirm={confirm} okText="Yes" cancelText="No">
             <Button>BL</Button>
           </Popconfirm>

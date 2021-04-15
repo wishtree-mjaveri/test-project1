@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, message, Popconfirm} from "antd";
+import React from 'react';
+import { Card, message, Popconfirm } from 'antd';
 
 const Basic = () => {
   function confirm(e) {
@@ -14,8 +14,13 @@ const Basic = () => {
 
   return (
     <Card title="Basic" className="gx-card">
-      <Popconfirm title="Are you sure delete this task?" onConfirm={confirm} onCancel={cancel} okText="Yes"
-                  cancelText="No">
+      <Popconfirm
+        title="Are you sure delete this task?"
+        onConfirm={confirm}
+        onCancel={cancel}
+        okText="Yes"
+        cancelText="No"
+      >
         <span className="gx-link">Delete</span>
       </Popconfirm>
     </Card>

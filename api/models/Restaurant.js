@@ -1,37 +1,39 @@
-const Logger = require('../services/Logger')
-
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-undef */
+/* eslint-disable no-param-reassign */
+const Logger = require('../services/Logger');
 
 module.exports = {
-    datastore: 'mongoServer',
+  datastore: 'mongoServer',
 
-    attributes: {
-
+  attributes: {
 
     restaurantName: {
-      type: "string",
-      required:true
+      type: 'string',
+      required: true,
     },
     restaurantDescription: {
-      type: "string",
+      type: 'string',
     },
     restaurantAddress: {
-      type: "string",
+      type: 'string',
     },
     restaurantOpeningTime: {
-      type: "string",
+      type: 'string',
     },
     restaurantClosingTime: {
-      type: "string",
+      type: 'string',
     },
-    uid:{
-      type:"string"
+    uid: {
+      type: 'string',
     },
-    image:{
-      type:"string"
+    image: {
+      type: 'string',
     },
-    isActive:{
-      type:"boolean",
-      defaultsTo:true
+    isActive: {
+      type: 'boolean',
+      defaultsTo: true,
     },
     // ratings:{
     //   type:'json',
@@ -48,78 +50,72 @@ module.exports = {
   async createRestaurant(values, callback) {
     try {
       const createdRestaurant = await Restaurant.create(values).fetch();
-      console.log("in model", createdRestaurant);
+      console.log('in model', createdRestaurant);
       return callback(null, createdRestaurant);
     } catch (error) {
-        console.log(error)
+      console.log(error);
       return callback(error);
     }
   },
-  async getRestaurant(id,callback){
-      try {
-          const restaurantFound = await Restaurant.findOne({id:id})
-          if (restaurantFound==undefined) {
-              return callback(error)
-          } else {
-            sails.log.debug("restaurant founded,",restaurantFound)
-            return callback(null,restaurantFound)
-          }
-        
-      } catch (error) {
-          return callback(error)
+  async getRestaurant(id, callback) {
+    try {
+      const restaurantFound = await Restaurant.findOne({ id });
+      if (restaurantFound == undefined) {
+        return callback(error);
       }
-  
+      sails.log.debug('restaurant founded,', restaurantFound);
+      return callback(null, restaurantFound);
+    } catch (error) {
+      return callback(error);
+    }
   },
 
-  async getAllRestaurants(page,pagination,sortOrder,callback) {
+  async getAllRestaurants(page, pagination, sortOrder, callback) {
     try {
-        const allRestaurants = await Restaurant.find().where({isActive:true}).skip((page-1)*pagination).limit(pagination).sort(`restaurantName ${sortOrder}`)
-        return callback(null,allRestaurants)
+      const allRestaurants = await Restaurant.find().where({ isActive: true }).skip((page - 1) * pagination).limit(pagination)
+        .sort(`restaurantName ${sortOrder}`);
+      return callback(null, allRestaurants);
     } catch (error) {
-        return callback(error)
+      return callback(error);
     }
   },
   async getRestaurants(callback) {
     try {
-        const allRestaurants = await Restaurant.find({
-          select:['restaurantName','restaurantDescription','restaurantOpeningTime','restaurantClosingTime','uid','image','restaurantAddress'],
-        where:{ isActive:true},
-         
-        }).sort('restaurantName ASC')
-        Logger.verbose('all restaurants',allRestaurants)
-        return callback(null,allRestaurants)
+      const allRestaurants = await Restaurant.find({
+        select: ['restaurantName', 'restaurantDescription', 'restaurantOpeningTime', 'restaurantClosingTime', 'uid', 'image', 'restaurantAddress'],
+        where: { isActive: true },
+
+      }).sort('restaurantName ASC');
+      Logger.verbose('all restaurants', allRestaurants);
+      return callback(null, allRestaurants);
     } catch (error) {
-        return callback(error)
+      return callback(error);
     }
   },
 
   async updateRestaurant(restaurantId, restaurantData, callback) {
-    const updatedRecord = await Restaurant.updateOne().where({ id:restaurantId }).set(restaurantData);
+    const updatedRecord = await Restaurant.updateOne().where({ id: restaurantId }).set(restaurantData);
     return callback(null, updatedRecord);
   },
-  async deleteRestaurant(restaurantId, restaurantData,callback) {
-    const deletedRecord = await Restaurant.updateOne().where({uid:restaurantId,isActive:true}).set(restaurantData);
+  async deleteRestaurant(restaurantId, restaurantData, callback) {
+    const deletedRecord = await Restaurant.updateOne().where({ uid: restaurantId, isActive: true }).set(restaurantData);
     return callback(null, deletedRecord);
   },
 
-  async searchRestaurantByText(searchText,callback){
-    
-    Logger.verbose('Restaurant Model')
+  async searchRestaurantByText(searchText, callback) {
+    Logger.verbose('Restaurant Model');
     try {
-     
-        const restaurantsFound = await Restaurant.find({
-          isActive:true,
-          or:[{
-          restaurantDescription:{contains:searchText}
+      const restaurantsFound = await Restaurant.find({
+        isActive: true,
+        or: [{
+          restaurantDescription: { contains: searchText },
 
-          },{restaurantAddress:{contains:searchText}}]
-      }) 
-      return callback(null,restaurantsFound)  
-      
+        }, { restaurantAddress: { contains: searchText } }],
+      });
+       callback(null, restaurantsFound);
     } catch (error) {
-      return callback(error)
+       callback(error);
     }
-     
   },
   // async setRestaurantRating(restaurantId, restaurantData, callback) {
 
@@ -128,4 +124,3 @@ module.exports = {
   // },
 
 };
-

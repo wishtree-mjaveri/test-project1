@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Cascader} from "antd";
+import React from 'react';
+import { Card, Cascader } from 'antd';
 
 const options = [{
   value: 'zhejiang',
@@ -34,21 +34,18 @@ function onChange(value, selectedOptions) {
 }
 
 function filter(inputValue, path) {
-  return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1));
+  return (path.some((option) => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1));
 }
 
-
-const Search = () => {
-  return (
-    <Card className="gx-card" title="Search">
-      <Cascader
-        options={options}
-        onChange={onChange}
-        placeholder="Please select"
-        showSearch={{filter}}
-      />
-    </Card>
-  );
-};
+const Search = () => (
+  <Card className="gx-card" title="Search">
+    <Cascader
+      options={options}
+      onChange={onChange}
+      placeholder="Please select"
+      showSearch={{ filter }}
+    />
+  </Card>
+);
 
 export default Search;

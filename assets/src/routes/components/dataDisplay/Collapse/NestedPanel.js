@@ -1,8 +1,7 @@
-import React from "react";
-import {Card, Collapse} from "antd";
+import React from 'react';
+import { Card, Collapse } from 'antd';
 
-const Panel = Collapse.Panel;
-
+const { Panel } = Collapse;
 
 const text = `
   A dog is a type of domesticated animal.
@@ -11,7 +10,6 @@ const text = `
 `;
 
 const NestedPanel = () => {
-
   const callback = (key) => {
     console.log(key);
   };

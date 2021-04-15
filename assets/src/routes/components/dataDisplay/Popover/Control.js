@@ -1,13 +1,11 @@
-import React, {useState} from "react";
-import {Button, Card, Popover} from "antd";
-
+import React, { useState } from 'react';
+import { Button, Card, Popover } from 'antd';
 
 const Control = () => {
-
   const [visible, setVisible] = useState(false);
 
   const hide = () => {
-    setVisible(false)
+    setVisible(false);
   };
   const handleVisibleChange = (visible) => {
     setVisible(visible);
@@ -27,6 +25,5 @@ const Control = () => {
     </Card>
   );
 };
-
 
 export default Control;

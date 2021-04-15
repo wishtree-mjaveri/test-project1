@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Tag} from "antd";
+import React from 'react';
+import { Card, Tag } from 'antd';
 
 const Basic = () => {
   function log(e) {

@@ -9,12 +9,11 @@
  *   https://sailsjs.com/anatomy/tasks/config/uglify.js
  *
  */
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
   grunt.config.set('uglify', {
     dist: {
       src: ['.tmp/public/concat/production.js'],
-      dest: '.tmp/public/min/production.min.js'
+      dest: '.tmp/public/min/production.min.js',
     },
     options: {
       mangle: {
@@ -32,8 +31,8 @@ module.exports = function(grunt) {
       },
       compress: {
         keep_fnames: true//eslint-disable-line
-      }
-    }
+      },
+    },
   });
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,6 +58,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-uglify');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 };
-

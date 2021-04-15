@@ -1,8 +1,7 @@
-import React from "react";
-import {Card, Select} from "antd";
+import React from 'react';
+import { Card, Select } from 'antd';
 
-const Option = Select.Option;
-
+const { Option } = Select;
 
 const SearchField = () => {
   function handleChange(value) {
@@ -21,7 +20,7 @@ const SearchField = () => {
     <Card className="gx-card" title="Search Field">
       <Select
         showSearch
-        style={{width: 200}}
+        style={{ width: 200 }}
         placeholder="Select a person"
         optionFilterProp="children"
         onChange={handleChange}

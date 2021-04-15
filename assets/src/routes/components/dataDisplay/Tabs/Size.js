@@ -1,10 +1,9 @@
-import React, {useState} from "react";
-import {Card, Radio, Tabs} from "antd";
+import React, { useState } from 'react';
+import { Card, Radio, Tabs } from 'antd';
 
-const {TabPane} = Tabs;
+const { TabPane } = Tabs;
 
 const Size = () => {
-
   const [size, setSize] = useState('small');
 
   const onChange = (e) => {

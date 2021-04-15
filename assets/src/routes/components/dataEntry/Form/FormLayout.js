@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Radio,Card } from 'antd';
+import {
+  Form, Input, Button, Radio, Card,
+} from 'antd';
 
 const FormLayout = () => {
   const [form] = Form.useForm();
@@ -9,28 +11,26 @@ const FormLayout = () => {
     setFormLayout(layout);
   };
 
-  const formItemLayout =
-    formLayout === 'horizontal'
-      ? {
-        labelCol: {
-          xs: { span: 24 },
-          sm: { span: 6 },
-        },
-        wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 14 },
-        },
-      }
-      : null;
-  const buttonItemLayout =
-    formLayout === 'horizontal'
-      ? {
-        wrapperCol: {
-          span: 14,
-          offset: 4,
-        },
-      }
-      : null;
+  const formItemLayout = formLayout === 'horizontal'
+    ? {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 14 },
+      },
+    }
+    : null;
+  const buttonItemLayout = formLayout === 'horizontal'
+    ? {
+      wrapperCol: {
+        span: 14,
+        offset: 4,
+      },
+    }
+    : null;
   return (
     <Card className="gx-card" title="FORM LAYOUT">
       <Form

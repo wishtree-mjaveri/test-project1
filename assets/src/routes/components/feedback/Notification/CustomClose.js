@@ -1,5 +1,5 @@
-import React from "react";
-import {Button, Card, notification} from "antd";
+import React from 'react';
+import { Button, Card, notification } from 'antd';
 
 const close = () => {
   console.log('Notification was closed. Either the close button was clicked or duration time elapsed.');
@@ -21,14 +21,12 @@ const openNotification = () => {
   });
 };
 
-const CustomClose = () => {
-  return (
-    <Card title="Custom Close" className="gx-card">
-      <Button type="primary" onClick={openNotification}>
-        Open the notification box
-      </Button>
-    </Card>
-  );
-};
+const CustomClose = () => (
+  <Card title="Custom Close" className="gx-card">
+    <Button type="primary" onClick={openNotification}>
+      Open the notification box
+    </Button>
+  </Card>
+);
 
 export default CustomClose;

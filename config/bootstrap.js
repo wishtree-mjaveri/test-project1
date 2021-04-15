@@ -9,6 +9,9 @@
  * https://sailsjs.com/config/bootstrap
  */
 
+// const { Logger } = require("winston/lib/winston/logger");
+// const RedisService = require("../api/services/RedisService");
+
 module.exports.bootstrap = async function setup(cb) {
   // By convention, this is a good place to set up fake data during development.
   //
@@ -39,13 +42,20 @@ module.exports.bootstrap = async function setup(cb) {
   } catch (err) {
     return logAndExitSails(err, 'Logger service failed. Sails process will exit now. You can configure the logger and try again.');
   }
-  const registrationData={
-    username:"superadmin",
-    role:"Admin",
-    email:"superadmin123@demo.com",
-    password:"superadmin"
+  RedisService.setup((err)=>{
+if (err) {
+  logAndExitSails(err, 'Redis service setup failed. Sails process will exit now.');
+  
+} else {
+  sails.log.info('Redis service setup successfully.');
 
-  }
+  const registrationData = {
+    username: 'superadmin',
+    role: 'Admin',
+    email: 'superadmin1234@demo.com',
+    password: 'superadmin',
+    isVerified:true
+  };
   UserServices.registration(registrationData, (registrationErr, registeredUSer) => {
     if (registrationErr) {
       if (registrationErr === 'Already Present') {
@@ -61,4 +71,7 @@ module.exports.bootstrap = async function setup(cb) {
       cb();
     }
   });
+}
+  })
+  
 };

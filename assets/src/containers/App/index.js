@@ -1,7 +1,7 @@
 import React, {memo, useEffect,useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import URLSearchParams from 'url-search-params'
-import {Redirect, Route, Switch, useHistory, useLocation, useRouteMatch} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch, useHistory, useLocation, useRouteMatch} from "react-router-dom";
 import {ConfigProvider} from 'antd';
 import {IntlProvider} from "react-intl";
 import Error404 from '../../routes/customViews/errorPages/404/index'
@@ -29,6 +29,7 @@ import UserHome from "../../routes/user/UserHome";
 import RestaurantDetails from "../../routes/user/RestaurantDetails";
 import UserHomePage from "../../routes/admin/UserHomePage";
 import RestaurantInfo from "../../routes/user/RestaurantsInfo";
+import UserVerification from "../../routes/user/UserVerification";
 
 const RestrictedRoute = ({component: Component, location, authUser, ...rest}) =>
   <Route
@@ -164,6 +165,7 @@ if (defaultLang.length>0) {
 }
 console.log(currentAppLocale)
 const someid=""
+const string=""
   return (
     <ConfigProvider locale={currentAppLocale.antd}>
       <IntlProvider
@@ -176,11 +178,13 @@ const someid=""
           <Route path="/admin-home" component={Home} />
           <Route path="/userhomepage" component={UserHomePage}/>
           <Route path={`/restaurantdetails/${someid}`}  component={RestaurantDetails} />
+         <Route exact path={`/verify/:uniqueString`} component={UserVerification} />
           <Route path="/restaurantinfo" component={RestaurantInfo}/>
           <RestrictedRoute path={`${match.url}`} authUser={authUser} location={location}
                            component={MainApp}/>
-          <Route component={Error404} />
+          {/* <Route component={Error404} /> */}
         </Switch>
+     
       </IntlProvider>
     </ConfigProvider>
   )

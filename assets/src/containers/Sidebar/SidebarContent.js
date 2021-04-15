@@ -1,57 +1,56 @@
-import React from "react";
-import {Menu} from "antd";
-import {Link} from "react-router-dom";
+import React from 'react';
+import { Menu } from 'antd';
+import { Link } from 'react-router-dom';
 
-import CustomScrollbars from "../../util/CustomScrollbars";
-import SidebarLogo from "./SidebarLogo";
-import UserProfile from "./UserProfile";
-import AppsNavigation from "./AppsNavigation";
+import { useSelector } from 'react-redux';
+import CustomScrollbars from '../../util/CustomScrollbars';
+import SidebarLogo from './SidebarLogo';
+import UserProfile from './UserProfile';
+import AppsNavigation from './AppsNavigation';
 import {
   NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR,
   NAV_STYLE_NO_HEADER_MINI_SIDEBAR,
-  THEME_TYPE_LITE
-} from "../../constants/ThemeSetting";
-import IntlMessages from "../../util/IntlMessages";
-import {useSelector} from "react-redux";
+  THEME_TYPE_LITE,
+} from '../../constants/ThemeSetting';
+import IntlMessages from '../../util/IntlMessages';
 
-const SubMenu = Menu.SubMenu;
+const { SubMenu } = Menu;
 const MenuItemGroup = Menu.ItemGroup;
 
-
 const SidebarContent = () => {
-
-  let {navStyle, themeType, pathname} = useSelector(({settings}) => settings);
+  const { navStyle, themeType, pathname } = useSelector(({ settings }) => settings);
 
   const getNoHeaderClass = (navStyle) => {
     if (navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR || navStyle === NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR) {
-      return "gx-no-header-notifications";
+      return 'gx-no-header-notifications';
     }
-    return "";
+    return '';
   };
   const getNavStyleSubMenuClass = (navStyle) => {
     if (navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR) {
-      return "gx-no-header-submenu-popup";
+      return 'gx-no-header-submenu-popup';
     }
-    return "";
+    return '';
   };
   const selectedKeys = pathname.substr(1);
   const defaultOpenKeys = selectedKeys.split('/')[1];
   return (
     <>
-      <SidebarLogo/>
+      <SidebarLogo />
       <div className="gx-sidebar-content">
         <div className={`gx-sidebar-notifications ${getNoHeaderClass(navStyle)}`}>
-          <UserProfile/>
-          <AppsNavigation/>
+          <UserProfile />
+          <AppsNavigation />
         </div>
         <CustomScrollbars className="gx-layout-sider-scrollbar">
           <Menu
             defaultOpenKeys={[defaultOpenKeys]}
             selectedKeys={[selectedKeys]}
             theme={themeType === THEME_TYPE_LITE ? 'lite' : 'dark'}
-            mode="inline">
+            mode="inline"
+          >
 
-            <MenuItemGroup key="main" className="gx-menu-group" title={<IntlMessages id="sidebar.main"/>}>
+            <MenuItemGroup key="main" className="gx-menu-group" title={<IntlMessages id="sidebar.main" />}>
               {/* <SubMenu key="dashboard" popupClassName={getNavStyleSubMenuClass(navStyle)}
                        title={<span> <i className="icon icon-dasbhoard"/>
                          <span><IntlMessages id="sidebar.dashboard"/></span></span>}>
@@ -75,9 +74,11 @@ const SidebarContent = () => {
                 </Menu.Item>
               </SubMenu> */}
 
-<Menu.Item key="main/home">
-                <Link to="/home"><i className="icon icon-widgets"/>
-                  <span>Home</span></Link>
+              <Menu.Item key="main/home">
+                <Link to="/home">
+                  <i className="icon icon-widgets" />
+                  <span>Home</span>
+                </Link>
               </Menu.Item>
 
               {/* <Menu.Item key="main/widgets">
@@ -338,12 +339,12 @@ const SidebarContent = () => {
                     <span><IntlMessages
                       id="sidebar.dataDisplay.calender"/></span></Link>
                 </Menu.Item>
-                {/*<Menu.Item key="components/dataDisplay/list">*/}
-                {/*  <Link to="/components/dataDisplay/list">*/}
-                {/*    <span><IntlMessages*/}
-                {/*      id="sidebar.dataDisplay.list"/></span></Link>*/}
-                {/*</Menu.Item>*/}
-                {/* <Menu.Item key="components/dataDisplay/popover">
+                {/*<Menu.Item key="components/dataDisplay/list"> */}
+            {/*  <Link to="/components/dataDisplay/list"> */}
+            {/*    <span><IntlMessages */}
+            {/*      id="sidebar.dataDisplay.list"/></span></Link> */}
+            {/* </Menu.Item> */}
+            {/* <Menu.Item key="components/dataDisplay/popover">
                   <Link to="/components/dataDisplay/popover">
                     <span><IntlMessages
                       id="sidebar.dataDisplay.popover"/></span></Link>
@@ -375,7 +376,7 @@ const SidebarContent = () => {
                 </Menu.Item>
               </SubMenu> */}
 
-              {/* <SubMenu key="feedBack" popupClassName={getNavStyleSubMenuClass(navStyle)} title={
+            {/* <SubMenu key="feedBack" popupClassName={getNavStyleSubMenuClass(navStyle)} title={
                 <span>
                   <i className="icon icon-feedback"/>
                     <span><IntlMessages id="sidebar.components.feedBack"/></span>
@@ -446,7 +447,7 @@ const SidebarContent = () => {
                          <span>
                            <i className="icon icon-table"/>
 
-                             <span><IntlMessages id="sidebar.dataDisplay.table"/></span> 
+                             <span><IntlMessages id="sidebar.dataDisplay.table"/></span>
 
                          </span>}>
                 <Menu.Item key="components/table/basic">
@@ -949,4 +950,3 @@ const SidebarContent = () => {
 
 SidebarContent.propTypes = {};
 export default SidebarContent;
-

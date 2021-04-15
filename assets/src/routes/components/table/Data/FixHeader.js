@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Table} from "antd";
+import React from 'react';
+import { Card, Table } from 'antd';
 
 const columns = [{
   title: 'Name',
@@ -24,13 +24,16 @@ for (let i = 0; i < 100; i++) {
   });
 }
 
-const FixHeader = () => {
-  return (
-    <Card title="Fix Header">
-      <Table className="gx-table-responsive" columns={columns} dataSource={data} pagination={{pageSize: 50}}
-             scroll={{y: 240}}/>
-    </Card>
-  );
-};
+const FixHeader = () => (
+  <Card title="Fix Header">
+    <Table
+      className="gx-table-responsive"
+      columns={columns}
+      dataSource={data}
+      pagination={{ pageSize: 50 }}
+      scroll={{ y: 240 }}
+    />
+  </Card>
+);
 
 export default FixHeader;

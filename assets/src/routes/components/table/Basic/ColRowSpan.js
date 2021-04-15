@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Table} from "antd";
+import React from 'react';
+import { Card, Table } from 'antd';
 // In the fifth row, other columns are merged into first column
 // by setting it's colSpan to be 0
 const renderContent = (value, row, index) => {
@@ -100,13 +100,9 @@ const data = [{
   address: 'Dublin No. 2 Lake Park',
 }];
 
-const ColRowSpan = () => {
-    return (
-      <Card title="ColSpan and RowSpan Table">
-        <Table className="gx-table-responsive" columns={columns} dataSource={data} bordered/>
-      </Card>
-    );
-  }
-;
-
+const ColRowSpan = () => (
+  <Card title="ColSpan and RowSpan Table">
+    <Table className="gx-table-responsive" columns={columns} dataSource={data} bordered />
+  </Card>
+);
 export default ColRowSpan;

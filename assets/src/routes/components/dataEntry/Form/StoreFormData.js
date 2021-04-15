@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input,Card } from 'antd';
+import { Form, Input, Card } from 'antd';
 
 const CustomizedForm = ({ onChange, fields }) => (
   <Form
@@ -36,7 +36,7 @@ const StoreFormData = () => {
     <Card className="gx-card" title="Store Form Data">
       <CustomizedForm
         fields={fields}
-        onChange={newFields => {
+        onChange={(newFields) => {
           setFields(newFields);
         }}
       />

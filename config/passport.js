@@ -1,7 +1,7 @@
-const passport = require('passport'),
-      LocalStrategy = require('passport-local').Strategy,
-      bcrypt = require('bcrypt');
-const Logger = require('../api/services/Logger')
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+const Logger = require('../api/services/Logger');
 // passport.serializeUser(function(user, cb) {
 //   cb(null, user.id);
 // });
@@ -29,27 +29,30 @@ const Logger = require('../api/services/Logger')
 //   });
 // }));
 passport.serializeUser((user, done) => {
-  Logger.verbose(user.id)
+  Logger.verbose(user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser((req, id, done) => {
-  User.findOne({ id }, (err, userData) => {
+  User.findOne({id} , (err, userData) => {
+    if (err) {
+      Logger.error(err)
+    }
     done(err, userData);
   });
 });
 
 passport.use(new LocalStrategy({
-  usernameField:'email',
+  usernameField: 'email',
   passwordField: 'password',
-  
+
   passReqToCallback: true,
 },
-((req,email, password, done) => {
+((req, email, password, done) => {
   // Logger.verbose(username);
   Logger.verbose(email);
   Logger.verbose(password);
-  User.findOne({ email: email}, (err, user) => {
+  User.findOne({ email }, (err, user) => {
     if (err) {
       Logger.err(`Passport : at User.findOne ${err}`);
       return done(err);
@@ -76,4 +79,3 @@ passport.use(new LocalStrategy({
     });
   });
 })));
-

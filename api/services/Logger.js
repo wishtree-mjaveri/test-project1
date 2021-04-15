@@ -9,7 +9,7 @@ const assert = require('assert');
 const util = require('util');
 
 const levelColor = {
-  verbose: 'green', debug: 'cyan', info: 'white', warn: 'yellow', error: 'red'
+  verbose: 'green', debug: 'cyan', info: 'white', warn: 'yellow', error: 'red',
 };
 
 const logLevels = {
@@ -77,7 +77,7 @@ const channelDefinition = {
 
 function log(msg, level) {
   try {
-    const channels = sails.config.logger.logLevelConfig[level].channels;
+    const { channels } = sails.config.logger.logLevelConfig[level];
     let message = '';
     if (typeof msg === 'string') { message = `${level}: ${msg}`; } else { message = `${level}: ${util.inspect(msg)}`; }
     channels.forEach((channel) => {
@@ -114,8 +114,7 @@ module.exports = {
       let msg;
       if (error instanceof Error) {
         msg = errMsg ? `${errMsg}\n${error.stack}` : error.stack;
-      } else if (errMsg) { msg = `${error} ${errMsg}`;}
-      else { msg = error; }
+      } else if (errMsg) { msg = `${error} ${errMsg}`; } else { msg = error; }
       log(msg, 'error');
     } catch (err) {
       sails.log.error(err);
@@ -138,7 +137,7 @@ module.exports = {
             assert.ok(levels[level1].channels.indexOf(channel) > -1, `Channel ${channel} configured for lower log level ${level} but not for higher log level ${level1}`);
           }
         });
-if (channel === 'console') { return; }
+        if (channel === 'console') { return; }
 
         assert.ok(loggerConfig.channels, 'No Log Channels configured.');
 

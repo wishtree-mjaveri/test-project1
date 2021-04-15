@@ -10,26 +10,26 @@
 
 module.exports.policies = {
 
-  /***************************************************************************
+  /** *************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions, unless overridden.       *
   * (`true` allows public access)                                            *
   *                                                                          *
-  ***************************************************************************/
+  ************************************************************************** */
 
   // '*': true,
-  RestaurantController:{
-    '*':['isAuthenticated'],
-    '*':['isAdmin'],
-    'getRestaurants':true,
-    'getRestaurant':true,
-    'getAllRestaurant':true,
-    'searchRestaurantsByText':['isAuthenticated']
-    
+  RestaurantController: {
+    '*': ['isAuthenticated'],
+    '*': ['isAdmin'],
+    getRestaurants: true,
+    getRestaurant: true,
+    getAllRestaurant: true,
+    searchRestaurantsByText: ['isAuthenticated'],
+
   },
-  AuthController:{
-    '*':true,
-    
-  }
+  AuthController: {
+    '*': true,
+
+  },
 
 };

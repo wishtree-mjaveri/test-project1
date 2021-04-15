@@ -1,8 +1,7 @@
-import React from "react";
-import {Highlight,} from 'react-instantsearch-dom';
+import React from 'react';
+import { Highlight } from 'react-instantsearch-dom';
 
-
-const ProductItem = ({item}) => {
+const ProductItem = ({ item }) => {
   console.log(item);
   const icons = [];
   for (let i = 0; i < 5; i++) {
@@ -17,8 +16,8 @@ const ProductItem = ({item}) => {
         width="24"
         height="24"
       >
-        <use xlinkHref={`#ais-RatingMenu-star${suffixXlink}Symbol`}/>
-      </svg>
+        <use xlinkHref={`#ais-RatingMenu-star${suffixXlink}Symbol`} />
+      </svg>,
     );
   }
   return (
@@ -27,19 +26,23 @@ const ProductItem = ({item}) => {
         <img
           src={`https://res.cloudinary.com/hilnmyskv/image/fetch/h_300,q_100,f_auto/${
             item.image
-            }`} alt=''
+          }`}
+          alt=""
         />
       </div>
       <div className="gx-product-body">
 
         <div className="gx-product-name">
-          <Highlight attribute="name" hit={item}/>
+          <Highlight attribute="name" hit={item} />
         </div>
         <div className="gx-mb-3">
-          <Highlight attribute="type" hit={item}/>
+          <Highlight attribute="type" hit={item} />
         </div>
         <div className="ais-RatingMenu-link">{icons}</div>
-        <div className="gx-product-price">${item.price}</div>
+        <div className="gx-product-price">
+          $
+          {item.price}
+        </div>
 
       </div>
     </div>

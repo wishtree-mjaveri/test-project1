@@ -1,10 +1,10 @@
-import React from "react";
-import {Button} from "antd";
+import React from 'react';
+import { Button } from 'antd';
 
-import {BlockPicker} from "react-color";
+import { BlockPicker } from 'react-color';
 
 export const BasicPosition = () => {
-  const handleColorChange = ({hex}) => console.log(hex);
+  const handleColorChange = ({ hex }) => console.log(hex);
 
   return (
     <div className="gx-text-center gx-alpha-pickers">
@@ -27,7 +27,7 @@ export const BasicPosition = () => {
         />
       </div>
     </div>
-  )
+  );
 };
 
-export default BasicPosition
+export default BasicPosition;

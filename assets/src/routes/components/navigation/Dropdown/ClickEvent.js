@@ -1,8 +1,10 @@
-import React from "react";
-import {Card, Dropdown, Menu, message} from "antd";
-import {DownOutlined} from '@ant-design/icons';
+import React from 'react';
+import {
+  Card, Dropdown, Menu, message,
+} from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
-const onClick = function ({key}) {
+const onClick = function ({ key }) {
   message.info(`Click on item ${key}`);
 };
 const menu = (
@@ -12,16 +14,16 @@ const menu = (
     <Menu.Item key="3">3rd menu item</Menu.Item>
   </Menu>
 );
-const ClickEvent = () => {
-  return (
-    <Card className="gx-card" title="Click Event">
-      <Dropdown overlay={menu}>
-        <span className="gx-link ant-dropdown-link">
-          Hover me, Click menu item <DownOutlined/>
-        </span>
-      </Dropdown>
-    </Card>
-  );
-};
+const ClickEvent = () => (
+  <Card className="gx-card" title="Click Event">
+    <Dropdown overlay={menu}>
+      <span className="gx-link ant-dropdown-link">
+        Hover me, Click menu item
+        {' '}
+        <DownOutlined />
+      </span>
+    </Dropdown>
+  </Card>
+);
 
 export default ClickEvent;

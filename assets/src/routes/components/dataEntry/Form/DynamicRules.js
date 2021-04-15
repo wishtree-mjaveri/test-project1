@@ -1,5 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Card, Checkbox, Form, Input} from 'antd';
+import React, { useEffect, useState } from 'react';
+import {
+  Button, Card, Checkbox, Form, Input,
+} from 'antd';
 
 const formItemLayout = {
   labelCol: {
@@ -28,7 +30,7 @@ const DynamicRules = () => {
     form.validateFields(['nickname']);
   }, [checkNick]);
 
-  const onCheckboxChange = e => {
+  const onCheckboxChange = (e) => {
     setCheckNick(e.target.checked);
   };
 
@@ -55,7 +57,7 @@ const DynamicRules = () => {
             },
           ]}
         >
-          <Input placeholder="Please input your name"/>
+          <Input placeholder="Please input your name" />
         </Form.Item>
         <Form.Item
           {...formItemLayout}
@@ -68,7 +70,7 @@ const DynamicRules = () => {
             },
           ]}
         >
-          <Input placeholder="Please input your nickname"/>
+          <Input placeholder="Please input your nickname" />
         </Form.Item>
         <Form.Item {...formTailLayout}>
           <Checkbox checked={checkNick} onChange={onCheckboxChange}>

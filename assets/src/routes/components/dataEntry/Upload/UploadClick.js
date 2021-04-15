@@ -1,7 +1,9 @@
-import React from "react";
-import {Button, Card, message, Upload} from "antd";
+import React from 'react';
+import {
+  Button, Card, message, Upload,
+} from 'antd';
 import Icon from '@ant-design/icons';
-import UploadOutlined from "@ant-design/icons/lib/icons/UploadOutlined";
+import UploadOutlined from '@ant-design/icons/lib/icons/UploadOutlined';
 
 const props = {
   name: 'file',
@@ -21,17 +23,15 @@ const props = {
   },
 };
 
-const UploadClick = () => {
-    return (
-      <Card className="gx-card" title="Upload Click">
-        <Upload {...props}>
-          <Button>
-            <UploadOutlined /> Click to Upload
-          </Button>
-        </Upload>
-      </Card>
-    );
-  }
-;
-
+const UploadClick = () => (
+  <Card className="gx-card" title="Upload Click">
+    <Upload {...props}>
+      <Button>
+        <UploadOutlined />
+        {' '}
+        Click to Upload
+      </Button>
+    </Upload>
+  </Card>
+);
 export default UploadClick;

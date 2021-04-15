@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Cascader} from "antd";
+import React from 'react';
+import { Card, Cascader } from 'antd';
 
 const options = [{
   value: 'zhejiang',
@@ -32,18 +32,28 @@ function handleAreaClick(e, label, option) {
   console.log('clicked', label, option);
 }
 
-
 const CustomRender = () => {
   const displayRender = (labels, selectedOptions) => labels.map((label, i) => {
     const option = selectedOptions[i];
     if (i === labels.length - 1) {
       return (
         <span key={option.value}>
-        {label} (<span className="gx-link" onClick={e => handleAreaClick(e, label, option)}>{option.code}</span>)
-      </span>
+          {label}
+          {' '}
+          (
+          <span className="gx-link" onClick={(e) => handleAreaClick(e, label, option)}>{option.code}</span>
+          )
+        </span>
       );
     }
-    return <span key={option.value}>{label} / </span>;
+    return (
+      <span key={option.value}>
+        {label}
+        {' '}
+        /
+        {' '}
+      </span>
+    );
   });
   return (
     <Card className="gx-card" title="CustomRender">
@@ -51,7 +61,7 @@ const CustomRender = () => {
         options={options}
         defaultValue={['zhejiang', 'hangzhou', 'xihu']}
         displayRender={displayRender}
-        style={{width: '100%'}}
+        style={{ width: '100%' }}
       />
     </Card>
   );

@@ -1,8 +1,7 @@
-import React from "react";
-import {Card, Carousel} from "antd";
+import React from 'react';
+import { Card, Carousel } from 'antd';
 
 const Basic = () => {
-
   const onChange = (a, b, c) => {
     console.log(a, b, c);
   };

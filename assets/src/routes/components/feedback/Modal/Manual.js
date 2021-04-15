@@ -1,5 +1,5 @@
-import React from "react";
-import {Button, Card, Modal} from "antd";
+import React from 'react';
+import { Button, Card, Modal } from 'antd';
 
 const Manual = () => {
   function success() {

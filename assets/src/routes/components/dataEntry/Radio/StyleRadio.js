@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Radio} from "antd";
+import React from 'react';
+import { Card, Radio } from 'antd';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;

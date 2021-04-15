@@ -1,30 +1,30 @@
-import React from "react";
-import {Badge, Calendar, Card} from "antd";
+import React from 'react';
+import { Badge, Calendar, Card } from 'antd';
 
 const getListData = (value) => {
   let listData;
   switch (value.date()) {
     case 8:
       listData = [
-        {type: 'warning', content: 'This is warning event.'},
-        {type: 'success', content: 'This is usual event.'},
+        { type: 'warning', content: 'This is warning event.' },
+        { type: 'success', content: 'This is usual event.' },
       ];
       break;
     case 10:
       listData = [
-        {type: 'warning', content: 'This is warning event.'},
-        {type: 'success', content: 'This is usual event.'},
-        {type: 'error', content: 'This is error event.'},
+        { type: 'warning', content: 'This is warning event.' },
+        { type: 'success', content: 'This is usual event.' },
+        { type: 'error', content: 'This is error event.' },
       ];
       break;
     case 15:
       listData = [
-        {type: 'warning', content: 'This is warning event'},
-        {type: 'success', content: 'This is very long usual event。。....'},
-        {type: 'error', content: 'This is error event 1.'},
-        {type: 'error', content: 'This is error event 2.'},
-        {type: 'error', content: 'This is error event 3.'},
-        {type: 'error', content: 'This is error event 4.'},
+        { type: 'warning', content: 'This is warning event' },
+        { type: 'success', content: 'This is very long usual event。。....' },
+        { type: 'error', content: 'This is error event 1.' },
+        { type: 'error', content: 'This is error event 2.' },
+        { type: 'error', content: 'This is error event 3.' },
+        { type: 'error', content: 'This is error event 4.' },
       ];
       break;
     default:
@@ -38,9 +38,9 @@ const NoticeCalendar = () => {
     return (
       <ul className="events gx-text-left">
         {
-          listData.map(item => (
+          listData.map((item) => (
             <li key={item.content}>
-              <Badge className="gx-text-left" status={item.type} text={item.content}/>
+              <Badge className="gx-text-left" status={item.type} text={item.content} />
             </li>
           ))
         }
@@ -66,7 +66,7 @@ const NoticeCalendar = () => {
 
   return (
     <Card className="gx-card" title="Notice Calendar">
-      <Calendar className="gx-com-calendar" dateCellRender={dateCellRender} monthCellRender={monthCellRender}/>
+      <Calendar className="gx-com-calendar" dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
     </Card>
   );
 };

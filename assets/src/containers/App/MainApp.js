@@ -1,17 +1,18 @@
-import React,{useState} from "react";
-import {Layout,Affix} from "antd";
+import React, { useState } from 'react';
+import { Layout, Affix } from 'antd';
 
-import Sidebar from "../Sidebar/index";
-import HorizontalDefault from "../Topbar/HorizontalDefault/index";
-import HorizontalDark from "../Topbar/HorizontalDark/index";
-import InsideHeader from "../Topbar/InsideHeader/index";
-import AboveHeader from "../Topbar/AboveHeader/index";
-import BelowHeader from "../Topbar/BelowHeader/index";
+import { useSelector } from 'react-redux';
+import { Route, useRouteMatch } from 'react-router-dom';
+import Sidebar from '../Sidebar/index';
+import HorizontalDefault from '../Topbar/HorizontalDefault/index';
+import HorizontalDark from '../Topbar/HorizontalDark/index';
+import InsideHeader from '../Topbar/InsideHeader/index';
+import AboveHeader from '../Topbar/AboveHeader/index';
+import BelowHeader from '../Topbar/BelowHeader/index';
 
-import Topbar from "../Topbar/index";
-import {footerText} from "../../util/config";
-import App from "../../routes/index";
-import {useSelector} from "react-redux";
+import Topbar from '../Topbar/index';
+import { footerText } from '../../util/config';
+import App from '../../routes/index';
 import {
   NAV_STYLE_ABOVE_HEADER,
   NAV_STYLE_BELOW_HEADER,
@@ -23,103 +24,100 @@ import {
   NAV_STYLE_MINI_SIDEBAR,
   NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR,
   NAV_STYLE_NO_HEADER_MINI_SIDEBAR,
-  TAB_SIZE
-} from "../../constants/ThemeSetting";
-import NoHeaderNotification from "../Topbar/NoHeaderNotification/index";
-import {Route, useRouteMatch} from "react-router-dom";
-import Customizer from "../Customizer";
+  TAB_SIZE,
+} from '../../constants/ThemeSetting';
+import NoHeaderNotification from '../Topbar/NoHeaderNotification/index';
+import Customizer from '../Customizer';
 
-const {Content, Footer} = Layout;
+const { Content, Footer } = Layout;
 
 const MainApp = () => {
-
-  const {width, navStyle} = useSelector(({settings}) => settings);
+  const { width, navStyle } = useSelector(({ settings }) => settings);
   const match = useRouteMatch();
 
   const getContainerClass = (navStyle) => {
     switch (navStyle) {
       case NAV_STYLE_DARK_HORIZONTAL:
-        return "gx-container-wrap";
+        return 'gx-container-wrap';
       case NAV_STYLE_DEFAULT_HORIZONTAL:
-        return "gx-container-wrap";
+        return 'gx-container-wrap';
       case NAV_STYLE_INSIDE_HEADER_HORIZONTAL:
-        return "gx-container-wrap";
+        return 'gx-container-wrap';
       case NAV_STYLE_BELOW_HEADER:
-        return "gx-container-wrap";
+        return 'gx-container-wrap';
       case NAV_STYLE_ABOVE_HEADER:
-        return "gx-container-wrap";
+        return 'gx-container-wrap';
       default:
         return '';
     }
   };
   const getNavStyles = (navStyle) => {
     switch (navStyle) {
-      case NAV_STYLE_DEFAULT_HORIZONTAL :
-        return <HorizontalDefault/>;
-      case NAV_STYLE_DARK_HORIZONTAL :
-        return <HorizontalDark/>;
-      case NAV_STYLE_INSIDE_HEADER_HORIZONTAL :
-        return <InsideHeader/>;
-      case NAV_STYLE_ABOVE_HEADER :
-        return <AboveHeader/>;
-      case NAV_STYLE_BELOW_HEADER :
-        return <BelowHeader/>;
-      case NAV_STYLE_FIXED :
-        return <Topbar/>;
-      case NAV_STYLE_DRAWER :
-        return <Topbar/>;
-      case NAV_STYLE_MINI_SIDEBAR :
-        return <Topbar/>;
-      case NAV_STYLE_NO_HEADER_MINI_SIDEBAR :
-        return <NoHeaderNotification/>;
-      case NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR :
-        return <NoHeaderNotification/>;
-      default :
+      case NAV_STYLE_DEFAULT_HORIZONTAL:
+        return <HorizontalDefault />;
+      case NAV_STYLE_DARK_HORIZONTAL:
+        return <HorizontalDark />;
+      case NAV_STYLE_INSIDE_HEADER_HORIZONTAL:
+        return <InsideHeader />;
+      case NAV_STYLE_ABOVE_HEADER:
+        return <AboveHeader />;
+      case NAV_STYLE_BELOW_HEADER:
+        return <BelowHeader />;
+      case NAV_STYLE_FIXED:
+        return <Topbar />;
+      case NAV_STYLE_DRAWER:
+        return <Topbar />;
+      case NAV_STYLE_MINI_SIDEBAR:
+        return <Topbar />;
+      case NAV_STYLE_NO_HEADER_MINI_SIDEBAR:
+        return <NoHeaderNotification />;
+      case NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR:
+        return <NoHeaderNotification />;
+      default:
         return null;
     }
   };
 
   const getSidebar = (navStyle, width) => {
     if (width < TAB_SIZE) {
-      return <Sidebar/>;
+      return <Sidebar />;
     }
     switch (navStyle) {
-      case NAV_STYLE_FIXED :
-        return <Sidebar/>;
-      case NAV_STYLE_DRAWER :
-        return <Sidebar/>;
-      case NAV_STYLE_MINI_SIDEBAR :
-        return <Sidebar/>;
-      case NAV_STYLE_NO_HEADER_MINI_SIDEBAR :
-        return <Sidebar/>;
+      case NAV_STYLE_FIXED:
+        return <Sidebar />;
+      case NAV_STYLE_DRAWER:
+        return <Sidebar />;
+      case NAV_STYLE_MINI_SIDEBAR:
+        return <Sidebar />;
+      case NAV_STYLE_NO_HEADER_MINI_SIDEBAR:
+        return <Sidebar />;
       case NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR:
-        return <Sidebar/>;
-      default :
+        return <Sidebar />;
+      default:
         return null;
     }
   };
-const [top, setTop] = useState(10)
+  const [top, setTop] = useState(10);
 
   return (
     <Layout className="gx-app-layout">
       {getSidebar(navStyle, width)}
       <Layout>
-      
-      {getNavStyles(navStyle)}
-         
+
+        {getNavStyles(navStyle)}
+
         <Content className={`gx-layout-content ${getContainerClass(navStyle)} `}>
-        
-          <App match={match}/>
+
+          <App match={match} />
           <Footer>
             <div className="gx-layout-footer-content">
               {footerText}
             </div>
           </Footer>
         </Content>
-        <Customizer/>
+        <Customizer />
       </Layout>
     </Layout>
-  )
+  );
 };
 export default MainApp;
-

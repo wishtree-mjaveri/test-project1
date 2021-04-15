@@ -1,8 +1,7 @@
-import React from "react";
-import {Card, Select} from "antd";
+import React from 'react';
+import { Card, Select } from 'antd';
 
-const {Option, OptGroup} = Select;
-
+const { Option, OptGroup } = Select;
 
 const SelectOption = () => {
   function handleChange(value) {
@@ -13,7 +12,7 @@ const SelectOption = () => {
     <Card className="gx-card" title="Select Option">
       <Select
         defaultValue="lucy"
-        style={{width: 200}}
+        style={{ width: 200 }}
         onChange={handleChange}
       >
         <OptGroup label="Manager">

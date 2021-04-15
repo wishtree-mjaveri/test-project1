@@ -1,9 +1,9 @@
-import React from "react";
-import {AutoComplete, Card, Input} from "antd";
-import Icon from '@ant-design/icons';
-import {SearchOutlined} from "@ant-design/icons";
-const Option = AutoComplete.Option;
-const OptGroup = AutoComplete.OptGroup;
+import React from 'react';
+import { AutoComplete, Card, Input } from 'antd';
+import Icon, { SearchOutlined } from '@ant-design/icons';
+
+const { Option } = AutoComplete;
+const { OptGroup } = AutoComplete;
 
 const dataSource = [{
   title: 'g-axon',
@@ -36,22 +36,23 @@ function renderTitle(title) {
     <span>
       {title}
       <a
-        style={{float: 'right'}}
+        style={{ float: 'right' }}
         href="https://www.google.com/search?q=antd"
         target="_blank"
         rel="noopener noreferrer"
-      >version 1.1
+      >
+        version 1.1
       </a>
     </span>
   );
 }
 
-const options = dataSource.map(group => (
+const options = dataSource.map((group) => (
   <OptGroup
     key={group.title}
     label={renderTitle(group.title)}
   >
-    {group.children.map(opt => (
+    {group.children.map((opt) => (
       <Option key={opt.title} value={opt.title}>
         {opt.title}
         <span className="certain-search-item-count">{opt.count}</span>
@@ -70,27 +71,23 @@ const options = dataSource.map(group => (
   </Option>,
 ]);
 
-const LookupPatterns = () => {
-    return (
-      <Card className="gx-card" title="Lookup Patterns">
-        <div className="certain-category-search-wrapper" style={{width: 250}}>
-          <AutoComplete
-            className="certain-category-search"
-            dropdownClassName="certain-category-search-dropdown"
-            dropdownMatchSelectWidth={false}
-            dropdownStyle={{width: 300}}
-            size="large"
-            style={{width: '100%'}}
-            dataSource={options}
-            placeholder="input here"
-            optionLabelProp="value"
-          >
-            <Input suffix={<SearchOutlined/>}/>
-          </AutoComplete>
-        </div>
-      </Card>
-    );
-  }
-;
-
+const LookupPatterns = () => (
+  <Card className="gx-card" title="Lookup Patterns">
+    <div className="certain-category-search-wrapper" style={{ width: 250 }}>
+      <AutoComplete
+        className="certain-category-search"
+        dropdownClassName="certain-category-search-dropdown"
+        dropdownMatchSelectWidth={false}
+        dropdownStyle={{ width: 300 }}
+        size="large"
+        style={{ width: '100%' }}
+        dataSource={options}
+        placeholder="input here"
+        optionLabelProp="value"
+      >
+        <Input suffix={<SearchOutlined />} />
+      </AutoComplete>
+    </div>
+  </Card>
+);
 export default LookupPatterns;

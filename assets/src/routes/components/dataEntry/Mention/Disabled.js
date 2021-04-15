@@ -1,8 +1,8 @@
-import React from "react";
-import {Card} from "antd";
+import React from 'react';
+import { Card } from 'antd';
 import { Mention } from '@ant-design/compatible';
 
-const {toString} = Mention;
+const { toString } = Mention;
 const users = ['afc163', 'benjycui', 'yiminghe', 'jljsj33', 'dqaria', 'RaoHai'];
 
 function Disabled() {
@@ -14,7 +14,7 @@ function Disabled() {
     <Card className="gx-card" title="Disabled">
       <div className="gx-mb-3">
         <Mention
-          style={{width: '100%'}}
+          style={{ width: '100%' }}
           onChange={onChange}
           placeholder="this is disabled Mention"
           suggestions={users}
@@ -22,7 +22,7 @@ function Disabled() {
         />
       </div>
       <Mention
-        style={{width: '100%'}}
+        style={{ width: '100%' }}
         onChange={onChange}
         placeholder="this is readOnly Mention"
         suggestions={users}

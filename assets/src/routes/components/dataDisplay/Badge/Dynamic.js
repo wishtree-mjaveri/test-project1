@@ -1,12 +1,12 @@
-import React, {useState} from "react";
-import {Badge, Button, Card, Switch} from "antd";
-import Icon from '@ant-design/icons';
-import {PlusOutlined,MinusOutlined} from "@ant-design/icons";
+import React, { useState } from 'react';
+import {
+  Badge, Button, Card, Switch,
+} from 'antd';
+import Icon, { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 const ButtonGroup = Button.Group;
 
 const Dynamic = () => {
-
   const [count, setCount] = useState(5);
   const [show, setShow] = useState(true);
 
@@ -30,7 +30,7 @@ const Dynamic = () => {
     <Card className="gx-card" title="Dynamic">
       <div>
         <Badge count={count}>
-          <div className="head-example"/>
+          <div className="head-example" />
         </Badge>
         <ButtonGroup>
           <Button onClick={decline}>
@@ -41,11 +41,11 @@ const Dynamic = () => {
           </Button>
         </ButtonGroup>
       </div>
-      <div style={{marginTop: 10}}>
+      <div style={{ marginTop: 10 }}>
         <Badge dot={show}>
-          <div className="head-example"/>
+          <div className="head-example" />
         </Badge>
-        <Switch onChange={onChange} checked={show}/>
+        <Switch onChange={onChange} checked={show} />
       </div>
     </Card>
   );

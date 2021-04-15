@@ -1,10 +1,10 @@
-import React from "react";
-import {Card, Table} from "antd";
+import React from 'react';
+import { Card, Table } from 'antd';
 
 const columns = [{
   title: 'Name',
   dataIndex: 'name',
-  render: text => <span className="gx-link">{text}</span>,
+  render: (text) => <span className="gx-link">{text}</span>,
 }, {
   title: 'Age',
   dataIndex: 'age',
@@ -39,18 +39,16 @@ const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   },
-  getCheckboxProps: record => ({
+  getCheckboxProps: (record) => ({
     disabled: record.name === 'Disabled User', // Column configuration not to be checked
     name: record.name,
   }),
 };
 
-const Selection = () => {
-  return (
-    <Card title="Selection Table">
-      <Table className="gx-table-responsive" rowSelection={rowSelection} columns={columns} dataSource={data}/>
-    </Card>
-  );
-};
+const Selection = () => (
+  <Card title="Selection Table">
+    <Table className="gx-table-responsive" rowSelection={rowSelection} columns={columns} dataSource={data} />
+  </Card>
+);
 
 export default Selection;

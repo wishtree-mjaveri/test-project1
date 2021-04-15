@@ -1,20 +1,20 @@
 export default [
   {
-    'title': 'All',
+    title: 'All',
   },
   {
-    'title': 'None',
+    title: 'None',
   },
   {
-    'title': 'Starred',
+    title: 'Starred',
   },
   {
-    'title': 'Unstarred',
+    title: 'Unstarred',
   },
   {
-    'title': 'Important',
+    title: 'Important',
   },
   {
-    'title': 'Unimportant',
-  }
+    title: 'Unimportant',
+  },
 ];

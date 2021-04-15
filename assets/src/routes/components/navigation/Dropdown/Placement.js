@@ -1,7 +1,9 @@
-import React from "react";
-import {Button, Card, Dropdown, Menu} from "antd";
+import React from 'react';
+import {
+  Button, Card, Dropdown, Menu,
+} from 'antd';
 
-import "./placement.less";
+import './placement.less';
 
 const menu = (
   <Menu>
@@ -17,30 +19,28 @@ const menu = (
   </Menu>
 );
 
-const Placement = () => {
-  return (
-    <Card className="gx-card" title="Placement">
-      <Dropdown overlay={menu} placement="bottomLeft">
-        <Button>bottomLeft</Button>
-      </Dropdown>
-      <Dropdown overlay={menu} placement="bottomCenter">
-        <Button>bottomCenter</Button>
-      </Dropdown>
-      <Dropdown overlay={menu} placement="bottomRight">
-        <Button>bottomRight</Button>
-      </Dropdown>
-      <br/>
-      <Dropdown overlay={menu} placement="topLeft">
-        <Button>topLeft</Button>
-      </Dropdown>
-      <Dropdown overlay={menu} placement="topCenter">
-        <Button>topCenter</Button>
-      </Dropdown>
-      <Dropdown overlay={menu} placement="topRight">
-        <Button>topRight</Button>
-      </Dropdown>
-    </Card>
-  );
-};
+const Placement = () => (
+  <Card className="gx-card" title="Placement">
+    <Dropdown overlay={menu} placement="bottomLeft">
+      <Button>bottomLeft</Button>
+    </Dropdown>
+    <Dropdown overlay={menu} placement="bottomCenter">
+      <Button>bottomCenter</Button>
+    </Dropdown>
+    <Dropdown overlay={menu} placement="bottomRight">
+      <Button>bottomRight</Button>
+    </Dropdown>
+    <br />
+    <Dropdown overlay={menu} placement="topLeft">
+      <Button>topLeft</Button>
+    </Dropdown>
+    <Dropdown overlay={menu} placement="topCenter">
+      <Button>topCenter</Button>
+    </Dropdown>
+    <Dropdown overlay={menu} placement="topRight">
+      <Button>topRight</Button>
+    </Dropdown>
+  </Card>
+);
 
 export default Placement;

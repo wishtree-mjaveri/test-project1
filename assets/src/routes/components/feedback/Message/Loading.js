@@ -1,5 +1,5 @@
-import React from "react";
-import {Button, Card, message} from "antd";
+import React from 'react';
+import { Button, Card, message } from 'antd';
 
 const success = () => {
   const hide = message.loading('Action in progress..', 0);
@@ -7,12 +7,10 @@ const success = () => {
   setTimeout(hide, 2500);
 };
 
-const Loading = () => {
-  return (
-    <Card title="Loading" className="gx-card">
-      <Button onClick={success}>Display a loading indicator</Button>
-    </Card>
-  );
-};
+const Loading = () => (
+  <Card title="Loading" className="gx-card">
+    <Button onClick={success}>Display a loading indicator</Button>
+  </Card>
+);
 
 export default Loading;

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Row, Col, Input, Button ,Card} from 'antd';
+import {
+  Form, Row, Col, Input, Button, Card,
+} from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 const AdvancedSearch = () => {
@@ -11,7 +13,7 @@ const AdvancedSearch = () => {
     const children = [];
     for (let i = 0; i < count; i++) {
       children.push(
-        <Col lg={8} md={8} sm={12} xs={24} key={i} style={{display: i < count ? 'block' : 'none'}}>
+        <Col lg={8} md={8} sm={12} xs={24} key={i} style={{ display: i < count ? 'block' : 'none' }}>
           <div className="gx-form-row0">
             <Form.Item
               name={`field-${i}`}
@@ -32,42 +34,44 @@ const AdvancedSearch = () => {
     return children;
   };
 
-  const onFinish = values => {
+  const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
 
   return (
     <Card className="gx-card" title="Advanced Search">
-    <Form
-      form={form}
-      name="advanced_search"
-      className="ant-advanced-search-form"
-      onFinish={onFinish}
-    >
-      <Row gutter={24}>{getFields()}</Row>
-      <Row>
-        <Col span={24} style={{ textAlign: 'right' }}>
-          <Button type="primary" htmlType="submit">
-            Search
-          </Button>
-          <Button
-            onClick={() => {
-              form.resetFields();
-            }}
-          >
-            Clear
-          </Button>
-          <a
-            style={{ display: 'inline-block', verticalAlign: 'middle', marginBottom: 15, }}
-            onClick={() => {
-              setExpand(!expand);
-            }}
-          >
-            {expand ? <UpOutlined /> : <DownOutlined />} Collapse
-          </a>
-        </Col>
-      </Row>
-    </Form>
+      <Form
+        form={form}
+        name="advanced_search"
+        className="ant-advanced-search-form"
+        onFinish={onFinish}
+      >
+        <Row gutter={24}>{getFields()}</Row>
+        <Row>
+          <Col span={24} style={{ textAlign: 'right' }}>
+            <Button type="primary" htmlType="submit">
+              Search
+            </Button>
+            <Button
+              onClick={() => {
+                form.resetFields();
+              }}
+            >
+              Clear
+            </Button>
+            <a
+              style={{ display: 'inline-block', verticalAlign: 'middle', marginBottom: 15 }}
+              onClick={() => {
+                setExpand(!expand);
+              }}
+            >
+              {expand ? <UpOutlined /> : <DownOutlined />}
+              {' '}
+              Collapse
+            </a>
+          </Col>
+        </Row>
+      </Form>
     </Card>
   );
 };

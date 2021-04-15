@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Pagination} from "antd";
+import React from 'react';
+import { Card, Pagination } from 'antd';
 
 const MiniSize = () => {
   function showTotal(total) {
@@ -8,9 +8,9 @@ const MiniSize = () => {
 
   return (
     <Card className="gx-card" title="Mini Size Pagination">
-      <Pagination size="small" total={50}/>
-      <Pagination size="small" total={50} showSizeChanger showQuickJumper/>
-      <Pagination size="small" total={50} showTotal={showTotal}/>
+      <Pagination size="small" total={50} />
+      <Pagination size="small" total={50} showSizeChanger showQuickJumper />
+      <Pagination size="small" total={50} showTotal={showTotal} />
     </Card>
   );
 };

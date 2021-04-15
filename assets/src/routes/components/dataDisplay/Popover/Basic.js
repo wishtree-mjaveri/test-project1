@@ -1,5 +1,5 @@
-import React from "react";
-import {Button, Card, Popover} from "antd";
+import React from 'react';
+import { Button, Card, Popover } from 'antd';
 
 const content = (
   <div>
@@ -8,15 +8,12 @@ const content = (
   </div>
 );
 
-
-const Basic = () => {
-  return (
-    <Card className="gx-card" title="Basic">
-      <Popover content={content} title="Title">
-        <Button type="primary">Hover me</Button>
-      </Popover>
-    </Card>
-  );
-};
+const Basic = () => (
+  <Card className="gx-card" title="Basic">
+    <Popover content={content} title="Title">
+      <Button type="primary">Hover me</Button>
+    </Popover>
+  </Card>
+);
 
 export default Basic;

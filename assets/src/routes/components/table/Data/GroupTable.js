@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Table} from "antd";
+import React from 'react';
+import { Card, Table } from 'antd';
 
 const columns = [{
   title: 'Name',
@@ -79,18 +79,16 @@ for (let i = 0; i < 100; i++) {
     gender: 'M',
   });
 }
-const GroupTable = () => {
-  return (
-    <Card title="Group Table">
-      <Table
-        columns={columns}
-        dataSource={data}
-        bordered
-        size="middle"
-        scroll={{x: '130%', y: 240}}
-      />
-    </Card>
-  );
-};
+const GroupTable = () => (
+  <Card title="Group Table">
+    <Table
+      columns={columns}
+      dataSource={data}
+      bordered
+      size="middle"
+      scroll={{ x: '130%', y: 240 }}
+    />
+  </Card>
+);
 
 export default GroupTable;

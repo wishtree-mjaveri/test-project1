@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Table} from "antd";
+import React from 'react';
+import { Card, Table } from 'antd';
 
 const columns = [{
   title: 'Name',
@@ -28,15 +28,13 @@ const data = [{
   address: 'Sidney No. 1 Lake Park',
 }];
 
-const Size = () => {
-  return (
-    <Card title="Size Table">
-      <h4>Middle size table</h4>
-      <Table className="gx-table-responsive" columns={columns} dataSource={data} size="middle"/>
-      <h4>Small size table</h4>
-      <Table className="gx-table-responsive" columns={columns} dataSource={data} size="small"/>
-    </Card>
-  );
-};
+const Size = () => (
+  <Card title="Size Table">
+    <h4>Middle size table</h4>
+    <Table className="gx-table-responsive" columns={columns} dataSource={data} size="middle" />
+    <h4>Small size table</h4>
+    <Table className="gx-table-responsive" columns={columns} dataSource={data} size="small" />
+  </Card>
+);
 
 export default Size;

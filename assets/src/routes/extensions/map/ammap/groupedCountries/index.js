@@ -1,15 +1,13 @@
-import React from "react";
-import {Card} from "antd";
+import React from 'react';
+import { Card } from 'antd';
 
-import GroupedCountriesMap from "./Components/GroupedCountriesMap";
-import IntlMessages from "../../../../../util/IntlMessages";
+import GroupedCountriesMap from './Components/GroupedCountriesMap';
+import IntlMessages from '../../../../../util/IntlMessages';
 
-const GroupedCountries = () => {
-  return (
-    <Card className="gx-card" title={<IntlMessages id="sidebar.map.grouped.countries"/>}>
-      <GroupedCountriesMap/>
-    </Card>
-  );
-};
+const GroupedCountries = () => (
+  <Card className="gx-card" title={<IntlMessages id="sidebar.map.grouped.countries" />}>
+    <GroupedCountriesMap />
+  </Card>
+);
 
 export default GroupedCountries;

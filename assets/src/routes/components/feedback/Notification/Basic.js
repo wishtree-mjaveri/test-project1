@@ -1,5 +1,5 @@
-import React from "react";
-import {Button, Card, notification} from "antd";
+import React from 'react';
+import { Button, Card, notification } from 'antd';
 
 const openNotification = () => {
   notification.open({
@@ -8,12 +8,10 @@ const openNotification = () => {
   });
 };
 
-const Basic = () => {
-  return (
-    <Card title="Basic" className="gx-card">
-      <Button type="primary" onClick={openNotification}>Open the notification box</Button>
-    </Card>
-  );
-};
+const Basic = () => (
+  <Card title="Basic" className="gx-card">
+    <Button type="primary" onClick={openNotification}>Open the notification box</Button>
+  </Card>
+);
 
 export default Basic;

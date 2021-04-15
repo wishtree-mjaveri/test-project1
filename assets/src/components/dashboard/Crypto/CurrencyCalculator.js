@@ -1,19 +1,21 @@
-import React from "react";
-import {Button, Form, Input, Select} from "antd";
-import Widget from "../../../components/Widget/index";
+import React from 'react';
+import {
+  Button, Form, Input, Select,
+} from 'antd';
+import Widget from '../../Widget/index';
 
-const Option = Select.Option;
+const { Option } = Select;
 const FormItem = Form.Item;
 
 const CurrencyCalculator = () => {
-
   function handleChange(value) {
     console.log(`selected ${value}`);
   }
 
   return (
     <Widget
-      title={<h2 className="h4 gx-mb-0 gx-text-capitalize">Currency Calculator</h2>}>
+      title={<h2 className="h4 gx-mb-0 gx-text-capitalize">Currency Calculator</h2>}
+    >
       <p className="gx-mb-2">1.87 BTC equals</p>
       <h1 className="gx-mb-2 gx-text-primary gx-font-weight-medium gx-fs-xxl">11466.78 USD</h1>
       <p className="gx-text-grey gx-fs-sm gx-mb-3 gx-mb-lg-4">@ 1 BTC = 6718.72 USD</p>
@@ -31,7 +33,7 @@ const CurrencyCalculator = () => {
           </Select>
         </FormItem>
         <FormItem label="Amount (BTC)" className="gx-form-item-two-fourth">
-          <Input placeholder="0.0"/>
+          <Input placeholder="0.0" />
         </FormItem>
         <FormItem className="gx-d-block gx-mb-1 gx-mt-1">
           <Button className="gx-mb-0" type="primary">Transfer Now</Button>

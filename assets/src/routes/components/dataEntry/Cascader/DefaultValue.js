@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Cascader} from "antd";
+import React from 'react';
+import { Card, Cascader } from 'antd';
 
 const options = [{
   value: 'menu',
@@ -29,12 +29,10 @@ function onChange(value) {
   console.log(value);
 }
 
-const DefaultValue = () => {
-  return (
-    <Card className="gx-card" title="Default Value">
-      <Cascader defaultValue={['menu', 'jumbo', 'opstion']} options={options} onChange={onChange}/>
-    </Card>
-  );
-};
+const DefaultValue = () => (
+  <Card className="gx-card" title="Default Value">
+    <Cascader defaultValue={['menu', 'jumbo', 'opstion']} options={options} onChange={onChange} />
+  </Card>
+);
 
 export default DefaultValue;

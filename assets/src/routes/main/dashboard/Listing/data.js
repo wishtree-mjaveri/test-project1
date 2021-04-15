@@ -1,31 +1,31 @@
-import React from "react";
+import React from 'react';
 
 export const recentList = [
   {
     id: 1,
-    avatar: "https://via.placeholder.com/150",
+    avatar: 'https://via.placeholder.com/150',
     title: 'Need a quick support on setting',
-    description: [<span className="gx-link" key={1}>Joy Parish</span>, "  created ticket 15 mins ago"],
-    status: 2
+    description: [<span className="gx-link" key={1}>Joy Parish</span>, '  created ticket 15 mins ago'],
+    status: 2,
   }, {
     id: 2,
-    avatar: "https://via.placeholder.com/150",
+    avatar: 'https://via.placeholder.com/150',
     title: 'Pre-sale query about the product',
-    description: [<span className="gx-link" key={2}>You</span>, " replied 2 days ago"],
-    status: 1
+    description: [<span className="gx-link" key={2}>You</span>, ' replied 2 days ago'],
+    status: 1,
   }, {
     id: 3,
-    avatar: "https://via.placeholder.com/150",
+    avatar: 'https://via.placeholder.com/150',
     title: 'Regarding customization service',
-    description: [<span className="gx-link" key={3}>Joy Parish</span>, " replied 2 days ago"],
-    status: 4
-  }
+    description: [<span className="gx-link" key={3}>Joy Parish</span>, ' replied 2 days ago'],
+    status: 4,
+  },
 ];
 
 export const popularList = [
   {
     id: 1,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'Beach side Villah ',
     subTitle: 'South Western Ave',
@@ -40,7 +40,7 @@ export const popularList = [
   },
   {
     id: 2,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'Luxury family home at beach side',
     subTitle: 'South Western Ave',
@@ -55,7 +55,7 @@ export const popularList = [
   },
   {
     id: 3,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'CB Jeni Lifestyle Homes',
     subTitle: 'South Western Ave',
@@ -67,12 +67,12 @@ export const popularList = [
     baths: 1,
     area: '1300 m2',
     more: 4,
-  }
+  },
 ];
 export const newJersy = [
   {
     id: 1,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'Luxury family home at beach side',
     subTitle: 'South Western Ave',
@@ -87,7 +87,7 @@ export const newJersy = [
   },
   {
     id: 2,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'CB Jeni Lifestyle Homes',
     subTitle: 'South Western Ave',
@@ -102,7 +102,7 @@ export const newJersy = [
   },
   {
     id: 3,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'Beach side Villah ',
     subTitle: 'South Western Ave',
@@ -114,12 +114,12 @@ export const newJersy = [
     baths: 1,
     area: '1300 m2',
     more: 4,
-  }
+  },
 ];
 export const colorado = [
   {
     id: 1,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'Luxury family home at beach side',
     subTitle: 'South Western Ave',
@@ -134,7 +134,7 @@ export const colorado = [
   },
   {
     id: 2,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'Beach side Villah ',
     subTitle: 'South Western Ave',
@@ -149,7 +149,7 @@ export const colorado = [
   },
   {
     id: 3,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'CB Jeni Lifestyle Homes',
     subTitle: 'South Western Ave',
@@ -161,12 +161,12 @@ export const colorado = [
     baths: 1,
     area: '1300 m2',
     more: 4,
-  }
+  },
 ];
 export const albama = [
   {
     id: 1,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'Luxury family home at beach side',
     subTitle: 'South Western Ave',
@@ -181,7 +181,7 @@ export const albama = [
   },
   {
     id: 2,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'Beach side Villah ',
     subTitle: 'South Western Ave',
@@ -196,7 +196,7 @@ export const albama = [
   },
   {
     id: 3,
-    image: "https://via.placeholder.com/1100X750",
+    image: 'https://via.placeholder.com/1100X750',
     isFeatured: false,
     title: 'CB Jeni Lifestyle Homes',
     subTitle: 'South Western Ave',
@@ -208,5 +208,5 @@ export const albama = [
     baths: 1,
     area: '1300 m2',
     more: 4,
-  }
+  },
 ];

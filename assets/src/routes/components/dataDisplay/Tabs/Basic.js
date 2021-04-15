@@ -1,7 +1,7 @@
-import React from "react";
-import {Card, Tabs} from "antd";
+import React from 'react';
+import { Card, Tabs } from 'antd';
 
-const TabPane = Tabs.TabPane;
+const { TabPane } = Tabs;
 
 const Basic = () => {
   const callback = (key) => {

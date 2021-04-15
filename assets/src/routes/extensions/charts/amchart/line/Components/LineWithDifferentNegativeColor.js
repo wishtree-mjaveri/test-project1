@@ -1,41 +1,40 @@
-import React from "react";
-import AmCharts from "@amcharts/amcharts3-react";
+import React from 'react';
+import AmCharts from '@amcharts/amcharts3-react';
 
 const LineWithDifferentNegativeColor = () => {
-
-  let chartData = generateChartData();
+  const chartData = generateChartData();
   const config = {
-    "theme": "light",
-    "type": "serial",
-    "dataProvider": chartData,
-    "valueAxes": [{
-      "inside": true,
-      "axisAlpha": 0
+    theme: 'light',
+    type: 'serial',
+    dataProvider: chartData,
+    valueAxes: [{
+      inside: true,
+      axisAlpha: 0,
     }],
-    "graphs": [{
-      "id": "g1",
-      "balloonText": "<div style='margin:5px; font-size:19px;'><span style='font-size:13px;'>[[category]]</span><br>[[value]]</div>",
-      "bullet": "round",
-      "bulletBorderAlpha": 1,
-      "bulletBorderColor": "#FFFFFF",
-      "hideBulletsCount": 50,
-      "lineThickness": 2,
-      "lineColor": "#fdd400",
-      "negativeLineColor": "#67b7dc",
-      "valueField": "visits"
+    graphs: [{
+      id: 'g1',
+      balloonText: "<div style='margin:5px; font-size:19px;'><span style='font-size:13px;'>[[category]]</span><br>[[value]]</div>",
+      bullet: 'round',
+      bulletBorderAlpha: 1,
+      bulletBorderColor: '#FFFFFF',
+      hideBulletsCount: 50,
+      lineThickness: 2,
+      lineColor: '#fdd400',
+      negativeLineColor: '#67b7dc',
+      valueField: 'visits',
     }],
-    "chartScrollbar": {},
-    "chartCursor": {},
-    "categoryField": "date",
-    "categoryAxis": {
-      "parseDates": true,
-      "axisAlpha": 0,
-      "minHorizontalGap": 55
-    }
+    chartScrollbar: {},
+    chartCursor: {},
+    categoryField: 'date',
+    categoryAxis: {
+      parseDates: true,
+      axisAlpha: 0,
+      minHorizontalGap: 55,
+    },
   };
 
   function generateChartData() {
-    let chartData = [];
+    const chartData = [];
     const firstDate = new Date();
     firstDate.setDate(firstDate.getDate() - 150);
     let visits = -40;
@@ -53,7 +52,7 @@ const LineWithDifferentNegativeColor = () => {
 
       chartData.push({
         date: newDate,
-        visits: visits
+        visits,
       });
     }
     return chartData;
@@ -61,9 +60,9 @@ const LineWithDifferentNegativeColor = () => {
 
   return (
     <div className="App">
-      <AmCharts.React style={{width: "100%", height: "500px"}} options={config}/>
+      <AmCharts.React style={{ width: '100%', height: '500px' }} options={config} />
     </div>
-  )
-}
+  );
+};
 
 export default LineWithDifferentNegativeColor;

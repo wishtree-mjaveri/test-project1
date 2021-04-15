@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Cascader} from "antd";
+import React from 'react';
+import { Card, Cascader } from 'antd';
 
 const options = [{
   value: 'zhejiang',
@@ -34,17 +34,15 @@ function displayRender(label) {
   return label[label.length - 1];
 }
 
-const Hover = () => {
-  return (
-    <Card className="gx-card" title="Hover">
-      <Cascader
-        options={options}
-        expandTrigger="hover"
-        displayRender={displayRender}
-        onChange={onChange}
-      />
-    </Card>
-  );
-};
+const Hover = () => (
+  <Card className="gx-card" title="Hover">
+    <Cascader
+      options={options}
+      expandTrigger="hover"
+      displayRender={displayRender}
+      onChange={onChange}
+    />
+  </Card>
+);
 
 export default Hover;

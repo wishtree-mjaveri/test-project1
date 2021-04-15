@@ -1,9 +1,9 @@
 const path = require('path');
-const {override, addLessLoader} = require('customize-cra');
+const { override, addLessLoader } = require('customize-cra');
 
-const overrideProcessEnv = value => config => {
+const overrideProcessEnv = (value) => (config) => {
   config.resolve.modules = [
-    path.join(__dirname, 'src')
+    path.join(__dirname, 'src'),
   ].concat(config.resolve.modules);
   return config;
 };
@@ -14,5 +14,5 @@ module.exports = override(
   }),
   overrideProcessEnv({
     VERSION: JSON.stringify(require('./package.json').version),
-  })
+  }),
 );

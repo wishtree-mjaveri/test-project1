@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Cascader} from "antd";
+import React from 'react';
+import { Card, Cascader } from 'antd';
 
 const options = [{
   value: 'zhejiang',
@@ -30,13 +30,9 @@ function onChange(value) {
   console.log(value);
 }
 
-const DisabledOption = () => {
-    return (
-      <Card className="gx-card" title="Disabled Option">
-        <Cascader options={options} onChange={onChange}/>
-      </Card>
-    );
-  }
-;
-
+const DisabledOption = () => (
+  <Card className="gx-card" title="Disabled Option">
+    <Cascader options={options} onChange={onChange} />
+  </Card>
+);
 export default DisabledOption;

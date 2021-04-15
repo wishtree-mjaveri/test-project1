@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, Table} from "antd";
+import React from 'react';
+import { Card, Table } from 'antd';
 
 const columns = [{
   title: 'Name',
@@ -81,13 +81,9 @@ const rowSelection = {
   },
 };
 
-const TreeData = () => {
-    return (
-      <Card title="Tree Data">
-        <Table className="gx-table-responsive" columns={columns} rowSelection={rowSelection} dataSource={data}/>
-      </Card>
-    );
-  }
-;
-
+const TreeData = () => (
+  <Card title="Tree Data">
+    <Table className="gx-table-responsive" columns={columns} rowSelection={rowSelection} dataSource={data} />
+  </Card>
+);
 export default TreeData;
