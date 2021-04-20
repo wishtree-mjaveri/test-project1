@@ -115,27 +115,37 @@ module.exports={
    setUser(userId,user){
 
         user.name=`${user.username}`;
-        client1.set(`zonion:user:${userId}`, JSON.stringify(user.name), (setErr) => {
+        client1.set(`zonion:user:${userId}`, JSON.stringify(user), (setErr) => {
           if (setErr) {
             Logger.error(`RedisService.setUser at client1.set ${setErr}`);
           } else {
-                const todayEnd = (new Date().setHours(23,59,59,999))/100;
+                // const todayEnd = (new Date().setHours(23,59,59,999))/100;
+                const todayEnd = 2*60;
                
-                    client1.expireat(`zonion:user:${userId}`, parseInt(String(todayEnd / 1000), 10), (err) => {
-                      if (err) {
-                        Logger.error(`RedisService.setUser at client1.expireat ${err}`);
+                    // client1.expireat(`zonion:user:${userId}`, parseInt(String(todayEnd / 1000), 10), (err) => {
+                      client1.expire((`zonion:user:${userId}`),todayEnd, (err) => {
+                   
+                    if (err) {
+                        Logger.error(`RedisService."get" "zonion:user:607af464ab0752cf640b74d9"setUser at client1.expireat ${err}`);
+                      }
+                      else{
+                Logger.verbose('user in expire method')
+
                       }
                   });
+                Logger.verbose('User obj-id created')
+
             }
         })
     },
-
+  
    
   
       getUser(userId, callback) {
         Logger.debug('RedisService.getUser');
+        
         // console.log(client1)
-       
+       console.log(userId)
           client1.get([`zonion:user:${userId}`],  (err, user) => {
             if (err) {
               Logger.error(`RedisService.getUser at client1.get ${err}`);
@@ -144,7 +154,7 @@ module.exports={
           else if (user != null && user !== '') {
             const parseUserObj = JSON.parse(user);
             Logger.info(`user already exist ${parseUserObj}`)
-            Logger.info(`zonion:user:${userid}`)
+            Logger.info(`zonion:user:${userId}`)
            
             return callback(null, parseUserObj);
           } else {
@@ -162,7 +172,7 @@ module.exports={
             });
           }
         });
-      }, db: 0,
+      },
 
       setup(callback) {
         Logger.info('in Redis Setup method')

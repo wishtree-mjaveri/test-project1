@@ -51,8 +51,8 @@ function Home(props) {
   useEffect(() => {
     Axios.get(`http://localhost:1337/api/admin/restaurants?page=${page}&order=${sortorder}`, { withCredentials: true }).then((res) => {
       console.log(res.data);
-      if (res.data.status == 401) {
-        props.history.push('/userHome');
+      if (res.data.status == 401||res.data.status == 403) {
+        props.history.push('/restaurants');
         message.error('Anauthorized access');
       }
       setRestaurantList(res.data.list);
@@ -81,11 +81,11 @@ function Home(props) {
         console.log(res);
 
         if (res.data.status == 300 && res.data.message == 'Please Login') {
-          props.history.push('/userHome');
+          props.history.push('/restaurants');
           pleaseLogin();
         }
         if (res.data.status == 401 && res.data.message == 'Please login') {
-          history.push('/userHome');
+          props.history.push('/restaurants');
           pleaseLogin();
         } else {
           refreshData();
@@ -142,7 +142,7 @@ function Home(props) {
       ),
     },
     {
-      title: <IntlMessages id="Adminhome.table.restaurantaddress" />,
+      title: <IntlMessages id="Adminhome.table.restaurantdescription" />,
       dataIndex: 'restaurantDescription',
       key: 'age',
       ellipsis: {

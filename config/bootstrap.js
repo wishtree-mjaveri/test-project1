@@ -42,36 +42,37 @@ module.exports.bootstrap = async function setup(cb) {
   } catch (err) {
     return logAndExitSails(err, 'Logger service failed. Sails process will exit now. You can configure the logger and try again.');
   }
-  RedisService.setup((err)=>{
-if (err) {
-  logAndExitSails(err, 'Redis service setup failed. Sails process will exit now.');
+ 
+//   RedisService.setup((err)=>{
+// if (err) {
+//   logAndExitSails(err, 'Redis service setup failed. Sails process will exit now.');
   
-} else {
-  sails.log.info('Redis service setup successfully.');
+// } else {
+//   sails.log.info('Redis service setup successfully.');
 
-  const registrationData = {
-    username: 'superadmin',
-    role: 'Admin',
-    email: 'superadmin1234@demo.com',
-    password: 'superadmin',
-    isVerified:true
-  };
-  UserServices.registration(registrationData, (registrationErr, registeredUSer) => {
-    if (registrationErr) {
-      if (registrationErr === 'Already Present') {
-        sails.log.info('Super Admin exists.');
-        cb();
-      } else {
-        logAndExitSails(registrationErr, 'Error while creating Super Admin. Please contact your Administrator.');
-      }
-    } else if (!registeredUSer) {
-      logAndExitSails(registrationErr, 'Error while creating Super Admin. Please contact your Administrator.');
-    } else {
-      sails.log.info('Super Admin created successfully.');
+//   const registrationData = {
+//     username: 'superadmin',
+//     role: 'Admin',
+//     email: 'superadmin1234@demo.com',
+//     password: 'superadmin',
+//     isVerified:true
+//   };
+//   UserServices.registration(registrationData, (registrationErr, registeredUSer) => {
+//     if (registrationErr) {
+//       if (registrationErr === 'Already Present') {
+//         sails.log.info('Super Admin exists.');
+//         cb();
+//       } else {
+//         logAndExitSails(registrationErr, 'Error while creating Super Admin. Please contact your Administrator.');
+//       }
+//     } else if (!registeredUSer) {
+//       logAndExitSails(registrationErr, 'Error while creating Super Admin. Please contact your Administrator.');
+//     } else {
+      // sails.log.info('Super Admin created successfully.');
       cb();
-    }
-  });
-}
-  })
+//     }
+//   });
+// }
+//   })
   
 };

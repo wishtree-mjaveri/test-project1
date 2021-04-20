@@ -9,6 +9,7 @@ import Axios from 'axios';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import IntlMessages from '../../util/IntlMessages';
 import localforage from 'localforage'
+
 const FormItem = Form.Item;
 
 const SignIn = (props) => {
@@ -73,7 +74,13 @@ const SignIn = (props) => {
       Axios.post('http://localhost:1337/user/login', { email, password }, { headers:header.headers, withCredentials: true })
 
         .then((res) => {
-          console.log(res);
+          console.log(res.data)
+          if (res.data.status==301 ) {
+            console.log('in incorrect email')
+            setErrorMessage('invalid email or password');
+            seterrorState(true);
+            
+          }
           if (res.data.user.isVerified == true && res.data.user.role !== 'Admin') {
             history.push('/userhomepage');
             message.success("Login successful")
@@ -98,7 +105,7 @@ const SignIn = (props) => {
             history.push('/restaurants');
             return message.error('Please Login');
           }
-          if (res.data.status == 200 && res.data.user.role === 'Admin') {
+          if ( res.data.user.role === 'Admin'&& res.data.status == 200) {
             console.log('admin successful login to home page');
             history.push('/admin-home');
             successfulLogin();
@@ -108,10 +115,7 @@ const SignIn = (props) => {
               }
               console.log(val)
             })
-          } else if (res.data.status == 300) {
-            setErrorMessage('invalid email or password');
-            seterrorState(true);
-          }
+          }  
         })
         .catch((error) => {
           console.log(error);
@@ -144,7 +148,7 @@ const SignIn = (props) => {
     <div>
       <Button onClick={showModal}><IntlMessages id="mainapp.login" /></Button>
       <div className="gx-login-container">
-        <Modal visible={isModalVisible} onCancel={handelCancel} destroyOnClose footer={null}>
+        <Modal visible={isModalVisible} onCancel={handelCancel} destroyOnClose afterClose={()=>setErrorMessage("")} footer={null}>
           <div className="gx-login-header gx-text-center">
             <h1 className="gx-login-title"><IntlMessages id="mainapp.login" /></h1>
           </div>

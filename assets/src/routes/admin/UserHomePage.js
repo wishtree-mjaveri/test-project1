@@ -28,6 +28,7 @@ function UserHomePage() {
       </Link>
     </Col>
   )) : <h2>No restaurants Found</h2>;
+  document.title="Zonions"
   return (
     <div>
       <HorizontalDark setSearch={setSearch} search={search} setrestaurants={setrestaurants} />

@@ -107,18 +107,36 @@ const [defaultLang, setDefaultLang] = useState({})
     }
   };
 
+  
   useEffect(() => {
     if (location.pathname === '/') {
       // if (authUser === null) {
       //   history.push('/signin');
       // } 
-       if (initURL === '' || initURL === '/' || initURL === '/signin') {
+       if (initURL === '' || initURL === '/' || initURL === '/signin'||initURL==='/restaurants') {
+      // localforage.getItem('user-key')
+      // .then(res=>{
+      //   console.log(res.data)
+      //  if (res.email.length!=0 && res.role==="Admin") {
+      //    history.push('/admin-home')
+      //  } else if(res.email.length!=0 && res.role===""){
+      //     history.push('/userhomepage')
+      //  }
+       
+      //  else {
+      //    history.push('/restaurants')
+      //  } 
+        //  history.push('/restaurants')
+
+      // }
+      //   )
+
         history.push('/restaurants');
       } else {
         history.push(initURL);
       }
     }
-  }, [authUser, initURL, location, history]);
+  }, [authUser, initURL, location]);
   
   useEffect(() => {
     if (themeType === THEME_TYPE_DARK) {
@@ -156,11 +174,11 @@ console.log('locale from settings',locale)
 if (defaultLang.length>0) {
  
   currentAppLocale=AppLocale[defaultLang]
-  console.log('in if',currentAppLocale)
+  // console.log('in if',currentAppLocale)
 
 } else {
   currentAppLocale=AppLocale[locale.locale]
-  console.log('in else',currentAppLocale)
+  // console.log('in else',currentAppLocale)
  
 }
 console.log(currentAppLocale)

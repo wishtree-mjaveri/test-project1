@@ -46,7 +46,10 @@ function RestaurantDetails(props) {
           }
           setLoading(false);
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {console.log(error)
+        props.history.push('/restaurants')
+        
+        })
         .finally(() => setSpining(false));
     }
     fetchRestaurants();
@@ -126,10 +129,12 @@ function RestaurantDetails(props) {
                   alignItems: 'center',
                 }}
                 >
-                  <h1>{restaurant.name}</h1>
+                  <ShowMore more="more" less="less">
+                  <h1 style={{wordBreak:'break-all'}}>{restaurant.name}</h1>
+                  </ShowMore>
                   { (parseInt(currentTime) >= parseInt(restaurant.openingTime) && parseInt(currentTime) <= parseInt(restaurant.closingTime))
-                    ? <h3 style={{ color: 'green', paddingLeft: '10px' }}>(Open now)</h3>
-                    : <h3 style={{ color: 'red', paddingLeft: '10px' }}>(Closed)</h3>}
+                    ? <h3 style={{ flex:'none',color: 'green', paddingLeft: '10px' }}>(Open now)</h3>
+                    : <h3 style={{ flex:'none',color: 'red', paddingLeft: '10px' }}>(Closed)</h3>}
                 </div>
                 {/* <h3 style={{color:currentRestaurantStatus=="Open"?"green":"red"}}>{currentRestaurantStatus}</h3>  */}
 

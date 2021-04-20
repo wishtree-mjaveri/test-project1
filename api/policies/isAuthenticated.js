@@ -24,6 +24,7 @@ module.exports = function isAuthenticated(req, res, next) {
       }
       if (userObj != null) {
         if (!userObj.isVerified) {
+          console.log(userObj.isVerified)
           return res.send({ status: 401, message: 'Please login.' });
         }
         res.locals.user = userObj;

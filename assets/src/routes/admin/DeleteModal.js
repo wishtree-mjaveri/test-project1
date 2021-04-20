@@ -41,10 +41,10 @@ function DeleteModal({
         console.log(res);
 
         if (res.data.status == 300 && res.data.message == 'Please Login') {
-          history.push('/userHome');
+          history.push('/restaurants');
           pleaseLogin();
         } if (res.data.status == 401 && res.data.message == 'Please login.') {
-          history.push('/userHome');
+          history.push('/restaurants');
           pleaseLogin();
         } else {
           refreshData();

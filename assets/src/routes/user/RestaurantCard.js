@@ -20,7 +20,7 @@ function RestaurantCard({
       </div>
 
       <div className="gx-product-body">
-        <h3 className="gx-product-title">
+        <h3 className="gx-product-title" style={{overflow:"hidden",textOverflow:"ellipsis"}}>
           {name}
           {/* <small className="gx-text-grey">{", " + variant}</small> */}
         </h3>

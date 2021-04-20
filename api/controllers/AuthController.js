@@ -22,7 +22,7 @@ module.exports = {
       }
       if (!user) {
         Logger.verbose('User not found');
-        return res.send({ status: 300, message: info.message, user: null });
+        return res.send({ status: 301, message: info.message, user: null });
       }
       req.logIn(user, (logInErr) => {
         if (logInErr) {
