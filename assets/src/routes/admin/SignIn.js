@@ -9,7 +9,8 @@ import Axios from 'axios';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import IntlMessages from '../../util/IntlMessages';
 import localforage from 'localforage'
-
+import {admin, instance, signin,} from '../constants/Api'
+import {GoogleLogin} from 'react-google-login'
 const FormItem = Form.Item;
 
 const SignIn = (props) => {
@@ -71,8 +72,8 @@ const SignIn = (props) => {
     if (email.length == 0 || password.length == 0) {
       setIsModalVisible(true);
     } else {
-      Axios.post('http://localhost:1337/user/login', { email, password }, { headers:header.headers, withCredentials: true })
-
+      // Axios.post('http://localhost:1337/user/login', { email, password }, { headers:header.headers, withCredentials: true })
+      instance.post(signin,{email, password})
         .then((res) => {
           console.log(res.data)
           if (res.data.status==301 ) {
@@ -81,7 +82,7 @@ const SignIn = (props) => {
             seterrorState(true);
             
           }
-          if (res.data.user.isVerified == true && res.data.user.role !== 'Admin') {
+          if (res.data.user.isVerified == true && res.data.user.role !== admin) {
             history.push('/userhomepage');
             message.success("Login successful")
             localforage.setItem('user-key',res.data.user,(err,val)=>{
@@ -124,6 +125,20 @@ const SignIn = (props) => {
         });
     }
   };
+  const responseGoogle = (response) => {
+    console.log(response);
+  }
+
+  const googleSignIn = ()=>{
+    <GoogleLogin 
+    clientId='206197260501-lu0i11eu48mf62tn885fi3ge3lscjasp.apps.googleusercontent.com'
+    buttonText="Login"
+    onSuccess={responseGoogle}
+    onFailure={responseGoogle}
+    cookiePolicy={'single_host_origin'}
+    
+    />
+  }
 
   // if (email=="demo@123.com"&&password=="demo") {
   // history.push('/home')
@@ -189,6 +204,8 @@ const SignIn = (props) => {
                 <IntlMessages id="mainapp.login.loginbutton" />
               </Button>
             </FormItem>
+         
+           
           </Form>
         </Modal>
 

@@ -18,6 +18,7 @@ import HorizontalNav from '../../containers/Topbar/HorizontalNav';
 // import {switchLanguage, toggleCollapsedSideNav} from "../../../appRedux/actions/Setting";
 import IntlMessages from '../../util/IntlMessages';
 import localforage from 'localforage'
+import { instance, signout } from '../constants/Api';
 
 const { Header } = Layout;
 
@@ -73,11 +74,12 @@ const HorizontalDark = (props) => {
     setSearchText(evt.target.value);
   };
   const handleLogout = () => {
-    Axios.post(
-      'http://localhost:1337/user/logout',
-      { headers },
-      { withCredentials: true },
-    )
+    instance.post(signout)
+    // Axios.post(
+    //   'http://localhost:1337/user/logout',
+    //   { headers },
+    //   { withCredentials: true },
+    // )
       .then((res) => {
         console.log(res.data);
 
@@ -92,8 +94,8 @@ const HorizontalDark = (props) => {
     await Axios.get(`http://localhost:1337/api/description/restaurants?text=${search}`, {headers:{  Accept: 'application/json',
     'Content-Type': 'application/json',}, withCredentials: true })
       .then((result) => {
-        console.log(result.data.restaurants);
-        props.setrestaurants(result.data.restaurants);
+        console.log(result.data.restaurantList);
+        props.setrestaurants(result.data.restaurantList);
       })
       .catch((error) => console.log(error));
     setSearchText('');
@@ -115,7 +117,7 @@ const HorizontalDark = (props) => {
           history.push('/restaurants');
           message.error('Please Login');
         }
-        props.setrestaurants(result.data.restaurants);
+        props.setrestaurants(result.data.restaurantList);
       })
       .catch((error) => console.log(error));
   }, []);

@@ -5,6 +5,7 @@ import {
 } from 'antd';
 import { DeleteTwoTone, ExclamationCircleOutlined } from '@ant-design/icons';
 import Axios from 'axios';
+import {instance,deleteRestaurant} from '../constants/Api'
 
 const { confirm } = Modal;
 function DeleteModal({
@@ -33,10 +34,11 @@ function DeleteModal({
   const history = useHistory();
   function handleDelete(id) {
     console.log('uid:-', id);
-    Axios.delete(`http://localhost:1337/api/restaurant?uid=${id}`, {
-    headers:headers.headers,
-      withCredentials: true,
-    })
+    // Axios.delete(`http://localhost:1337/api/restaurant?uid=${id}`, {
+    // headers:headers.headers,
+    //   withCredentials: true,
+    // })
+    instance.delete(deleteRestaurant,{params:{uid:uid}})
       .then((res) => {
         console.log(res);
 

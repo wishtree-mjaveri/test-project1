@@ -10,7 +10,7 @@ import { restaurantList } from './Restaurants';
 import RestaurantCard from './RestaurantCard';
 import Basic from '../components/dataDisplay/Avatar/Basic';
 import ScrollAutomatically from '../components/dataDisplay/Carousel/ScrollAutomatically';
-
+import {instance,getAllrestaurants} from '../constants/Api'
 function UserHome(props) {
   const [restaurants, setRestaurants] = useState([]);
   const [restaurantId, setRestaurantId] = useState('');
@@ -20,13 +20,19 @@ function UserHome(props) {
   useEffect(() => {
     // http://localhost:1337/api/card/restaurants
     // http://localhost:1337/api/restaurants?pagination=${restaurantPagination}&page=${restaurantPage}
-    Axios.get('http://localhost:1337/api/card/restaurants')
-      .then((res) => {
-        console.log(res.data.list);
+   instance.get(getAllrestaurants).then((res)=>{
+    console.log(res.data);
         setRestaurants(res.data.list);
         setRestaurantId(restaurants._id);
-      })
-      .catch((error) => console.log(error));
+   })
+   .catch(error=>console.log(error))
+    // Axios.get('http://localhost:1337/api/card/restaurants')
+    //   .then((res) => {
+    //     console.log(res.data.list);
+    //     setRestaurants(res.data.list);
+    //     setRestaurantId(restaurants._id);
+    //   })
+    //   .catch((error) => console.log(error));
   }, [restaurantPage]);
 
   const handleCHange = (e) => {
@@ -45,7 +51,7 @@ function UserHome(props) {
         {
          restaurants.map((restaurant) => (
            <Col key={restaurant.id} xl={6} md={8} sm={12} xs={24}>
-             <Link to={{ pathname: `/restaurantdetails/${restaurant.uid}`, restaurantId: restaurant.id }}>
+             <Link to={{ pathname: `/restaurantdetails/${restaurant.uid}`, restaurantId: restaurant.uid }}>
                <RestaurantCard name={restaurant.restaurantName} description={restaurant.restaurantDescription} hotelImage={restaurant.image} address={restaurant.restaurantAddress} grid />
                {' '}
              </Link>

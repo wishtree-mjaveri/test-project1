@@ -10,7 +10,7 @@ const moment = require('moment');
 
 module.exports = {
 
-  validate(args, callback) {
+  async validate(args, callback) {
     // //Logger.verbose(`args.length :${args.length}`);
     const validationErrMsg = [];
 

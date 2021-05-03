@@ -9,6 +9,7 @@ import { footerText } from '../../util/config';
 import IntlMessages from '../../util/IntlMessages';
 import RestaurantDetails from './RestaurantDetails';
 import ShowMore from 'react-show-more'
+import {instance,getRestaurant} from '../constants/Api'
 
 function RestaurantInfo(props) {
   const [restaurant, setRestaurant] = useState({});
@@ -19,16 +20,16 @@ function RestaurantInfo(props) {
   const [description, setDescription] = useState('');
   useEffect(() => {
     async function fetchRestaurants() {
-      await Axios.get(`http://localhost:1337/api/restaurant?_id=${props.location.restaurantId}`)
+      await instance.get(getRestaurant,{params:{uid:props.location.restaurantId}})
         .then((res) => {
-          console.log(res.data.restaurant);
-          setRestaurant(res.data.restaurant);
-          setDescription(res.data.restaurant.description);
+          console.log(res.data.restaurant[0]);
+          setRestaurant(res.data.restaurant[0]);
+          setDescription(res.data.restaurant[0].restaurantDescription);
 
-          if (res.data.restaurant.address == '') {
+          if (res.data.restaurant[0].restaurantAddress == '') {
             setAddress('N/A');
           } else {
-            setAddress(res.data.restaurant.address);
+            setAddress(res.data.restaurant[0].restaurantAddress);
           }
           setSpining(false);
         })
@@ -95,9 +96,9 @@ function RestaurantInfo(props) {
                 }}
                 >
                   <ShowMore  more="more" less="less" >
-                  <h1 style={{wordBreak:"break-all"}}>{restaurant.name}</h1>
+                  <h1 style={{wordBreak:"break-all"}}>{restaurant.restaurantName}</h1>
                   </ShowMore>
-                  { (parseInt(currentTime) >= parseInt(restaurant.openingTime) && parseInt(currentTime) <= parseInt(restaurant.closingTime))
+                  { (parseInt(currentTime) >= parseInt(restaurant.restaurantOpeningTime) && parseInt(currentTime) <= parseInt(restaurant.restaurantClosingTime))
                     ? <h3 style={{ flex:'none',color: 'green', paddingLeft: '10px' }}>(Open now)</h3>
                     : <h3 style={{ flex:'none',color: 'red', paddingLeft: '10px' }}>(Closed)</h3>}
                 </div>
@@ -131,12 +132,12 @@ function RestaurantInfo(props) {
                   <p>
                     <IntlMessages id="restaurantDetails.time.openingtime" />
                     :-
-                    {restaurant.openingTime}
+                    {restaurant.restaurantOpeningTime}
                   </p>
                   <p>
                     <IntlMessages id="restaurantDetails.time.closingtime" />
                     :-
-                    {restaurant.closingTime}
+                    {restaurant.restaurantClosingTime}
                   </p>
 
                 </div>

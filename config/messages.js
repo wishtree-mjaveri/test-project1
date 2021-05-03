@@ -15,5 +15,8 @@ module.exports.messages = {
   restaurantCreated: 'Restaurant created successfully',
   restaurantUpdated: 'Restaurant updated successfully',
   restaurantDeleted: 'Restaurant deleted successfully',
-
+  restaurantNameEmpty:'Please enter restaurant name',
+  restaurantDescrription:'Please enter restaurant description',
+  restaurantOpeningTimeEmpty:'Please enter restaurant opening-time',
+  restaurantClosingTimeEmpty:'Please enter restaurant closing-time',
 };

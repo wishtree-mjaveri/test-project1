@@ -5,17 +5,18 @@ import Axios from 'axios'
 import {EditTwoTone} from '@ant-design/icons'
 import moment from 'moment'
 import {useHistory} from 'react-router-dom'
+import {instance,editRestaurant,getRestaurant} from '../constants/Api'
 
 const FormItem =Form.Item
 
 
-function EditRestaurant({visible,name,id,desc,address,openingTime,closingTime,refresh,image},props) {
+function EditRestaurant({visible,name,id,uid,desc,address,openingTime,closingTime,refresh,image},props) {
     const [isEditModelVisible, setIsEditModelVisible] = useState(visible)
     const [restaurantName, setRestaurantName] = useState()
     const [restaurantDescription, setdescription] = useState()
     const [restaurantAddress, setrestaurantAddress] = useState()
-    const [restaurantOpeningTime, setRestaurantOpeningTime] = useState('')
-    const [restaurantClosingTime, setRestaurantClosingTime] = useState('')
+    const [restaurantOpeningTime, setRestaurantOpeningTime] = useState()
+    const [restaurantClosingTime, setRestaurantClosingTime] = useState()
     const [restaurantImage, setRestaurantImage] = useState('')
     const [errorimage, seterrorimage] = useState(false)
     const [errorMessage, seterrorMessage] = useState('')
@@ -127,49 +128,50 @@ const headers={
 //    fetchRestaurants()
     
 //  }, [id])
- async function fetchRestaurants(){
+//  async function fetchRestaurants(){
 
-  await Axios.get(`http://localhost:1337/api/restaurant?_id=${id}`).
-   then(res=>{
-       console.log(res.data.restaurant)
-       setRestaurant(res.data.restaurant)
-       setRestaurantName(res.data.restaurant.name)
-       setrestaurantAddress(res.data.restaurant.address.charAt(0).toUpperCase()+res.data.restaurant.restaurantAddress.slice(1))
-       setdescription(res.data.restaurant.description)
-       setRestaurantOpeningTime(res.data.restaurant.openingTime)
-       setRestaurantClosingTime(res.data.restaurant.closingTime)
-       setRestaurantImage(res.data.restaurant.image)
-       if (res.data.restaurant.address=="") {
-         setrestaurantAddress("N/A")
-       } else {
-         setrestaurantAddress(res.data.restaurant.address)
-       }
-       setLoading(false)
-   })
-   .catch(error=>console.log(error))
-  .finally(()=>setLoading(false))
- }
+//   await Axios.get(`http://localhost:1337/api/restaurant?_id=${id}`).
+//    then(res=>{
+//        console.log(res.data.restaurant)
+//        setRestaurant(res.data.restaurant)
+//        setRestaurantName(res.data.restaurant.name)
+//        setrestaurantAddress(res.data.restaurant.address.charAt(0).toUpperCase()+res.data.restaurant.restaurantAddress.slice(1))
+//        setdescription(res.data.restaurant.description)
+//        setRestaurantOpeningTime(res.data.restaurant.openingTime)
+//        setRestaurantClosingTime(res.data.restaurant.closingTime)
+//        setRestaurantImage(res.data.restaurant.image)
+//        if (res.data.restaurant.address=="") {
+//          setrestaurantAddress("N/A")
+//        } else {
+//          setrestaurantAddress(res.data.restaurant.address)
+//        }
+//        setLoading(false)
+//    })
+//    .catch(error=>console.log(error))
+//   .finally(()=>setLoading(false))
+//  }
     const showModel=async()=>{
       // fetchRestaurants()
-     await Axios.get(`http://localhost:1337/api/restaurant?_id=${id}`).
-      then(res=>{
-          console.log(res.data.restaurant)
+    //  await Axios.get(`http://localhost:1337/api/restaurant?_id=${id}`).
+  await instance.get(getRestaurant,{params: {uid:uid}})
+      .then(res=>{
+          console.log(res.data.restaurant[0])
           setRestaurant(res.data.restaurant)
-          setRestaurantName(res.data.restaurant.name)
-          setrestaurantAddress(res.data.restaurant.address.charAt(0).toUpperCase()+res.data.restaurant.address.slice(1))
-          setdescription(res.data.restaurant.description)
-          setRestaurantOpeningTime(res.data.restaurant.openingTime)
-          setRestaurantClosingTime(res.data.restaurant.closingTime)
-          setRestaurantImage(res.data.restaurant.image)
+          setRestaurantName(res.data.restaurant[0].restaurantName)
+          setrestaurantAddress(res.data.restaurant[0].restaurantAddress)
+          setdescription(res.data.restaurant[0].restaurantDescription)
+          setRestaurantOpeningTime(res.data.restaurant[0].restaurantOpeningTime)
+          setRestaurantClosingTime(res.data.restaurant[0].restaurantClosingTime)
+          setRestaurantImage(res.data.restaurant[0].image)
           // console.log(restaurant)
           // console.log(restaurantImage)
-console.log(res.data.restaurant.openingTime)
+console.log(res.data.restaurant[0].restaurantOpeningTime)
 
       })
       .catch(error=>console.log(error))
   
-      console.log(id)
-      console.log(restaurantName)
+      // console.log(id)
+      // console.log(restaurantName)
         setIsEditModelVisible(true)
         setLoading(false)
 
@@ -181,7 +183,7 @@ console.log(res.data.restaurant.openingTime)
         setIsEditModelVisible(true)
         
       } else {
-       await Axios.put(`http://localhost:1337/api/restaurant`,{id,restaurantName,restaurantAddress:address,restaurantClosingTime,restaurantOpeningTime,restaurantDescription:description,image:restaurantImage},{headers:headers.headers,withCredentials:true})
+     instance.put(editRestaurant,{id,restaurantName,restaurantAddress:address,restaurantClosingTime,restaurantOpeningTime,restaurantDescription:description,image:restaurantImage})
         .then(res=>{console.log(res.data)
           if (res.data.status=300&&res.data.message=="Please Login") {
             history.push('/userHome')
@@ -213,7 +215,7 @@ console.log(res.data.restaurant.openingTime)
     }
   //  let imageUrl=restaurantImage!=""?restaurantImage:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60";
   // let imageUrl=restaurantImage!=""?restaurantImage:null;
-   let defaultFileList=restaurantImage!=''?[{uid:-1,status:"done",url:restaurantImage}]:null;
+   let defaultFileList=restaurantImage!=''?[{uid:1,status:"done",url:restaurantImage}]:null;
    
   return (
         <div>

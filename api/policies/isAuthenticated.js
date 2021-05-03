@@ -3,6 +3,7 @@ const RedisService = require('../services/RedisService')
 const { messages } = sails.config;
 module.exports = function isAuthenticated(req, res, next) {
   Logger.debug('isAuthenticated.js');
+  
   if (req.isAuthenticated()) {
     Logger.verbose('in if isauth.js');
     const user = req.user;

@@ -22,7 +22,7 @@ function UserHomePage() {
   // }, [])
   const restaurantList = restaurants.length != 0 ? restaurants.map((restaurant) => (
     <Col key={restaurant.id} xl={6} md={8} sm={12} xs={24}>
-      <Link to={{ pathname: '/restaurantinfo', restaurantId: restaurant.id }}>
+      <Link to={{ pathname: '/restaurantinfo', restaurantId: restaurant.uid }}>
         <RestaurantCard name={restaurant.restaurantName} description={restaurant.restaurantDescription} hotelImage={restaurant.image} address={restaurant.restaurantAddress} grid />
         {' '}
       </Link>

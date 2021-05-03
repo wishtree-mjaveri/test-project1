@@ -10,6 +10,7 @@ import Modal from 'antd/lib/modal/Modal';
 import EditRestaurant from './EditRestaurant';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import {instance,allrestaurants, getAllrestaurants} from '../constants/Api'
 
 import './index.css';
 import { refresh } from 'less';
@@ -49,51 +50,75 @@ function Home(props) {
   };
 
   useEffect(() => {
-    Axios.get(`http://localhost:1337/api/admin/restaurants?page=${page}&order=${sortorder}`, { withCredentials: true }).then((res) => {
+    instance.get(allrestaurants,{params:{page:page,order:sortorder}})
+    .then(res=>{
       console.log(res.data);
-      if (res.data.status == 401||res.data.status == 403) {
-        props.history.push('/restaurants');
-        message.error('Anauthorized access');
-      }
-      setRestaurantList(res.data.list);
-      setLoading(false);
-      Axios.get('http://localhost:1337/api/card/restaurants').then((res) => { console.log(res.data.list.length), setTotal(Math.ceil(res.data.list.length / 4)); });
-    }).catch((error) => console.log(error));
+        if (res.data.status == 401||res.data.status == 403) {
+          props.history.push('/restaurants');
+          message.error('Anauthorized access');
+        }
+        setRestaurantList(res.data.restaurants);
+        setLoading(false);
+        instance.get(getAllrestaurants).then((res) => { console.log(res.data.list.length), setTotal(Math.ceil(res.data.list.length / 4)); });
+    
+    })
+    .catch(err=>console.log(err))
+    // Axios.get(`http://localhost:1337/api/admin/restaurants?page=${page}&order=${sortorder}`, { withCredentials: true }).then((res) => {
+    //   console.log(res.data);
+    //   if (res.data.status == 401||res.data.status == 403) {
+    //     props.history.push('/restaurants');
+    //     message.error('Anauthorized access');
+    //   }
+    //   setRestaurantList(res.data.restaurants);
+    //   setLoading(false);
+    //   Axios.get('http://localhost:1337/api/card/restaurants').then((res) => { console.log(res.data.list.length), setTotal(Math.ceil(res.data.list.length / 4)); });
+    // }).catch((error) => console.log(error));
   }, [page, total, sortorder]);
 
   const refreshData = async () => {
-    await Axios.get(`http://localhost:1337/api/restaurants?page=${page}&order=${sortorder}`).then((res) => {
-      console.log(res.data.list);
-      setRestaurantList(res.data.list);
-      Axios.get('http://localhost:1337/api/card/restaurants').then((res) => { console.log(res.data.list.length), setTotal(Math.ceil(res.data.list.length / 4)); });
-      setLoading(false);
-    });
+    instance.get(allrestaurants,{params:{page:page,order:sortorder}})
+    .then(res=>{
+      console.log(res.data);
+       
+        setRestaurantList(res.data.restaurants);
+        // setLoading(false);
+        instance.get(getAllrestaurants).then((res) => { console.log(res.data.list.length), setTotal(Math.ceil(res.data.list.length / 4)); });
+    
+    })
+    .catch(err=>console.log(err))
+
+    // await Axios.get(`http://localhost:1337/api/restaurants?page=${page}&order=${sortorder}`).then((res) => {
+    //   console.log(res.data.restaurants);
+    //   setRestaurantList(res.data.restaurants);
+    //   Axios.get('http://localhost:1337/api/card/restaurants').then((res) => { console.log(res.data.list.length), setTotal(Math.ceil(res.data.list.length / 4)); });
+    //   setLoading(false);
+    // });
   };
   const { Footer } = Layout;
 
-  function handleDelete(id) {
-    console.log('uid:-', id);
-    Axios.delete(`http://localhost:1337/api/restaurant?uid=${id}`, {
-      headers,
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res);
+  // function handleDelete(id) {
+  //   console.log('uid:-', id);
+  //   Axios.delete(`http://localhost:1337/api/restaurant?uid=${id}`, {
+  //     headers,
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
 
-        if (res.data.status == 300 && res.data.message == 'Please Login') {
-          props.history.push('/restaurants');
-          pleaseLogin();
-        }
-        if (res.data.status == 401 && res.data.message == 'Please login') {
-          props.history.push('/restaurants');
-          pleaseLogin();
-        } else {
-          refreshData();
-          successfulDelete();
-        }
-      })
-      .catch((error) => console.log(error));
-  }
+  //       if (res.data.status == 300 && res.data.message == 'Please Login') {
+  //         props.history.push('/restaurants');
+  //         pleaseLogin();
+  //       }
+  //       if (res.data.status == 401 && res.data.message == 'Please login') {
+  //         props.history.push('/restaurants');
+  //         pleaseLogin();
+  //       } else {
+  //         refreshData();
+  //         successfulDelete();
+  //       }
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
   function sortMethod(sortorder) {
     if (sortorder == 'ASC') {
       setSortorder('DESC');
@@ -133,7 +158,7 @@ function Home(props) {
         <span className="gx-link">
           <Tooltip placement="topLeft" title={text}>
             <Link
-              to={{ pathname: `/restaurantdetails/${record.uid}`, restaurantId: record.id }}
+              to={{ pathname:`/restaurantdetails/${record.uid}`, restaurantId: record.uid }}
             >
               {text}
             </Link>
@@ -192,6 +217,7 @@ function Home(props) {
 
             name={record.restaurantName}
             id={record.id}
+            uid={record.uid}
             desc={record.restaurantDescription}
             address={record.restaurantAddress}
             openingTime={record.restaurantOpeningTime}
@@ -201,7 +227,7 @@ function Home(props) {
           />
 
           <Divider type="vertical" />
-          <DeleteModal uid={record.uid} handleDelete={handleDelete} pleaseLogin={pleaseLogin} refreshData={refreshData} />
+          <DeleteModal uid={record.uid}  pleaseLogin={pleaseLogin} refreshData={refreshData} />
 
           {/* <Divider type="vertical"/> */}
           {/* <span className="gx-link ant-dropdown-link">
@@ -298,6 +324,7 @@ function Home(props) {
             // }}
               pagination={false}
               showSorterTooltip={false}
+            
             />
             <Pagination style={{ float: 'right', paddingTop: '20px' }} defaultPageSize={page} defaultCurrent={current} total={total} onChange={handleChange} />
           </Spin>

@@ -22,7 +22,7 @@ import ShowMore from 'react-show-more';
 import ReadMore from 'read-more-react';
 import { footerText } from '../../util/config';
 import ScrollAutomatically from '../components/dataDisplay/Carousel/ScrollAutomatically';
-
+import {instance,getRestaurant} from '../constants/Api'
 function RestaurantDetails(props) {
   const [restaurant, setRestaurant] = useState({});
   const [restaurantStatus, setRestaurantStatus] = useState('');
@@ -34,15 +34,17 @@ function RestaurantDetails(props) {
   const [showToolTip, setShowToolTip] = useState(true);
   useEffect(() => {
     async function fetchRestaurants() {
-      await Axios.get(`http://localhost:1337/api/restaurant?_id=${props.location.restaurantId}`)
-        .then((res) => {
-          console.log(res.data.restaurant);
-          setRestaurant(res.data.restaurant);
-          setDescription(res.data.restaurant.description);
-          if (res.data.restaurant.address == '') {
+      await 
+      // Axios.get(`http://localhost:1337/api/restaurant?_id=${props.location.restaurantId}`)
+      instance.get(getRestaurant,{ params:{uid:props.location.restaurantId}})  
+      .then((res) => {
+          console.log(res.data.restaurant[0]);
+          setRestaurant(res.data.restaurant[0]);
+          setDescription(res.data.restaurant[0].restaurantDescription);
+          if (res.data.restaurant[0].restaurantAddress == '') {
             setAddress('N/A');
           } else {
-            setAddress(res.data.restaurant.address);
+            setAddress(res.data.restaurant[0].restaurantAddress);
           }
           setLoading(false);
         })
@@ -130,9 +132,9 @@ function RestaurantDetails(props) {
                 }}
                 >
                   <ShowMore more="more" less="less">
-                  <h1 style={{wordBreak:'break-all'}}>{restaurant.name}</h1>
+                  <h1 style={{wordBreak:'break-all'}}>{restaurant.restaurantName}</h1>
                   </ShowMore>
-                  { (parseInt(currentTime) >= parseInt(restaurant.openingTime) && parseInt(currentTime) <= parseInt(restaurant.closingTime))
+                  { (parseInt(currentTime) >= parseInt(restaurant.restaurantOpeningTime) && parseInt(currentTime) <= parseInt(restaurant.restaurantClosingTime))
                     ? <h3 style={{ flex:'none',color: 'green', paddingLeft: '10px' }}>(Open now)</h3>
                     : <h3 style={{ flex:'none',color: 'red', paddingLeft: '10px' }}>(Closed)</h3>}
                 </div>
@@ -159,7 +161,7 @@ function RestaurantDetails(props) {
                   :-
                 </h3>
                 {/* address.charAt(0).toUpperCase()+address.slice(1) */}
-                <p style={{ overflowY: 'auto', wordBreak: 'break-all', height: '100px' }}>
+                <p style={{ overflowY: 'auto', wordBreak: 'break-all', maxHeight:"100px" }}>
                   <Tooltip placement="topLeft" destroyTooltipOnHide title={address.charAt(0).toUpperCase() + address.slice(1)}>
                     {address.charAt(0).toUpperCase() + address.slice(1) }
                   </Tooltip>
@@ -174,12 +176,12 @@ function RestaurantDetails(props) {
                   <p>
                     <IntlMessages id="restaurantDetails.time.openingtime" />
                     :-
-                    {restaurant.openingTime}
+                    {restaurant.restaurantOpeningTime}
                   </p>
                   <p>
                     <IntlMessages id="restaurantDetails.time.closingtime" />
                     :-
-                    {restaurant.closingTime}
+                    {restaurant.restaurantClosingTime}
                   </p>
 
                 </div>

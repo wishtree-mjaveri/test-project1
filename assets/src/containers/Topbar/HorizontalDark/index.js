@@ -21,6 +21,8 @@ import VerifyEmail from '../../../routes/admin/VerifyEmail'
 import Z_logo from '../../../assets/images/Z-Letter-PNG.png';
 import Home from '../../../routes/admin/Home';
 import SignUP from '../../../routes/admin/SignUp';
+import GoogleSignIn from '../../../routes/admin/GoogleSignIn';
+import FacebookLogin from '../../../routes/admin/FacebookLogin';
 
 const { Header } = Layout;
 
@@ -195,6 +197,8 @@ const HorizontalDark = () => {
                 <span className="gx-pointer gx-flex-row ">
                   <SignIn />
                   <SignUP />
+                  {/* <GoogleSignIn />
+                  <FacebookLogin /> */}
                   {/* <VerifyEmail/> */}
                 </span>
                 {' '}

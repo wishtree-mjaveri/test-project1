@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import './index.css';
 import IntlMessages from '../../util/IntlMessages';
-
+import {instance,addRestaurant} from '../constants/Api'
 const FormItem = Form.Item;
 
 function AddRestaurant(props) {
@@ -42,16 +42,16 @@ function AddRestaurant(props) {
   };
 
   const handleOk = async () => {
-    if (restaurantName.length == 0 || restaurantDescription.length == 0 || restaurantClosingTime.length == 0 || restaurantOpeningTime.length == 0 || restaurantName.length > 20) {
+    if (restaurantName.length == 0 || restaurantDescription.length == 0 || restaurantClosingTime.length == 0 || restaurantOpeningTime.length == 0 || restaurantName.length > 200) {
       setErrorStatus(true);
       setIsModelVisible(true);
     } else {
       const address = restaurantAddress.toLowerCase().trim();
       const description = restaurantDescription.toLowerCase().trim();
       console.log('new address', address);
-      await axios.post('http://localhost:1337/api/registration', {
+      await instance.post(addRestaurant, {
         restaurantName, restaurantDescription: description, restaurantAddress: address, restaurantOpeningTime, restaurantClosingTime, image,
-      }, { headers:headers.headers, withCredentials: true })
+      })
         .then((res) => {
           console.log(res.data);
           if (res.data.status == 300 || res.data.message == 'Please Login') {
@@ -156,7 +156,7 @@ function AddRestaurant(props) {
           <Form layout="vertical">
 
             <div className="gx-form-group">
-              <FormItem rules={[{ required: true, message: 'Please enter restaurant name!' }, { max: 20, message: 'Restaurant name must be less than or equal to 20 characters' }]} label={<IntlMessages id="Addrestaurant.label.name" />} name="restaurantName">
+              <FormItem rules={[{ required: true, message: 'Please enter restaurant name!' }, { max: 200, message: 'Restaurant name must be less than  200 characters' }]} label={<IntlMessages id="Addrestaurant.label.name" />} name="restaurantName">
 
                 <Input
 
@@ -195,7 +195,7 @@ function AddRestaurant(props) {
               </FormItem>
             </div>
             <div style={{ display: 'inline-flex', flexWrap: 'wrap', gap: '60px' }}>
-              <FormItem rules={[{ required: true, message: 'Please enter opening time!' }]} label={<IntlMessages id="Addrestaurant.label.time" />} name="restaurantOpeningTime">
+              <FormItem rules={[{ required: true, message: 'Please enter time!' }]} label={<IntlMessages id="Addrestaurant.label.time" />} name="restaurantOpeningTime">
 
                 <TimePicker.RangePicker
 

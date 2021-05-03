@@ -13,6 +13,7 @@ import TwitterOutlined from '@ant-design/icons/lib/icons/TwitterOutlined';
 import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 import IntlMessages from '../../util/IntlMessages';
+import { instance, signup } from '../constants/Api';
 
 const FormItem = Form.Item;
 
@@ -46,10 +47,11 @@ const SignUP = () => {
     if (email.length == 0 || username.length == 0 || password.length == 0 || confirmPassword.length == 0) {
       setIsModalVisible(true);
     } else if (confirmPassword === password) {
-      Axios.post('http://localhost:1337/user/registration', { email, username, password })
+     instance.post(signup,{email, username, password })
+      // Axios.post('http://localhost:1337/user/registration', { email, username, password })
         .then((res) => {
           console.log(res.data);
-          if (res.data.status == 200) {
+          if (res.data.status == 201) {
             setIsModalVisible(false);
             successfulRegisteration();
           } else {
@@ -61,6 +63,13 @@ const SignUP = () => {
         });
     }
   };
+  const handleGoogleSignup=()=>{
+  
+    Axios.get('http://localhost:1337/api/v1/auth/google').then(res=>{res.redirect('http://localhost:1337/api/v1/auth/google')})
+    .catch(err=>{
+      console.log(err)
+    })
+  }
   return (
     <div>
       <Button onClick={showModal}><IntlMessages id="mainapp.signup" /></Button>
@@ -125,7 +134,9 @@ const SignUP = () => {
                 <IntlMessages id="mainapp.signup.signupbutton" />
               </Button>
             </FormItem>
+           
           </Form>
+        
 
         </Modal>
 

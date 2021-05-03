@@ -25,12 +25,12 @@ module.exports = {
     },
     username: {
       type: 'string',
-      required: true,
+     
 
     },
     password: {
       type: 'string',
-      required: true,
+     
     },
     role: {
       type: 'string',
@@ -87,14 +87,20 @@ module.exports = {
   async findByEmail(email, callback) {
     try {
       Logger.verbose(`in find by email method ${email}`);
-      const userExist = await User.find({ email });
+      const userExist = await User.find({ email:email });
+      Logger.verbose(userExist);
+
       if (userExist.length > 0) {
-        Logger.verbose(userExist);
-        return callback(null, userExist);
+        Logger.info("in if")
+        Logger.verbose(userExist[0].email);
+        return userExist;
+      } else{
+        return null;
+
       }
-      return callback(null);
     } catch (error) {
-      return callback(error);
+      Logger.error(`Error in User.findByEmail ${error}`)
+      return error;
     }
   },
 
@@ -115,22 +121,22 @@ try {
       // values.uniqueString = this.randomString();
       const createdRecord = await User.create(values).fetch();
       MailService.sendMail(values, values.uniqueString);
-      return callback(null, createdRecord);
+      return  createdRecord;
     } catch (error) {
-      return callback(error);
+      return error;
     }
   },
 
-  async verify(id, callback) {
+  async verify(id, ) {
     try {
       const verifiedUser = await User.updateOne( { uniqueString:id,isVerified:false }).set({ isVerified: true });
-      if (!verifiedUser) {
-        return callback(null);
-      }
+      // if (!verifiedUser) {
+      //   return verifiedUser;
+      // }
       Logger.verbose(`verified user - ${verifiedUser} `);
-      return callback(null, verifiedUser);   
+      return  verifiedUser;   
     } catch (error) {
-      return callback(error);
+      return error;
     }
   },
   async findVerifiedById(id, callback) {
